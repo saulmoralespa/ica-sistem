@@ -13,7 +13,7 @@
                     <form class="m-login__form m-form"  method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="form-group m-form__group">
-                            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} m-input" type="text" value="{{ old('email') }}" name="email" required autofocus>
+                            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} m-input" type="text" value="{{ old('email') }}" name="email" placeholder="{{ __("Email o usuario") }}" required autofocus>
                             @if ($errors->has('email'))
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>
@@ -21,7 +21,7 @@
                             @endif
                         </div>
                         <div class="form-group m-form__group">
-                            <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} m-input m-login__form-input--last" type="password" name="password" required>
+                            <input class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }} m-input m-login__form-input--last" type="password" name="password" placeholder="{{ __("Contraseña") }}" required>
                             @if ($errors->has('password'))
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('password') }}</strong>

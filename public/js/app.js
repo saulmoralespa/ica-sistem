@@ -13981,9 +13981,11 @@ window.Vue = __webpack_require__(39);
 
 Vue.component('example-component', __webpack_require__(40));
 
-var app = new Vue({
-  el: '#app'
-});
+if (document.getElementById("app")) {
+  var app = new Vue({
+    el: '#app'
+  });
+}
 
 /***/ }),
 /* 14 */

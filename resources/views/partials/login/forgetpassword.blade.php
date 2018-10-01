@@ -6,7 +6,7 @@
     <form class="m-login__form m-form" method="post" action="{{ route('password.email') }}">
         @csrf
         <div class="form-group m-form__group">
-            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} m-input" type="email" value="{{ old('email') }}" name="email" id="m_email" required>
+            <input class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }} m-input" type="email" value="{{ old('email') }}" name="email" id="m_email" placeholder="Email" required>
             @if ($errors->has('email'))
                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('email') }}</strong>

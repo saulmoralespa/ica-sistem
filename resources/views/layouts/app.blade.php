@@ -15,11 +15,13 @@
     @endif
 </head>
 <body @if(auth()->check()) class="m--skin- m-page--loading-enabled m-page--loading m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside-left--offcanvas-default m-aside-left--enabled m-aside-left--fixed m-aside-left--skin-dark m-aside--offcanvas-default" @else class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default" @endif>
+@if(auth()->check())
 <div id="app">
-    <main class="py-4">
-        @yield('content')
-    </main>
+    @yield('content')
 </div>
+@else
+    @yield('content')
+@endif
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/scripts.js') }}"></script>
 @if(auth()->check())
