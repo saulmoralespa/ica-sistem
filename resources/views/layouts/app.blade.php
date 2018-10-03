@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', config('app.name', 'Laravel'))</title>
     <link rel="shortcut icon" href="{{ asset('images/favicon.ico') }}" />
@@ -13,6 +13,7 @@
     @if(auth()->check())
     <link href="{{ asset('css/fullcalendar.bundle.css') }}" rel="stylesheet">
     @endif
+    @stack('styles')
 </head>
 <body @if(auth()->check()) class="m--skin- m-page--loading-enabled m-page--loading m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside-left--offcanvas-default m-aside-left--enabled m-aside-left--fixed m-aside-left--skin-dark m-aside--offcanvas-default" @else class="m--skin- m-header--fixed m-header--fixed-mobile m-aside-left--enabled m-aside-left--skin-dark m-aside-left--fixed m-aside-left--offcanvas m-footer--push m-aside--offcanvas-default" @endif>
 @if(auth()->check())
@@ -29,5 +30,6 @@
 @else
 <script src="{{ asset('js/login.js') }}"></script>
 @endif
+@stack('scripts')
 </body>
 </html>

@@ -6,6 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Role extends Model
 {
-    const SUPERAMIN = 1;
+    const SUPERADMIN = 1;
     CONST ADMIN = 2;
+
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
