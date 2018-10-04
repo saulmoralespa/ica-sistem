@@ -9,3 +9,6 @@ heroku config:set DB_PASSWORD=1f067e2f34fef51159764491844291677d0070aa09de7252d6
 heroku config:set APP_DEBUG=true
 heroku config:set APP_NAME=ICA
 heroku config:set APP_URL=http://ica-system.herokuapp.com
+
+
+artisan migrate --seed

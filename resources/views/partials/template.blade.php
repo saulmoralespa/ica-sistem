@@ -8,7 +8,7 @@
             <div class="m-grid__item m-grid__item--fluid m-grid m-grid--ver-desktop m-grid--desktop m-container m-container--responsive m-container--xxl m-container--full-height">
                 <div class="m-grid__item m-grid__item--fluid m-wrapper">
                     @yield('subheader')
-                    @yield('bodycontent');
+                    @yield('bodycontent')
                 </div>
             </div>
         </div>

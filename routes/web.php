@@ -41,14 +41,13 @@ Route::group(['middleware' => ['auth'] ], function () {
     })->name('reports');
 
 
+    Route::get('/users', 'UserController@index')->name('users');
 
-    Route::get('/users', function () {
-        return view('users.index');
-    })->name('users')->middleware('isSuperAdmin');
-
-    Route::get('/users/admin', 'UserController@show')->name('users.admin')->middleware('isSuperAdmin');
+    Route::get('/users/admin', 'UserController@show')->name('users.admin');
 
     Route::post('/delete/user', 'UserController@delete')->name('delete.user');
+    Route::post('/get/user', 'UserController@fetch')->name('get.user');
     Route::post('/edit/user', 'UserController@edit')->name('edit.user');
-
+    Route::post('/update/user', 'UserController@update')->name('update.user');
+    Route::post('/add/user', 'UserController@add')->name('add.user');
 });

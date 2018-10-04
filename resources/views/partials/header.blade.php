@@ -60,9 +60,7 @@
                                 @include(' navigations.payments')
                                 @include(' navigations.costs')
                                 @include(' navigations.reports')
-                                @can('isSuperAdmin', Auth::user())
                                 @include(' navigations.users')
-                                @endcan
                             </ul>
                         </div>
 

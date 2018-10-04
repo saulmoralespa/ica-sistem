@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+use App\User;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,8 +14,44 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(\App\User::class, 10)->create(['role_id' => \App\Role::all()->random()->id]);
-        /*factory(\App\Role::class, 1)->create(['name' => 'superadmin', 'description' => 'Usuario administrador con todos los permios']);
-        factory(\App\Role::class, 1)->create(['name' => 'admin', 'description' => 'Usuario administrador puede editar valores de los estados del banco'])*/;
+        $permissions = [
+
+            'board-see',
+            'board-create',
+            'board-cancel',
+            'students-see',
+            'students-createEdit',
+            'students-cancel',
+            'payments-see',
+            'payments-createEdit',
+            'payments-cancel',
+            'reports-see',
+            'reports-createEdit',
+            'reports-cancel',
+            'costs-see',
+            'costs-createEdit',
+            'costs-cancel'
+
+        ];
+
+        foreach ($permissions as $permission) {
+
+            Permission::create(['name' => $permission]);
+
+        }
+
+
+        $superAdmin = Role::create(['name' => 'SuperAdministrator']);
+        $superAdmin->givePermissionTo(Permission::all());
+
+        $user = User::create([
+            'name' => 'Saul Morales',
+            'username' => 'saulmoralespa',
+            'email' => 'cortuclas@gmail.com',
+            'password' => bcrypt('pass123#')
+
+        ]);
+
+        $user->assignRole('SuperAdministrator');
     }
 }

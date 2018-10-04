@@ -30,12 +30,13 @@
             </div>
         </div>
     </div>
-    @include('partials.modal')
+    @include('partials.users.modal')
 @endsection
 @push('scripts')
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script>
         let dt;
+        let form_msj = $('#form_output');
         $(document).ready(function(){
             dt = $('#users-table').DataTable({
                 sDom: "lfrti",
@@ -52,16 +53,39 @@
                 columns: [
                     {data: 'name'},
                     {data: 'username'},
-                    {data: 'created_at'},
+                    {
+                        data: 'created_at',
+                        type: 'num',
+                        render: {
+                            _: 'display',
+                            sort: 'timestamp'
+                        }
+                    },
                     {data: 'actions'}
                 ]
-            })
+            });
 
            $(document).on("click", ".edit-modal", function(e){
                e.preventDefault();
                const id = $(this).data('id');
+               $(form_msj).empty();
                $('#edit').modal({ backdrop: 'static', keyboard: false })
-           })
+               $.ajax({
+                   type: 'post',
+                   url: '{{ route('get.user') }}',
+                   dataType: 'json',
+                   data: {
+                       '_token': $('meta[name=csrf-token]').attr('content'),
+                       'id': id
+                   },
+                   success: (res) => {
+                       $('#name').val(res.name);
+                       $('#email').val(res.email);
+                       $('#user_id').val(id);
+                       $('#edit').modal('show');
+                   }
+               });
+           });
 
             $(document).on("click", ".delete-modal", function(e){
                 e.preventDefault();
@@ -81,7 +105,40 @@
                             }
                         });
                     });
-            })
+            });
+
+            $(document).on("click", ".add-modal", function(e){
+                e.preventDefault();
+                const id = $(this).data('id');
+                $('#add').modal({ backdrop: 'static', keyboard: false })
+                    .on('click', '#delete-btn', function(){
+                    });
+            });
+
+            $("#user_form").submit(function(e){
+                e.preventDefault()
+                const form_data = $(this).serialize()
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('update.user') }}',
+                    data: form_data,
+                    data_type: 'json',
+                    success: (res) => {
+                        let msg_html = '';
+                        if(res.error.length > 0)
+                        {
+                            for(var count = 0; count < res.error.length; count++)
+                            {
+                                msg_html += '<div class="alert alert-danger">'+res.error[count]+'</div>';
+                            }
+                        }else{
+                            msg_html += '<div class="alert alert-success">'+res.success+'</div>';
+                            dt.ajax.reload();
+                        }
+                        $(form_msj).html(msg_html);
+                    }
+                });
+            });
         })
     </script>
 @endpush
