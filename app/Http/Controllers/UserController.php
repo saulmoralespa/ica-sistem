@@ -13,6 +13,11 @@ class UserController extends Controller
 {
     public function index()
     {
+        /*$userid = 37;
+        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+            ->where("role_has_permissions.role_id",$userid )
+            ->get();*/
+
         $roles = Role::pluck('name','name')->all();
         $permission = Permission::get();
         return view('users.index', compact('roles', 'permission'));
@@ -51,18 +56,14 @@ class UserController extends Controller
 
     public function fetch(Request $request)
     {
-        $userid = $request->id;
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$userid )
-            ->get();
-
         $user = User::find($request->id);
+        $permissions = $user->permissions;
         return response()->json([
             'name' => $user->name,
-            'role_id' => isset($user->roles->first()->id) ? $user->roles->first()->id : '',
+            'role_id' => $user->roles->first()->id,
             'username' => $user->username,
             'email' => $user->email,
-            'permissions' => isset($rolePermissions) ? $rolePermissions : ''
+            'permissions' => $permissions,
         ]);
     }
 
@@ -108,12 +109,9 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'email' => 'required|unique:user|email',
-                'username' => 'required|string|unique:users',
+                'email' => 'required',
+                'username' => 'required',
             ]);
-
-
-        return response()->json( $validation);
 
         $error_array = array();
         $success_output = '';
@@ -153,15 +151,14 @@ class UserController extends Controller
             if ($createUser)
                 $user->assignRole('SuperAdministrator');
             $user->syncRoles(['SuperAdministrator']);
-            $role = Role::find($user->id);
-            $role->syncPermissions($permissions);
+            $user->givePermissionTo(Permission::all());
         }
         if (!empty($request->role_id) && $request->role_id == 2 && count($request->permission) < count($permissions)){
             if ($createUser)
                 $user->assignRole('Administrator');
             $user->syncRoles(['Administrator']);
-            $role = Role::find($user->id);
-            $role->syncPermissions($request->permission);
+            $user->revokePermissionTo(Permission::all());
+            $user->givePermissionTo($request->permission);
         }
     }
 }
