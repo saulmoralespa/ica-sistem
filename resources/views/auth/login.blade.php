@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="m-grid m-grid--hor m-grid--root m-page">
     <div class="m-grid__item m-grid__item--fluid m-grid m-grid--hor m-login m-login--signin m-login--2 m-login-2--skin-1" id="m_login" style="background-image: url({{ asset('images/bg-1.jpg') }});">
