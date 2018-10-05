@@ -66,8 +66,7 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'name' => 'required',
-                'email' => 'required'
+                'email' => 'required|unique:users',
             ]);
 
         $error_array = array();
@@ -89,7 +88,7 @@ class UserController extends Controller
                 $user->password = bcrypt($request->password);
             $user->save();
 
-            $success_output = __(sprintf("Se actualizo exitosamente el usuario: %s", $username));
+            $success_output = sprintf(__("Se actualizo exitosamente el usuario: %s"), $username);
         }
 
         $output = array(
