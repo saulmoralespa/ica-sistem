@@ -13,11 +13,6 @@ class UserController extends Controller
 {
     public function index()
     {
-        /*$userid = 37;
-        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
-            ->where("role_has_permissions.role_id",$userid )
-            ->get();*/
-
         $roles = Role::pluck('name','name')->all();
         $permission = Permission::get();
         return view('users.index', compact('roles', 'permission'));
@@ -109,8 +104,8 @@ class UserController extends Controller
     {
         $validation = Validator::make($request->all(),
             [
-                'email' => 'required',
-                'username' => 'required',
+                'email' => 'required|unique:users',
+                'username' => 'required|unique:users',
             ]);
 
         $error_array = array();
