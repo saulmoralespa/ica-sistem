@@ -64,5 +64,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $user->assignRole('SuperAdministrator');
+        $role = Role::find($user->id);
+        $role->syncPermissions(Permission::all());
     }
 }

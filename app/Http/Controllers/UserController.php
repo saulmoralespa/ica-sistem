@@ -51,11 +51,18 @@ class UserController extends Controller
 
     public function fetch(Request $request)
     {
+        $userid = $request->id;
+        $rolePermissions = Permission::join("role_has_permissions","role_has_permissions.permission_id","=","permissions.id")
+            ->where("role_has_permissions.role_id",$userid )
+            ->get();
+
         $user = User::find($request->id);
         return response()->json([
             'name' => $user->name,
+            'role_id' => isset($user->roles->first()->id) ? $user->roles->first()->id : '',
             'username' => $user->username,
-            'email' => $user->email
+            'email' => $user->email,
+            'permissions' => isset($rolePermissions) ? $rolePermissions : ''
         ]);
     }
 
@@ -81,8 +88,7 @@ class UserController extends Controller
             $username = $user->username;
             $user->name = $request->name;
             $user->email = $request->email;
-            if (!empty($request->role_id))
-                $user->role_id = (int)$request->role_id;
+            $this->_assinRoleAndPermissions($request, $user);
             if (!empty($request->password))
                 $user->password = bcrypt($request->password);
             $user->save();
@@ -100,6 +106,62 @@ class UserController extends Controller
 
     public function add(Request $request)
     {
+        $validation = Validator::make($request->all(),
+            [
+                'email' => 'required|unique:user|email',
+                'username' => 'required|string|unique:users',
+            ]);
 
+
+        return response()->json( $validation);
+
+        $error_array = array();
+        $success_output = '';
+
+        if ($validation->fails())
+        {
+            foreach ($validation->messages()->getMessages() as $field_name => $messages)
+            {
+                $error_array[] = $messages;
+            }
+        }else{
+            $user = User::create([
+                'name' => $request->input('name'),
+                'username' => $request->input('username'),
+                'email' => $request->input('email'),
+                'password' => bcrypt($request->input('password'))
+
+            ]);
+
+            $this->_assinRoleAndPermissions($request, $user, true);
+            $success_output = __(sprintf("Se agrego exitosamente el usuario: %s", $user->username));
+        }
+
+        $output = array(
+            'error'     =>  $error_array,
+            'success'   =>  $success_output
+        );
+
+        return response()->json($output);
+    }
+
+    private function _assinRoleAndPermissions($request, $user, $createUser = false)
+    {
+        $permissions = Permission::all();
+
+        if ((!empty($request->role_id) && $request->role_id == 1) || (count($request->permission) === count($permissions))){
+            if ($createUser)
+                $user->assignRole('SuperAdministrator');
+            $user->syncRoles(['SuperAdministrator']);
+            $role = Role::find($user->id);
+            $role->syncPermissions($permissions);
+        }
+        if (!empty($request->role_id) && $request->role_id == 2 && count($request->permission) < count($permissions)){
+            if ($createUser)
+                $user->assignRole('Administrator');
+            $user->syncRoles(['Administrator']);
+            $role = Role::find($user->id);
+            $role->syncPermissions($request->permission);
+        }
     }
 }

@@ -41,12 +41,14 @@
                     <div class="form-group">
                         <label>{{ __("Rol") }}</label>
                         <select name="role_id" class="form-control">
+                            <option value="">{{ __("Seleccione opción") }}</option>
                             <option value="1">{{ __("Super Administrador") }}</option>
                             <option value="2">{{ __("Adminstrador") }}</option>
                         </select>
                     </div>
+                    @include('partials.users.tablePermissions')
                     <div class="form-group">
-                        <label>{{ __("Contraseña") }}</label>
+                        <label>{{ __("Nueva contraseña") }}</label>
                         <input type="password" name="password" id="password" class="form-control" />
                     </div>
                 </div>
@@ -92,82 +94,7 @@
                             <option value="2">{{ __("Adminstrador") }}</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 col-form-label">{{ __("Permisos") }}</label>
-
-                        <table class="table table-striped table-bordered" id="user-add-table">
-                            <thead>
-                            <tr>
-                                <th>Módulo</th>
-                                <th>Consultar</th>
-                                <th>Crear/editar</th>
-                                <th>Cancelar</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td>{{ __("Tablero") }}</td>
-                                @foreach($permission as $value)
-                                    @if(strpos($value->name, 'board') !== false)
-                                    <div class="form-check form-check-inline">
-                                       <td>
-                                        {{ Form::checkbox('permission[]', $value->id, false, array()) }}
-                                       </td>
-                                    </div>
-                                    @endif
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <td>{{ __("Estudiantes") }}</td>
-                                @foreach($permission as $value)
-                                    @if(strpos($value->name, 'students') !== false)
-                                        <div class="form-check form-check-inline">
-                                            <td>
-                                                {{ Form::checkbox('permission[]', $value->id, false, array()) }}
-                                            </td>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <td>{{ __("Pagos") }}</td>
-                                @foreach($permission as $value)
-                                    @if(strpos($value->name, 'payments') !== false)
-                                        <div class="form-check form-check-inline">
-                                            <td>
-                                                {{ Form::checkbox('permission[]', $value->id, false, array()) }}
-                                            </td>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <td>{{ __("Reportes") }}</td>
-                                @foreach($permission as $value)
-                                    @if(strpos($value->name, 'reports') !== false)
-                                        <div class="form-check form-check-inline">
-                                            <td>
-                                                {{ Form::checkbox('permission[]', $value->id, false, array()) }}
-                                            </td>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </tr>
-                            <tr>
-                                <td>{{ __("Gestión de Costos") }}</td>
-                                @foreach($permission as $value)
-                                    @if(strpos($value->name, 'costs') !== false)
-                                        <div class="form-check form-check-inline">
-                                            <td>
-                                                {{ Form::checkbox('permission[]', $value->id, false, array()) }}
-                                            </td>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
+                    @include('partials.users.tablePermissions')
                     <div class="form-group">
                         <label>{{ __("Contraseña") }}</label>
                         <input type="password" name="password" id="password" class="form-control" required />

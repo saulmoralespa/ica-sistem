@@ -36,7 +36,7 @@
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script>
         let dt;
-        let form_msj = $('#form_output');
+        let form_msj = $('span#form_output');
         $(document).ready(function(){
             dt = $('#users-table').DataTable({
                 sDom: "lfrti",
@@ -68,8 +68,9 @@
            $(document).on("click", ".edit-modal", function(e){
                e.preventDefault();
                const id = $(this).data('id');
+               const edit = $('#edit')
                $(form_msj).empty();
-               $('#edit').modal({ backdrop: 'static', keyboard: false })
+               $(edit).modal({ backdrop: 'static', keyboard: false })
                $.ajax({
                    type: 'post',
                    url: '{{ route('get.user') }}',
@@ -82,7 +83,12 @@
                        $('#name').val(res.name);
                        $('#email').val(res.email);
                        $('#user_id').val(id);
-                       $('#edit').modal('show');
+
+                       $(edit).find('select').val(res.role_id).change()
+
+                       permissionsAdd(edit, res.permissions)
+
+                       $(edit).modal('show');
                    }
                });
            });
@@ -109,21 +115,39 @@
 
             $(document).on("click", ".add-modal", function(e){
                 e.preventDefault();
-                const id = $(this).data('id');
                 $('#add').modal({ backdrop: 'static', keyboard: false })
                     .on('click', '#delete-btn', function(){
                     });
             });
 
-            $("#user_form").submit(function(e){
+            let select_rol = $("select[name^=role_id]");
+            let permissionsTable = $("div#user-permissions-table");
+
+            $(select_rol).on('change', function(){
+                if(this.value != 2){
+                    $(permissionsTable).hide()
+                }else{
+                    $(permissionsTable).show()
+                }
+            });
+
+
+            function permissionsAdd(el, permissions){
+                for (permission of permissions) {
+                    $(el).find("input[data-permission="+permission.id+"]").prop('checked', true)
+                }
+            }
+
+            $("form#user_form").submit(function(e){
                 e.preventDefault()
                 const form_data = $(this).serialize()
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('update.user') }}',
+                    url: ($('div#add').is(':visible'))  ? '{{ route('add.user') }}' : '{{ route('update.user') }}',
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
+                        console.log(res)
                         let msg_html = '';
                         if(res.error.length > 0)
                         {

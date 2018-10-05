@@ -10,5 +10,5 @@ heroku config:set APP_DEBUG=true
 heroku config:set APP_NAME=ICA
 heroku config:set APP_URL=http://ica-system.herokuapp.com
 
-
-artisan migrate --seed
+heroku run php artisan migrate:fresh
+heroku run php artisan migrate --seed
