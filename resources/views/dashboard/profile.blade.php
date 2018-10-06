@@ -40,3 +40,48 @@
     </div>
     <!-- end::Scroll Top -->
 @endsection
+@push('scripts')
+<script>
+    $("form").submit(function (e) {
+        e.preventDefault();
+        let form_data = $(this).serialize();
+        let self = $(this)
+        $(self).find('div.alert-user').empty();
+        let form_password = $('form#password-user');
+        if($(form_password).is(':visible')){
+            let password = $(this).find('input[name=password]').val();
+            let repeatpassword = $(this).find('input[name=repeatpassword]').val();
+
+            if (password !== repeatpassword){
+                $(self).find('div.alert-user').removeClass('m--hide').html('<div class="alert alert-danger">{{ __('Las contraseñas ingresadas no coinciden') }}</div>');
+                return;
+            }
+
+        }
+
+       $.ajax({
+            type: 'post',
+            url: $(form_password).is(':visible')  ? '{{ route('password.admin') }}' : '{{ route('update.user') }}',
+            dataType: 'json',
+            data: form_data,
+            success: (res) => {
+                let msg_html = '';
+                if(res.error.length > 0)
+                {
+                    for(var count = 0; count < res.error.length; count++)
+                    {
+                        msg_html += '<div class="alert alert-danger">'+res.error[count]+'</div>';
+                    }
+                }else{
+                    msg_html += '<div class="alert alert-success">'+res.success+'</div>';
+                    if ($(form_password).is(':visible'))
+                        window.location.reload();
+                }
+
+                $(self).find('div.alert-user').removeClass('m--hide').html(msg_html);
+            }
+        })
+    });
+</script>
+@endpush
+

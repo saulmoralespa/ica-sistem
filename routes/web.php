@@ -50,4 +50,5 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/edit/user', 'UserController@edit')->name('edit.user');
     Route::post('/update/user', 'UserController@update')->name('update.user');
     Route::post('/add/user', 'UserController@add')->name('add.user');
+    Route::post('/password/admin', 'UserController@changePassword')->name('password.admin');
 });

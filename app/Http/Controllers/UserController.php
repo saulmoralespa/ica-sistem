@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class UserController extends Controller
@@ -64,25 +66,20 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $validation = Validator::make($request->all(),
-            [
-                'email' => 'required|unique:users',
-            ]);
-
         $error_array = array();
         $success_output = '';
 
-        if ($validation->fails())
+        $checkEmailExist = User::where('email', '=', $request->email)->where('id', '!=', $request->id)->first();
+
+        if ($checkEmailExist)
         {
-            foreach ($validation->messages()->getMessages() as $field_name => $messages)
-            {
-                $error_array[] = $messages;
-            }
+            $error_array[] = __('El correo electrónico ya esta en uso por otro usuario');
         }else{
             $user = User::find($request->id);
             $username = $user->username;
             $user->name = $request->name;
             $user->email = $request->email;
+            if (!empty($request->role_id))
             $this->_assinRoleAndPermissions($request, $user);
             if (!empty($request->password))
                 $user->password = bcrypt($request->password);
@@ -127,6 +124,30 @@ class UserController extends Controller
 
             $this->_assinRoleAndPermissions($request, $user, true);
             $success_output = __(sprintf("Se agrego exitosamente el usuario: %s", $user->username));
+        }
+
+        $output = array(
+            'error'     =>  $error_array,
+            'success'   =>  $success_output
+        );
+
+        return response()->json($output);
+    }
+
+    public function changePassword(Request $request)
+    {
+        $error_array = [];
+        $success_output = '';
+
+        $user = Auth::user();
+
+        if ((Hash::check($request->password, $user->password))) {
+            $error_array[] = __("La nueva contraseña no puede ser igual a su contraseña actual. Por favor elija una contraseña diferente");
+        }else{
+            $user->password = bcrypt($request->password);
+            $user->save();
+            Auth::logout();
+            $success_output = __("Se cambio la contraseña correctamente");
         }
 
         $output = array(

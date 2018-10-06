@@ -1,6 +1,6 @@
 <li class="m-nav__item m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
     <a href="#" class="m-nav__link m-dropdown__toggle">
-        <span class="m-topbar__username m--hidden-mobile">{{ auth()->user()->name }}</span>
+        <span class="m-topbar__username m--hidden-mobile">{{ auth()->user()->username }}</span>
         <span class="m-topbar__userpic">
 													<img src="assets/app/media/img/users/user4.jpg" class="m--img-rounded m--marginless m--img-centered" alt="" />
 												</span>

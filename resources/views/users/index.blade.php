@@ -114,6 +114,7 @@
             });
 
             $(document).on("click", ".add-modal", function(e){
+                $(form_msj).empty();
                 e.preventDefault();
                 $('#add').modal({ backdrop: 'static', keyboard: false })
                     .on('click', '#delete-btn', function(){
@@ -143,11 +144,10 @@
                 const form_data = $(this).serialize()
                 $.ajax({
                     type: 'post',
-                    url: ($('div#add').is(':visible'))  ? '{{ route('add.user') }}' : '{{ route('update.user') }}',
+                    url: $('div#add').is(':visible') ? '{{ route('add.user') }}' : '{{ route('update.user') }}',
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
-                        console.log(res)
                         let msg_html = '';
                         if(res.error.length > 0)
                         {
