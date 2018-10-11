@@ -21,7 +21,6 @@ Route::group(['middleware' => ['auth'] ], function () {
         return view('dashboard.profile');
     })->name('profile');
 
-
     Route::get('/payments', function () {
         return view('payments.index');
     })->name('payments');
@@ -48,10 +47,8 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/add/user', 'UserController@add')->name('add.user');
     Route::post('/password/admin', 'UserController@changePassword')->name('password.admin');
 
-
     Route::get('/students','StudentController@index')->name('students');
     Route::get('/students/admin','StudentController@show')->name('students.admin');
     Route::get('/students/admin/{status}', 'StudentController@show')->name('students.admin.status');
     Route::post('/add/student', 'StudentController@add')->name('add.student');
-
 });
