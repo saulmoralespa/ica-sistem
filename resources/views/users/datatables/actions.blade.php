@@ -1,0 +1,1 @@
+<button data-id="{{ $id }}" class="edit-modal btn btn-info"><i class="fas fa-edit"></i> {{ __("Editar") }}</button>  <button data-id="{{ $id }}" class="delete-modal btn btn-danger"><i class="fas fa-trash"></i> {{ __("Eliminar") }}</button>
