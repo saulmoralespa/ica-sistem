@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 @extends('partials.template')
 @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
@@ -73,13 +72,15 @@
 
             $(document).on("click", ".add-modal", function(e){
                 e.preventDefault();
+                form_msj.empty();
                 $('#add').modal({ backdrop: 'static', keyboard: false })
                     .on('click', '#delete-btn', function(){
                     });
             });
 
             $("form#user_form").submit(function(e){
-                e.preventDefault()
+                e.preventDefault();
+                form_msj.empty();
                 const form_data = $(this).serialize()
                 $.ajax({
                     type: 'post',
