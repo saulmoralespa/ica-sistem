@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="col">
-                <button class="add-modal btn btn-primary btn-lg pull-right"><i class="fas fa-plus"></i> {{ __("Agegar grado") }}</button>
+                <button class="add-modal btn btn-primary btn-lg pull-right"><i class="fas fa-plus"></i> {{ __("Agegar matrícula") }}</button>
             </div>
             <div class="w-100"></div>
             <div class="col">
@@ -62,13 +62,52 @@
                     });
             });
 
+            $(document).on("click", ".delete-modal", function(e){
+                e.preventDefault();
+                const id = $(this).data('id');
+                $('#delete').modal({ backdrop: 'static', keyboard: false })
+                    .on('click', '#delete-btn', function(){
+                        $.ajax({
+                            type: 'post',
+                            url: '{{ route('delete.enrollment') }}',
+                            data: {
+                                '_token': $('meta[name=csrf-token]').attr('content'),
+                                'id': id
+                            },
+                            success: (res) =>{
+                                $('#delete').modal('hide');
+                                dt.ajax.reload();
+                            }
+                        });
+                    });
+            });
+
             $("form#user_form").submit(function(e){
                 e.preventDefault();
                 form_msj.empty();
+                let formAdd = $('div#add');
+                if (formAdd.is(':visible')){
+                    let costInput = $('input[name=cost]');
+                    let cost = costInput.val();
+                    if (isNaN(cost)){
+                        alert("No esta ingresado un número");
+                        return;
+                    }
+
+                    if (!isFloat(cost)){
+                        cost = cost + '.00'
+                        costInput.val(cost);
+                    }else if(isFloat(cost) && countDecimals(cost) !== 2){
+                        alert("Debe ingresar una cantidad de número entero o preferiblemente un número con 2 decimales");
+                        return;
+                    }
+                }
+
                 const form_data = $(this).serialize()
+
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('add.student') }}',
+                    url: formAdd.is(':visible') ? '{{ route('add.enrollment') }}' : '{{ route('update.enrollment') }}',
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
@@ -87,6 +126,16 @@
                     }
                 });
             });
+
+
+            function isFloat(float) {
+                return /\./.test(float.toString());
+            }
+
+
+            function countDecimals(value){
+                return value.toString().split(".")[1].length || 0;
+            }
         });
     </script>
 @endpush

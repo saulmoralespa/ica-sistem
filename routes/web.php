@@ -46,7 +46,9 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::get('/students/admin/{status}', 'StudentController@show')->name('students.admin.status');
     Route::post('/students/add', 'StudentController@add')->name('add.student');
 
-    Route::get('/costs/enrollments', 'CostController@enrollments')->name('costs.enrollments');
-    Route::get('/costs/enrollments/fetch', 'CostController@fetch')->name('enrollments.fetch');
-
+    Route::get('/costs/enrollments', 'CostController@enrollmentsShow')->name('costs.enrollments');
+    Route::get('/costs/enrollments/fetch', 'CostController@enrollmentsFetch')->name('enrollments.fetch');
+    Route::post('/costs/enrollments/fetch', 'CostController@enrollmentsDelete')->name('delete.enrollment');
+    Route::post('/costs/enrollments/add', 'CostController@enrollmentsAdd')->name('add.enrollment');
+    Route::post('/costs/enrollments/update', 'CostController@enrollmentsUpdate')->name('update.enrollment');
 });
