@@ -25,7 +25,7 @@ class UserController extends Controller
 
         $users = User::select(['id', 'name', 'username', 'email', 'created_at'])->where('id', '!=', \Auth::user()->id);
 
-        $actions = 'users.datatables.actions';
+        $actions = 'actions.datatables.viewdel';
 
         return Datatables::of($users)
             ->editColumn('created_at', function ($user) {

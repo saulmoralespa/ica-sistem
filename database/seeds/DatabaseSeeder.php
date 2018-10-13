@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\User;
+use App\Student;
 
 class DatabaseSeeder extends Seeder
 {
@@ -66,5 +67,14 @@ class DatabaseSeeder extends Seeder
         $user->assignRole('SuperAdministrator');
         $role = Role::find($user->id);
         $role->syncPermissions(Permission::all());
+
+
+        $student = Student::create([
+            'name' => 'Julio Monsalve',
+            'email' => 'juliomonsalve@gmail.com',
+            'idPersonal' => '10424253465',
+            'attendant' => 'Karen Monsalve',
+            'phone' => '3125354572'
+        ]);
     }
 }

@@ -4,8 +4,6 @@
         <span class="m-menu__item-here"></span>
         <i class="m-menu__link-icon fas fa-users"></i>
         <span class="m-menu__link-text">{{ __("Usuarios") }}</span>
-        <i class="m-menu__hor-arrow la la-angle-down"></i>
-        <i class="m-menu__ver-arrow la la-angle-right"></i>
     </a>
     <div class="m-menu__submenu  m-menu__submenu--fixed m-menu__submenu--left" style="width:600px">
         <span class="m-menu__arrow m-menu__arrow--adjust"></span>

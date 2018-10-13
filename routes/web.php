@@ -26,10 +26,6 @@ Route::group(['middleware' => ['auth'] ], function () {
     })->name('payments');
 
 
-    Route::get('/costs', function () {
-        return view('costs.index');
-    })->name('costs');
-
 
     Route::get('/reports', function () {
         return view('reports.index');
@@ -37,18 +33,20 @@ Route::group(['middleware' => ['auth'] ], function () {
 
 
     Route::get('/users', 'UserController@index')->name('users');
-
     Route::get('/users/admin', 'UserController@show')->name('users.admin');
-
-    Route::post('/delete/user', 'UserController@delete')->name('delete.user');
-    Route::post('/get/user', 'UserController@fetch')->name('get.user');
-    Route::post('/edit/user', 'UserController@edit')->name('edit.user');
-    Route::post('/update/user', 'UserController@update')->name('update.user');
-    Route::post('/add/user', 'UserController@add')->name('add.user');
-    Route::post('/password/admin', 'UserController@changePassword')->name('password.admin');
+    Route::post('/users/delete', 'UserController@delete')->name('delete.user');
+    Route::post('/users/get', 'UserController@fetch')->name('get.user');
+    Route::post('/users/edit', 'UserController@edit')->name('edit.user');
+    Route::post('/users/update', 'UserController@update')->name('update.user');
+    Route::post('/users/add', 'UserController@add')->name('add.user');
+    Route::post('/users/admin/password', 'UserController@changePassword')->name('password.admin');
 
     Route::get('/students','StudentController@index')->name('students');
     Route::get('/students/admin','StudentController@show')->name('students.admin');
     Route::get('/students/admin/{status}', 'StudentController@show')->name('students.admin.status');
-    Route::post('/add/student', 'StudentController@add')->name('add.student');
+    Route::post('/students/add', 'StudentController@add')->name('add.student');
+
+    Route::get('/costs/enrollments', 'CostController@enrollments')->name('costs.enrollments');
+    Route::get('/costs/enrollments/fetch', 'CostController@fetch')->name('enrollments.fetch');
+
 });
