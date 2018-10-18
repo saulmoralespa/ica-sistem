@@ -70,4 +70,48 @@ class StudentController extends Controller
 
         return response()->json($output);
     }
+
+    public function fetch(Request $request)
+    {
+        $student = Student::find($request->id);
+        return response()->json([
+            'name' => $student->name,
+            'email' => $student->email,
+            'idPersonal' => $student->idPersonal,
+            'attendant' => $student->attendant,
+            'phone' => $student->phone
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $error_array = array();
+        $success_output = '';
+
+        $checkEmailExist = Student::where('email', '=', $request->email)->where('id', '!=', $request->id)->first();
+        $checkIdPersonalExist = Student::where('idPersonal', '=', $request->idPersonal)->where('id', '!=', $request->id)->first();
+
+        if ($checkEmailExist)
+        {
+            $error_array[] = __('El correo electrónico ya esta en uso por otro usuario');
+        }else if ($checkIdPersonalExist){
+            $error_array[] = __('El ID personal ya esta en uso por otro usuario');
+        }else{
+           $student = Student::find($request->id);
+           $student->name = $request->name;
+           $student->email = $request->email;
+           $student->idPersonal = $request->idPersonal;
+           $student->attendant = $request->attendant;
+           $student->phone = $request->phone;
+           $student->save();
+           $success_output = sprintf(__("Se actualizo exitosamente el estudiante: %s"), $student->name);
+        }
+
+        $output = array(
+            'error'     =>  $error_array,
+            'success'   =>  $success_output
+        );
+
+        return response()->json($output);
+    }
 }

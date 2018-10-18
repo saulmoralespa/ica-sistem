@@ -54,13 +54,12 @@ class UserController extends Controller
     public function fetch(Request $request)
     {
         $user = User::find($request->id);
-        $permissions = $user->permissions;
         return response()->json([
             'name' => $user->name,
             'role_id' => $user->roles->first()->id,
             'username' => $user->username,
             'email' => $user->email,
-            'permissions' => $permissions,
+            'permissions' => $user->permissions
         ]);
     }
 
@@ -76,7 +75,6 @@ class UserController extends Controller
             $error_array[] = __('El correo electrónico ya esta en uso por otro usuario');
         }else{
             $user = User::find($request->id);
-            $username = $user->username;
             $user->name = $request->name;
             $user->email = $request->email;
             if (!empty($request->role_id))
@@ -85,7 +83,7 @@ class UserController extends Controller
                 $user->password = bcrypt($request->password);
             $user->save();
 
-            $success_output = sprintf(__("Se actualizo exitosamente el usuario: %s"), $username);
+            $success_output = sprintf(__("Se actualizo exitosamente el usuario: %s"), $user->username);
         }
 
         $output = array(

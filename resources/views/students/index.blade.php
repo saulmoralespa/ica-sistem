@@ -68,7 +68,34 @@
                 let filter_value = $(this).val();
                 let new_url = '{{ route('students.admin') }}/' + filter_value;
                 dt.ajax.url(new_url).load();
-            })
+            });
+
+            $(document).on("click", ".edit-modal", function(e){
+                e.preventDefault();
+                const id = $(this).data('id');
+                const edit = $('#edit');
+                $(form_msj).empty();
+                $(edit).modal({ backdrop: 'static', keyboard: false });
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('get.student') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': $('meta[name=csrf-token]').attr('content'),
+                        'id': id
+                    },
+                    success: (res) => {
+                        $(edit).find('#name').val(res.name);
+                        $(edit).find('#email').val(res.email);
+                        $(edit).find('#idPersonal').val(res.idPersonal);
+                        $(edit).find('#phone').val(res.phone);
+                        $(edit).find('#attendant').val(res.attendant);
+                        $(edit).find('#student_id').val(id);
+
+                        $(edit).modal('show');
+                    }
+                });
+            });
 
             $(document).on("click", ".add-modal", function(e){
                 e.preventDefault();
@@ -84,10 +111,11 @@
                 const form_data = $(this).serialize()
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('add.student') }}',
+                    url: $('div#add').is(':visible') ? '{{ route('add.student') }}' : '{{ route('update.student') }}',
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
+                        console.log(res)
                         let msg_html = '';
                         if(res.error.length > 0)
                         {
