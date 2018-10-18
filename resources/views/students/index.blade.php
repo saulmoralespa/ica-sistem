@@ -97,6 +97,13 @@
                 });
             });
 
+            $(document).on("click", ".view-modal", function(e){
+                e.preventDefault();
+                const id = $(this).data('id');
+                const view = $('#view');
+                $(view).modal('show');
+            });
+
             $(document).on("click", ".add-modal", function(e){
                 e.preventDefault();
                 form_msj.empty();

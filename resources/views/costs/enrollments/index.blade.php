@@ -36,7 +36,9 @@
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script>
         let dt;
+        let formData = $("form#user_form");
         let form_msj = $('span#form_output');
+        let modalDefault = $('#postGet');
         $(document).ready(function(){
             dt = $('#enrollments-table').DataTable({
                 processing: true,
@@ -56,10 +58,41 @@
 
             $(document).on("click", ".add-modal", function(e){
                 e.preventDefault();
+                formData.trigger('reset');
                 form_msj.empty();
-                $('#add').modal({ backdrop: 'static', keyboard: false })
+                $(modalDefault).find('.modal-title').text('{{ __("Agregar matrícula") }}');
+                $(modalDefault).find('#action').val('{{ __("Agregar") }}');
+                $(modalDefault).modal({ backdrop: 'static', keyboard: false })
                     .on('click', '#delete-btn', function(){
                     });
+            });
+
+
+            $(document).on("click", ".edit-modal", function(e){
+                e.preventDefault();
+                formData.trigger('reset');
+                $(form_msj).empty();
+                const id = $(this).data('id');
+                $.ajax({
+                    type: 'post',
+                    url: '{{ route('get.enrollment') }}',
+                    dataType: 'json',
+                    data: {
+                        '_token': $('meta[name=csrf-token]').attr('content'),
+                        'id': id
+                    },
+                    success: (res) => {
+                        $('#grade').val(res.grade);
+                        $('#bachelor').val(res.bachelor);
+                        $('#cost').val(res.cost);
+                        $('#enrollment_id').val(id);
+
+                        $(modalDefault).find('.modal-title').text('{{ __("Editar matrícula") }}');
+                        $(modalDefault).find('#action').val('{{ __("Actualizar") }}');
+
+                        $(modalDefault).modal('show');
+                    }
+                });
             });
 
             $(document).on("click", ".delete-modal", function(e){
@@ -82,25 +115,29 @@
                     });
             });
 
-            $("form#user_form").submit(function(e){
+            $(formData).submit(function(e){
                 e.preventDefault();
                 form_msj.empty();
                 let formAdd = $('div#add');
-                if (formAdd.is(':visible')){
-                    let costInput = $('input[name=cost]');
-                    let cost = costInput.val();
-                    if (isNaN(cost)){
-                        alert("No esta ingresado un número");
-                        return;
-                    }
+                let costInput = $('input[name=cost]');
+                let cost = costInput.val();
 
-                    if (!isFloat(cost)){
-                        cost = cost + '.00'
-                        costInput.val(cost);
-                    }else if(isFloat(cost) && countDecimals(cost) !== 2){
-                        alert("Debe ingresar una cantidad de número entero o preferiblemente un número con 2 decimales");
-                        return;
-                    }
+                let grade = $('input[name=grade]');
+                let gradeVal = grade.val();
+
+                if(!isNaN(gradeVal)){
+                    gradeVal += '°';
+                    grade.val(gradeVal);
+                }
+
+                let bachelor = $('input[name=bachelor]');
+                let bacherlorVal = bachelor.val();
+                bacherlorVal = bacherlorVal.charAt(0).toUpperCase() + bacherlorVal.slice(1);
+                bachelor.val(bacherlorVal);
+
+                if (isNaN(cost)){
+                    $(form_msj).html('<div class="alert alert-danger">{{ __("No esta ingresado un costo válido, puede usar una cantidad con decimales ejemplo 345.00") }}</div>');
+                    return;
                 }
 
                 const form_data = $(this).serialize()
@@ -126,16 +163,6 @@
                     }
                 });
             });
-
-
-            function isFloat(float) {
-                return /\./.test(float.toString());
-            }
-
-
-            function countDecimals(value){
-                return value.toString().split(".")[1].length || 0;
-            }
         });
     </script>
 @endpush
