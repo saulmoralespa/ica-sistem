@@ -21,6 +21,12 @@
                     <span class="m-menu__link-text">{{ __("Costos de matrículas") }}</span>
                 </a>
             </li>
+            <li class="m-menu__item m-menu__item--submenu" m-menu-submenu-toggle="hover" m-menu-link-redirect="1" aria-haspopup="false">
+                <a href="{{ route('costs.annuites') }}" class="m-menu__link" title="{{ __("Agregar, editar, eliminar anualidades") }}">
+                    <i class="m-menu__link-icon fas fa-ticket-alt"></i>
+                    <span class="m-menu__link-text">{{ __("Costos de anualidades") }}</span>
+                </a>
+            </li>
         </ul>
     </div>
 </li>

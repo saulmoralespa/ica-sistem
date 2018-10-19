@@ -17,6 +17,8 @@ class CreateContractsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->string('observations')->nullable();
             $table->timestamps();
         });

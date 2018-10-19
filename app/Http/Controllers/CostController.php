@@ -17,4 +17,9 @@ class CostController extends Controller
     {
         return view('costs.services.index');
     }
+
+    public function annuites()
+    {
+        return view('costs.annuities.index');
+    }
 }

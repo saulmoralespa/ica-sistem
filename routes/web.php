@@ -61,4 +61,9 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/costs/services/update', 'ServiceController@update')->name('update.service');
     Route::post('/costs/services/get', 'ServiceController@get')->name('get.service');
     Route::post('/costs/services/delete', 'ServiceController@delete')->name('delete.service');
+
+    Route::get('/costs/annuites', 'CostController@annuites')->name('costs.annuites');
+    Route::get('/costs/annuites/fetch', 'AnnuityController@fetch')->name('annuities.fetch');
+    Route::post('/costs/annuites/add', 'AnnuityController@add')->name('add.annuity');
+    Route::post('/costs/annuites/update', 'AnnuityController@update')->name('update.annuity');
 });
