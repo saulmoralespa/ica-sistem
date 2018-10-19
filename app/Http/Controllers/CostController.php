@@ -12,4 +12,9 @@ class CostController extends Controller
     {
         return view('costs.enrollments.index');
     }
+
+    public function services()
+    {
+        return view('costs.services.index');
+    }
 }

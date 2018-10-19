@@ -48,7 +48,7 @@ class UserController extends Controller
     public function delete(Request $request)
     {
         User::find($request->id)->delete();
-        return response()->json();
+        return;
     }
 
     public function fetch(Request $request)

@@ -25,7 +25,7 @@ class StudentController extends Controller
         }
 
         $actions = 'students.datatables.actions';
-        $status = 'students.datatables.status';
+        $status = 'status.datatables.students.index';
 
         return DataTables::of($students)
             ->addColumn('actions', $actions)

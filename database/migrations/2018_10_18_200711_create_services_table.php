@@ -15,9 +15,13 @@ class CreateServicesTable extends Migration
     {
         Schema::create('services', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->unique();
             $table->decimal('cost', 10, 2)->default(0.00);
-
+            $table->enum('status', [
+                \App\Service::ACTIVE,
+                \App\Service::REQUIRED,
+                \App\Service::INACTIVE
+            ])->default(\App\Service::INACTIVE);
             $table->timestamps();
         });
     }

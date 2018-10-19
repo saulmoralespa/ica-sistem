@@ -12,20 +12,25 @@
                     @csrf
                     <span id="form_output"></span>
                     <div class="form-group">
-                        <label>{{ __("Grado") }}</label>
-                        <input type="text" name="grade" id="grade" class="form-control" required />
+                        <label>{{ __("Nombre") }}</label>
+                        <input type="text" name="name" id="name" class="form-control" required />
                     </div>
                     <div class="form-group">
-                        <label>{{ __("Bachiller") }}</label>
-                        <input type="text" name="bachelor" id="bachelor" class="form-control" required />
-                    </div>
-                    <div class="form-group">
-                        <label>{{ __("Costo de Matrícula") }}</label>
+                        <label>{{ __("costo") }}</label>
                         <input type="text" name="cost" id="cost" class="form-control" required />
+                    </div>
+                    <div class="form-group">
+                        <label>{{ __("Estado") }}</label>
+                        <select class="form-control" name="status" id="status" required>
+                            <option value="">{{ __("Seleccione estado") }}</option>
+                            <option value="1">{{ __("Activo") }}</option>
+                            <option value="2">{{ __("Obligatorio") }}</option>
+                            <option value="3">{{ __("Inactivo") }}</option>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="hidden" name="id" id="enrollment_id" value="" />
+                    <input type="hidden" name="id" id="service_id" value="" />
                     <input type="submit" name="submit" id="action" value="" class="btn btn-info" />
                     <button type="button" class="btn btn-default" data-dismiss="modal">{{ __("Cerrar") }}</button>
                 </div>
@@ -43,7 +48,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <p>{{ __("¿Estas seguro que quieres eliminar la matrícula?") }}</p>
+                <p>{{ __("¿Estas seguro que quieres eliminar el servicio?") }}</p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-sm btn-primary" id="delete-btn">{{ __("Eliminar") }}</button>

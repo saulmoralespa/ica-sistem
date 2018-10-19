@@ -54,4 +54,11 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/costs/enrollments/add', 'EnrollmentController@add')->name('add.enrollment');
     Route::post('/costs/enrollments/update', 'EnrollmentController@update')->name('update.enrollment');
     Route::post('/costs/enrollments/get', 'EnrollmentController@get')->name('get.enrollment');
+
+    Route::get('/costs/services', 'CostController@services')->name('costs.services');
+    Route::get('/costs/services/fetch', 'ServiceController@fetch')->name('services.fetch');
+    Route::post('/costs/services/add', 'ServiceController@add')->name('add.service');
+    Route::post('/costs/services/update', 'ServiceController@update')->name('update.service');
+    Route::post('/costs/services/get', 'ServiceController@get')->name('get.service');
+    Route::post('/costs/services/delete', 'ServiceController@delete')->name('delete.service');
 });
