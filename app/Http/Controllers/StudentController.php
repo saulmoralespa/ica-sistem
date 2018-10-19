@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contract;
 use App\Student;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -74,6 +75,11 @@ class StudentController extends Controller
     public function fetch(Request $request)
     {
         $student = Student::find($request->id);
+
+        if ($request->has('contract')){
+            $contract = Contract::where('student_id', '=', $request->id);
+        }
+
         return response()->json([
             'name' => $student->name,
             'email' => $student->email,

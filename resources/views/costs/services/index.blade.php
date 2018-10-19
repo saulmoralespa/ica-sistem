@@ -1,32 +1,35 @@
 @extends('partials.template')
 @push('styles')
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
 @endpush
 @section('bodycontent')
     <div class="container">
         <div class="row">
             <div class="col">
                 <div class="page-header">
-                    <h1>{{ __("Servicios") }}</h1>
+                    <h2>{{ __("Servicios") }}</h2>
                 </div>
             </div>
-            <div class="col">
+            <div class="col col-sm-4">
                 <button class="add-modal btn btn-primary btn-lg pull-right"><i class="fas fa-plus"></i> {{ __("Agegar servicio") }}</button>
             </div>
-            <div class="w-100"></div>
+        </div>
+        <div class="row">
             <div class="col">
-                <table class="table table-striped table-bordered nowrap"
-                       cellspacing="0"
-                       id="services-table">
-                    <thead>
-                    <tr>
-                        <th scope="col">{{ __("Nombre") }}</th>
-                        <th scope="col">{{ __("Costo") }}</th>
-                        <th scope="col">{{ __("Estado") }}</th>
-                        <th scope="col">{{ __("Acciones") }}</th>
-                    </tr>
-                    </thead>
-                </table>
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered nowrap"
+                           cellspacing="0"
+                           id="services-table">
+                        <thead>
+                        <tr>
+                            <th scope="col">{{ __("Nombre") }}</th>
+                            <th scope="col">{{ __("Costo") }}</th>
+                            <th scope="col">{{ __("Estado") }}</th>
+                            <th scope="col">{{ __("Acciones") }}</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

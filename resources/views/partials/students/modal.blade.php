@@ -83,21 +83,31 @@
         </div>
     </div>
 </div>
-<div class="modal" tabindex="-1" role="dialog" id="view">
-    <div class="modal-dialog" role="document">
+<div id="view" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog large" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title">{{ __("Confirmación de eliminación") }}</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
             <div class="modal-body">
-                <p>{{ __("¿Estas seguro que quieres eliminar el usuario?") }}</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-sm btn-primary" id="delete-btn">{{ __("Eliminar") }}</button>
-                <button type="button" class="btn btn-sm btn-default" data-dismiss="modal">{{ __("Cancelar") }}</button>
+                <button type="button" class="close no-padding" data-dismiss="modal" aria-hidden="true">x</button>
+                <div class="row no-margin">
+                    <div class="col-2 col-sm-1">
+                        <i class="fas fa-user-graduate fa-3x"></i>
+                    </div>
+                    <div class="col-10 col-sm-2 col-md-4">
+                        <p>{{ __("Estudiante:") }} <small class="name"></small></p>
+                        <p>{{ __("ID personal:") }} <small class="idpersonal"></small></p>
+                        <p>{{ __("Acudiente:") }} <small class="attendant"></small></p>
+                    </div>
+                    <div class="col-6 col-sm-2 col-md-4">
+                        <p>{{ __("Teléfono:") }} <small class="phone"></small></p>
+                        <p>{{ __("Email:") }} <small class="email"></small></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col text-center">
+                        <h2>{{ __("No hay contratos activos") }}</h2>
+                        <button class="btn btn-primary">{{ __("crear contrato") }}</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

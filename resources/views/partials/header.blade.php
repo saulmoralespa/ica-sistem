@@ -12,13 +12,6 @@
                     </div>
                     <div class="m-stack__item m-stack__item--middle m-brand__tools">
 
-                        <!-- BEGIN: Responsive Aside Left Menu Toggler -->
-                        <a href="javascript:;" id="m_aside_left_toggle_mobile" class="m-brand__icon m-brand__toggler m-brand__toggler--left">
-                            <span></span>
-                        </a>
-
-                        <!-- END -->
-
                         <!-- BEGIN: Responsive Header Menu Toggler -->
                         <a id="m_aside_header_menu_mobile_toggle" href="javascript:;" class="m-brand__icon m-brand__toggler">
                             <span></span>
@@ -39,15 +32,6 @@
             <!-- END: Brand -->
             <div class="m-stack__item m-stack__item--middle m-stack__item--left m-header-head" id="m_header_nav">
                 <div class="m-stack m-stack--ver m-stack--desktop">
-                    <div class="m-stack__item m-stack__item--middle m-stack__item--fit">
-
-                        <!-- BEGIN: Aside Left Toggle -->
-                        <a href="javascript:;" id="m_aside_left_toggle" class="m-aside-left-toggler m-aside-left-toggler--left m_aside_left_toggler">
-                            <span></span>
-                        </a>
-
-                        <!-- END: Aside Left Toggle -->
-                    </div>
                     <div class="m-stack__item m-stack__item--fluid">
 
                         <!-- BEGIN: Horizontal Menu -->
