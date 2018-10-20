@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Annuity;
 use Carbon\Carbon;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Validator;
@@ -13,7 +14,8 @@ class AnnuityController extends Controller
     public function fetch()
     {
         $enrollments = Annuity::select('id', 'year', 'cost', 'discount',
-            'maximum_data', 'second_month');
+            'maximum_date', 'second_month');
+
         $actions = 'actions.datatables.viewdel';
 
         return DataTables::of($enrollments)
@@ -43,7 +45,7 @@ class AnnuityController extends Controller
                 'year' => $request->year,
                 'cost' => $request->cost,
                 'discount' => $request->discount,
-                'maximum_data' => Carbon::parse($request->maximum_data),
+                'maximum_date' => Carbon::createFromFormat('d/m/y', $request->maximum_date),
                 'second_month' => $request->second_month
             ]);
 
@@ -60,5 +62,9 @@ class AnnuityController extends Controller
 
     public function update(Request $request)
     {
+    }
+
+    public function delete(Request $request){
+        Annuity::find($request->id)->delete();
     }
 }

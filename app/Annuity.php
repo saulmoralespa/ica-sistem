@@ -8,6 +8,11 @@ class Annuity extends Model
 {
     protected $fillable = [
         'year', 'cost', 'discount',
-        'maximum_data', 'second_month'
+        'maximum_date', 'second_month'
+    ];
+
+    protected $casts = [
+        'maximum_date' => 'date:d/m/y',
+        'second_month' => 'date:F'
     ];
 }

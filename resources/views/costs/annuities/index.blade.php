@@ -61,7 +61,7 @@
                     {data: 'year'},
                     {data: 'cost'},
                     {data: 'discount'},
-                    {data: 'maximum_data'},
+                    {data: 'maximum_date'},
                     {data: 'second_month'},
                     {data: 'actions'}
                 ]
@@ -114,7 +114,7 @@
                     .on('click', '#delete-btn', function(){
                         $.ajax({
                             type: 'post',
-                            url: '{{ route('delete.enrollment') }}',
+                            url: '{{ route('delete.annuity') }}',
                             data: {
                                 '_token': $('meta[name=csrf-token]').attr('content'),
                                 'id': id
@@ -148,6 +148,7 @@
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
+                        console.log(res)
                         let msg_html = '';
                         if(res.error.length > 0)
                         {
@@ -178,7 +179,7 @@
             });
 
 
-            $('#maximum_data').datepicker({
+            $('#maximum_date').datepicker({
                 startDate: date,
                 autoclose: true,
                 language: 'es',
@@ -187,13 +188,10 @@
 
             $('#second_month').datepicker({
                 startDate: date,
-                minViewMode: "months",
-                maxViewMode: 'months',
-                startView: 'months',
                 autoclose: true,
                 language: 'es',
-                format: 'mm'
-            }).datepicker("setDate", new Date());
+                format: 'dd/m/yy'
+            });
         });
     </script>
 @endpush

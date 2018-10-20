@@ -25,7 +25,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __("Fecha Máxima") }}</label>
-                        <input type="text" name="maximum_data " id="maximum_data" class="form-control" required />
+                        <input type="text" name="maximum_date" id="maximum_date" class="form-control" required />
                     </div>
                     <div class="form-group">
                         <label>{{ __("Mes de 2da Couta") }}</label>

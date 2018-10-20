@@ -18,8 +18,8 @@ class CreateAnnuitiesTable extends Migration
             $table->year('year')->unique();
             $table->decimal('cost', 10, 2)->default(0.00);
             $table->decimal('discount', 10, 2)->default(0.00);
-            $table->date('maximum_data');
-            $table->string('second_month');
+            $table->date('maximum_date');
+            $table->date('second_month');
             $table->timestamps();
         });
     }
