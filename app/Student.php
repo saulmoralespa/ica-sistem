@@ -18,4 +18,9 @@ class Student extends Model
     protected $fillable = [
         'name', 'email', 'idPersonal', 'attendant', 'phone'
     ];
+
+    public function contracts()
+    {
+        return $this->hasMany('App\Contract');
+    }
 }
