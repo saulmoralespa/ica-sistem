@@ -2,7 +2,9 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Jenssegers\Date\Date;
 
 class Annuity extends Model
 {
@@ -12,7 +14,12 @@ class Annuity extends Model
     ];
 
     protected $casts = [
-        'maximum_date' => 'date:d/m/y',
-        'second_month' => 'date:F'
+        'maximum_date' => 'date:d/m/y'
     ];
+
+    public function getSecondMonthAttribute($value)
+    {
+        $date = new Date($value);
+        return $date->englishMonth;
+}
 }
