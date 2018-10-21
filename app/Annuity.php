@@ -13,13 +13,25 @@ class Annuity extends Model
         'maximum_date', 'second_month'
     ];
 
-    protected $casts = [
-        'maximum_date' => 'date:d/m/y'
-    ];
+    protected $transDate = false;
+
+    public function getMaximumDateAttribute($value)
+    {
+        return Carbon::parse($value)->format('d/m/y');
+    }
+
+    public function setTransDate($value)
+    {
+        $this->transDate = $value;
+    }
 
     public function getSecondMonthAttribute($value)
     {
-        $date = new Date($value);
-        return $date->englishMonth;
-}
+        if (!$this->transDate) {
+            $date = new Date($value);
+            return $date->englishMonth;
+        }else{
+            return Carbon::parse($value)->format('d/m/y');
+        }
+    }
 }

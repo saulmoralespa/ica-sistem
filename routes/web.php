@@ -52,19 +52,20 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::get('/costs/enrollments/fetch', 'EnrollmentController@fetch')->name('enrollments.fetch');
     Route::post('/costs/enrollments/delete', 'EnrollmentController@delete')->name('delete.enrollment');
     Route::post('/costs/enrollments/add', 'EnrollmentController@add')->name('add.enrollment');
-    Route::post('/costs/enrollments/update', 'EnrollmentController@update')->name('update.enrollment');
     Route::post('/costs/enrollments/get', 'EnrollmentController@get')->name('get.enrollment');
+    Route::post('/costs/enrollments/update', 'EnrollmentController@update')->name('update.enrollment');
 
     Route::get('/costs/services', 'CostController@services')->name('costs.services');
     Route::get('/costs/services/fetch', 'ServiceController@fetch')->name('services.fetch');
     Route::post('/costs/services/add', 'ServiceController@add')->name('add.service');
-    Route::post('/costs/services/update', 'ServiceController@update')->name('update.service');
     Route::post('/costs/services/get', 'ServiceController@get')->name('get.service');
+    Route::post('/costs/services/update', 'ServiceController@update')->name('update.service');
     Route::post('/costs/services/delete', 'ServiceController@delete')->name('delete.service');
 
     Route::get('/costs/annuites', 'CostController@annuites')->name('costs.annuites');
     Route::get('/costs/annuites/fetch', 'AnnuityController@fetch')->name('annuities.fetch');
     Route::post('/costs/annuites/add', 'AnnuityController@add')->name('add.annuity');
-    Route::get('/costs/annuites/update', 'AnnuityController@update')->name('update.annuity');
+    Route::post('/costs/annuites/update', 'AnnuityController@update')->name('update.annuity');
+    Route::post('/costs/annuites/get', 'AnnuityController@get')->name('get.annuity');
     Route::post('/costs/annuites/delete', 'AnnuityController@delete')->name('delete.annuity');
 });

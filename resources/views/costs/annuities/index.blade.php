@@ -87,21 +87,22 @@
                 const id = $(this).data('id');
                 $.ajax({
                     type: 'post',
-                    url: '{{ route('get.enrollment') }}',
+                    url: '{{ route('get.annuity') }}',
                     dataType: 'json',
                     data: {
                         '_token': $('meta[name=csrf-token]').attr('content'),
                         'id': id
                     },
                     success: (res) => {
-                        $('#grade').val(res.grade);
-                        $('#bachelor').val(res.bachelor);
+                        $('#year').val(res.year);
                         $('#cost').val(res.cost);
-                        $('#enrollment_id').val(id);
+                        $('#discount').val(res.discount);
+                        $('#maximum_date').val(res.maximum_date);
+                        $('#second_month').val(res.second_month);
+                        $('#annuity_id').val(id);
 
                         $(modalDefault).find('.modal-title').text('{{ __("Editar anualidad") }}');
                         $(modalDefault).find('#action').val('{{ __("Actualizar") }}');
-
                         $(modalDefault).modal('show');
                     }
                 });
