@@ -21,6 +21,6 @@ class Student extends Model
 
     public function contracts()
     {
-        return $this->hasMany('App\Contract');
+        return $this->hasMany(Contract::class);
     }
 }

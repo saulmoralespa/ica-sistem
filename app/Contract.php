@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
 {
-    public function student()
+    public function students()
     {
-        return $this->belongsToMany('App\Student');
+        return $this->belongsToMany(Student::class);
     }
 }

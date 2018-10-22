@@ -118,8 +118,7 @@
                     dataType: 'json',
                     data: {
                         '_token': $('meta[name=csrf-token]').attr('content'),
-                        'id': id,
-                        'contract': 'get'
+                        'id': id
                     },
                     success: (res) => {
                         $(view).find('.name').text(res.name);
@@ -127,6 +126,14 @@
                         $(view).find('.idpersonal').text(res.idPersonal);
                         $(view).find('.phone').text(res.phone);
                         $(view).find('.attendant').text(res.attendant);
+
+                        if (res.contracts.length > 0){
+                            $('#notContracts').hide();
+                            $('#contracts').show();
+                        }else{
+                            $('#notContracts').show();
+                            $('#contracts').hide();
+                        }
 
                         $(view).modal({ backdrop: 'static', keyboard: false });
                     }

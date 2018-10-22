@@ -72,12 +72,14 @@ class StudentController extends Controller
         return response()->json($output);
     }
 
-    public function fetch(Request $request)
+    public function get(Request $request)
     {
         $student = Student::find($request->id);
 
-        if ($request->has('contract')){
-            $contract = Contract::where('student_id', '=', $request->id);
+
+        $contracts = '';
+        if ($student->contracts){
+            $contracts = $student->contracts;
         }
 
         return response()->json([
@@ -85,7 +87,8 @@ class StudentController extends Controller
             'email' => $student->email,
             'idPersonal' => $student->idPersonal,
             'attendant' => $student->attendant,
-            'phone' => $student->phone
+            'phone' => $student->phone,
+            'contracts' => $contracts
         ]);
     }
 

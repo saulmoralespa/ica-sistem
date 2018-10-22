@@ -45,7 +45,7 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::get('/students/admin','StudentController@show')->name('students.admin');
     Route::get('/students/admin/{status}', 'StudentController@show')->name('students.admin.status');
     Route::post('/students/add', 'StudentController@add')->name('add.student');
-    Route::post('/students/fetch', 'StudentController@fetch')->name('get.student');
+    Route::post('/students/get', 'StudentController@get')->name('get.student');
     Route::post('/students/update', 'StudentController@update')->name('update.student');
 
     Route::get('/costs/enrollments', 'CostController@enrollments')->name('costs.enrollments');
@@ -68,4 +68,5 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/costs/annuites/update', 'AnnuityController@update')->name('update.annuity');
     Route::post('/costs/annuites/get', 'AnnuityController@get')->name('get.annuity');
     Route::post('/costs/annuites/delete', 'AnnuityController@delete')->name('delete.annuity');
+
 });

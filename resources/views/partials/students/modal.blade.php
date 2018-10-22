@@ -103,9 +103,12 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col text-center">
+                    <div id="notContracts" class="col text-center">
                         <h2>{{ __("No hay contratos activos") }}</h2>
                         <button class="btn btn-primary">{{ __("crear contrato") }}</button>
+                    </div>
+                    <div id="contracts">
+                        have contracts
                     </div>
                 </div>
             </div>
