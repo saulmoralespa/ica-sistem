@@ -31,6 +31,8 @@ if(document.getElementById("app")){
             onChange:function(){
                 if (this.gradeBachelor){
                     this.getData;
+                }else{
+                    this.table = false;
                 }
             }
         },

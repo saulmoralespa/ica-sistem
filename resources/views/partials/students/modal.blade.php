@@ -125,7 +125,7 @@
                                     @endforeach
                                 </select>
                             </div>
-                            <table v-if="table" class="table table-bordered" cellspacing="0"
+                            <table v-show="table" class="table table-bordered" cellspacing="0"
                                    id="contract-table">
                                 <thead>
                                 <tr>
@@ -133,7 +133,7 @@
                                     <th scope="col">{{ __("Monto") }}</th>
                                 </tr>
                                 </thead>
-                                <tbody v-if="table">
+                                <tbody v-show="table">
                                     <template v-for="service in services">
                                         <tr>
                                             <td>@{{ service.name }}</td>
@@ -166,14 +166,17 @@
                                     </tr>
                                 </tbody>
                             </table>
-                            <div class="form-group">
+                            <div v-show="table" class="form-group">
+                                <label for="observations">{{ __("Obseervaciones") }}</label>
                                 <textarea name="observations" class="form-control" rows="4"></textarea>
                             </div>
-                            <button class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
                         </form>
-                    </div>0i
-
+                    </div>
                 </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
+                <button v-show="table" class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
             </div>
         </div>
     </div>

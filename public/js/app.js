@@ -115,6 +115,8 @@ if (document.getElementById("app")) {
             onChange: function onChange() {
                 if (this.gradeBachelor) {
                     this.getData;
+                } else {
+                    this.table = false;
                 }
             }
         },
