@@ -5,6 +5,9 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\User;
 use App\Student;
+use App\Service;
+use App\Enrollment;
+use App\Annuity;
 
 class DatabaseSeeder extends Seeder
 {
@@ -75,6 +78,38 @@ class DatabaseSeeder extends Seeder
             'idPersonal' => '10424253465',
             'attendant' => 'Karen Monsalve',
             'phone' => '3125354572'
+        ]);
+
+
+        $service = Service::create([
+            'name' => 'Segueduc',
+            'cost' => 30.50,
+            'status' => Service::REQUIRED
+        ]);
+
+        $service = Service::create([
+            'name' => 'Libros',
+            'cost' => 40.50,
+            'status' => Service::ACTIVE
+        ]);
+
+        $enrollment = Enrollment::create([
+            'grade' => '9°',
+            'bachelor' => 'Tecnico',
+            'cost' => '350.00'
+        ]);
+
+        $enrollment = Enrollment::create([
+            'grade' => '10°',
+            'bachelor' => 'Comercial',
+            'cost' => 450.00
+        ]);
+
+        $annuity = Annuity::create([
+            'year' => 2019,
+            'cost' => 3000.00,
+            'maximum_date' => '2019-01-20',
+            'second_month' => '2018-11-20'
         ]);
     }
 }

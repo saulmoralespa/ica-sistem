@@ -162,7 +162,6 @@
                     data: form_data,
                     data_type: 'json',
                     success: (res) => {
-                        console.log(res)
                         let msg_html = '';
                         if(res.error.length > 0)
                         {
@@ -186,6 +185,14 @@
 
             $('form#createContract').submit(function (e){
                 e.preventDefault();
+                $.ajax({
+                    url: '{{ route('create.contract') }}',
+                    type: 'post',
+                    data: $(this).serialize(),
+                    success: (res) =>{
+
+                }
+                });
             });
 
         });

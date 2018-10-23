@@ -10,4 +10,9 @@ class Contract extends Model
     {
         return $this->belongsToMany(Student::class);
     }
+
+    public function fees()
+    {
+        return $this->hasOne(Fee::class);
+    }
 }

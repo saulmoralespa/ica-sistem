@@ -37,13 +37,15 @@ class ContractController extends Controller
 
     }
 
+    public function create(Request $request)
+    {
 
+    }
 
     public function determineYearAnnuite()
     {
         $today = date("n");
 
     }
-
 
 }

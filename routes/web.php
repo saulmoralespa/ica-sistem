@@ -69,6 +69,7 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/costs/annuites/get', 'AnnuityController@get')->name('get.annuity');
     Route::post('/costs/annuites/delete', 'AnnuityController@delete')->name('delete.annuity');
 
-    Route::any('/contract/getenrollmentannuity', 'ContractController@dataCreateContract')->name('student.enrollmentAnnuity');
+    Route::post('/contract/getenrollmentannuity', 'ContractController@dataCreateContract')->name('student.enrollmentAnnuity');
+    Route::post('/contract/create', 'ContractController@create')->name('create.contract');
 
 });
