@@ -105,10 +105,39 @@
                 <div class="row">
                     <div id="notContracts" class="col text-center">
                         <h2>{{ __("No hay contratos activos") }}</h2>
-                        <button class="btn btn-primary">{{ __("crear contrato") }}</button>
+                        <button id="createContract"  class="btn btn-primary">{{ __("crear contrato") }}</button>
                     </div>
                     <div id="contracts">
                         have contracts
+                    </div>
+                    <div style="display: none;" id="newContract" class="mx-auto">
+                        <div class="float-left"><p>{{ __("Crear contracto") }}</p></div>
+                        <div class="float-right"></div>
+                        <form action="">
+                            <div class="form-group">
+                                <select name="gradeBachelor" id="gradeBachelor" class="form-control" required>
+                                    <option value="">{{ __("Escoger Bachiller y grado") }}</option>
+                                    @foreach(\App\Enrollment::select('id', 'grade', 'bachelor')->get() as $enrollment)
+                                        <option value="{{ $enrollment['1'] }}">
+                                            {{ $enrollment['grade'] }} {{ $enrollment['bachelor'] }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <table class="table table-bordered" cellspacing="0"
+                                   id="contract-table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __("Descrpción") }}</th>
+                                    <th scope="col">{{ __("Monto") }}</th>
+                                </tr>
+                                </thead>
+                            </table>
+                            <div class="form-group">
+                                <textarea name="observations" class="form-control" rows="4"></textarea>
+                            </div>
+                            <button class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
+                        </form>
                     </div>
                 </div>
             </div>

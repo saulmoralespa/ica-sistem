@@ -135,6 +135,8 @@
                             $('#contracts').hide();
                         }
 
+                        $("#newContract").hide();
+
                         $(view).modal({ backdrop: 'static', keyboard: false });
                     }
                 });
@@ -175,6 +177,27 @@
                     }
                 });
             });
+
+            $('button#createContract').click(function (){
+                $("#notContracts").hide();
+                $("#newContract").show();
+            });
+
+            dt = $('#contracts-table').DataTable({
+                sDom: "lfrti",
+                bInfo: false,
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('student.enrollmentAnnuity') }}',
+                language: {
+                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
+                },
+                columns: [
+                    {data: 'description'},
+                    {data: 'amount'}
+                ]
+            });
+
         });
     </script>
 @endpush
