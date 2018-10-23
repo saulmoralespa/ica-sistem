@@ -113,7 +113,8 @@
                     <div style="display: none;" id="newContract" class="mx-auto">
                         <div class="float-left"><p>{{ __("Crear contracto") }}</p></div>
                         <div class="float-right"></div>
-                        <form action="">
+                        <form id="createContract">
+                            @csrf
                             <div class="form-group">
                                 <select v-model="gradeBachelor" name="gradeBachelor" id="gradeBachelor" class="form-control" @change="onChange()" required>
                                     <option value="">{{ __("Escoger Bachiller y grado") }}</option>
@@ -136,24 +137,32 @@
                                     <template v-for="service in services">
                                         <tr>
                                             <td>@{{ service.name }}</td>
-                                            <td>@{{ service.cost }}</td>
+                                            <td>
+                                                <input type="text" name="serviceCost[]" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="service.cost">
+                                            </td>
                                         </tr>
                                     </template>
                                     <tr>
                                         <td>{{ __("Matricula") }}</td>
-                                        <td>@{{ enrollmentCost }}</td>
+                                        <td>
+                                            <input type="text" name="enrollmentCost" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="enrollmentCost">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Anualidad") }}</td>
-                                        <td>@{{ annuity.cost }}</td>
+                                        <td>
+                                            <input type="text" name="enrollmentCost" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="annuity.cost">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Descuento") }}</td>
-                                        <td>@{{ annuity.discount }}</td>
+                                        <td>
+                                            <input type="text" name="annuityDiscount" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="annuity.discount">
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Total") }}</td>
-                                        <td>@{{total | price}}</td>
+                                        <td>@{{subtotal + Number(enrollmentCost) + Number(annuity.cost) - Number(annuity.discount) | price}}</td>
                                     </tr>
                                 </tbody>
                             </table>

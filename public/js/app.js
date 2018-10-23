@@ -102,11 +102,6 @@ window.Vue = __webpack_require__(60);
 Vue.component('example-component', __webpack_require__(63));
 
 if (document.getElementById("app")) {
-
-    Vue.filter('price', function (value) {
-        return value.toFixed(2);
-    });
-
     var app = new Vue({
         el: '#app',
         data: {
@@ -160,10 +155,15 @@ if (document.getElementById("app")) {
 
                 return getData;
             }(),
-            total: function total() {
+            subtotal: function subtotal() {
                 return _.reduce(this.services, function (memo, service) {
                     return memo + Number(service.cost);
                 }, 0);
+            }
+        },
+        filters: {
+            price: function price(value) {
+                return value.toFixed(2);
             }
         }
     });

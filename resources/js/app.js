@@ -18,11 +18,6 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 if(document.getElementById("app")){
-
-    Vue.filter('price', function(value) {
-        return value.toFixed(2);
-    });
-
     const app = new Vue({
         el: '#app',
         data: {
@@ -56,10 +51,15 @@ if(document.getElementById("app")){
                    this.table = true;
                    }.bind(this));
            },
-            total: function() {
+            subtotal: function() {
                 return _.reduce(this.services, function(memo, service) {
                     return memo + Number(service.cost);
                 }, 0)
+            }
+        },
+        filters:{
+            price: function(value){
+                return value.toFixed(2);
             }
         }
     });

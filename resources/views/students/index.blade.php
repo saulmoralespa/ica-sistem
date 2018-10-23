@@ -184,6 +184,10 @@
                 $("#newContract").show();
             });
 
+            $('form#createContract').submit(function (e){
+                e.preventDefault();
+            });
+
         });
     </script>
 @endpush
