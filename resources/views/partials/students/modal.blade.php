@@ -167,7 +167,7 @@
                                 </tbody>
                             </table>
                             <div v-show="table" class="form-group">
-                                <label for="observations">{{ __("Obseervaciones") }}</label>
+                                <label for="observations">{{ __("Observaciones") }}</label>
                                 <textarea name="observations" class="form-control" rows="4"></textarea>
                             </div>
                         </form>
