@@ -115,16 +115,16 @@
                         <div class="float-right"></div>
                         <form action="">
                             <div class="form-group">
-                                <select name="gradeBachelor" id="gradeBachelor" class="form-control" required>
+                                <select v-model="gradeBachelor" name="gradeBachelor" id="gradeBachelor" class="form-control" @change="onChange()" required>
                                     <option value="">{{ __("Escoger Bachiller y grado") }}</option>
                                     @foreach(\App\Enrollment::select('id', 'grade', 'bachelor')->get() as $enrollment)
-                                        <option value="{{ $enrollment['1'] }}">
+                                        <option value="{{ $enrollment['id'] }}">
                                             {{ $enrollment['grade'] }} {{ $enrollment['bachelor'] }}
                                         </option>
                                     @endforeach
                                 </select>
                             </div>
-                            <table class="table table-bordered" cellspacing="0"
+                            <table v-if="table" class="table table-bordered" cellspacing="0"
                                    id="contract-table">
                                 <thead>
                                 <tr>
@@ -132,6 +132,30 @@
                                     <th scope="col">{{ __("Monto") }}</th>
                                 </tr>
                                 </thead>
+                                <tbody v-if="table">
+                                    <template v-for="service in services">
+                                        <tr>
+                                            <td>@{{ service.name }}</td>
+                                            <td>@{{ service.cost }}</td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td>{{ __("Matricula") }}</td>
+                                        <td>@{{ enrollmentCost }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Anualidad") }}</td>
+                                        <td>@{{ annuity.cost }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Descuento") }}</td>
+                                        <td>@{{ annuity.discount }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Total") }}</td>
+                                        <td>@{{total | price}}</td>
+                                    </tr>
+                                </tbody>
                             </table>
                             <div class="form-group">
                                 <textarea name="observations" class="form-control" rows="4"></textarea>

@@ -7,8 +7,6 @@
 
 require('./bootstrap');
 
-import swal from 'sweetalert';
-
 window.Vue = require('vue');
 
 /**
@@ -20,7 +18,49 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 if(document.getElementById("app")){
+
+    Vue.filter('price', function(value) {
+        return value.toFixed(2);
+    });
+
     const app = new Vue({
-        el: '#app'
+        el: '#app',
+        data: {
+            gradeBachelor: '',
+            services: '',
+            enrollmentCost: '',
+            annuity: '',
+            table: false
+        },
+        methods: {
+            onChange:function(){
+                if (this.gradeBachelor){
+                    this.getData;
+                }
+            }
+        },
+        computed: {
+           getData: async function() {
+               await jQuery.ajax({
+                   url: dataCreateContract,
+                   type: 'post',
+                   dataType: 'json',
+                   data: {
+                       '_token': $('meta[name=csrf-token]').attr('content'),
+                       'id': this.gradeBachelor
+                   }
+               }).then(function(res){
+                   this.services = res.services;
+                   this.enrollmentCost = res.enrollmentCost;
+                   this.annuity = res.annuity;
+                   this.table = true;
+                   }.bind(this));
+           },
+            total: function() {
+                return _.reduce(this.services, function(memo, service) {
+                    return memo + Number(service.cost);
+                }, 0)
+            }
+        }
     });
 }

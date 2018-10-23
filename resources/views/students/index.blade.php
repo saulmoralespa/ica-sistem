@@ -56,6 +56,7 @@
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
     <script>
         let dt;
+        const dataCreateContract = '{{ route('student.enrollmentAnnuity') }}';
         let form_msj = $('span#form_output');
         $(document).ready(function(){
             dt = $('#students-table').DataTable({
@@ -181,21 +182,6 @@
             $('button#createContract').click(function (){
                 $("#notContracts").hide();
                 $("#newContract").show();
-            });
-
-            dt = $('#contracts-table').DataTable({
-                sDom: "lfrti",
-                bInfo: false,
-                processing: true,
-                serverSide: true,
-                ajax: '{{ route('student.enrollmentAnnuity') }}',
-                language: {
-                    url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                },
-                columns: [
-                    {data: 'description'},
-                    {data: 'amount'}
-                ]
             });
 
         });
