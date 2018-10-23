@@ -87,7 +87,7 @@
     <div class="modal-dialog large" role="document">
         <div class="modal-content">
             <div class="modal-body">
-                <button type="button" class="close no-padding" data-dismiss="modal" aria-hidden="true">x</button>
+                <button type="button" class="close no-padding" data-dismiss="modal" @click="cancel" aria-hidden="true">x</button>
                 <div class="row no-margin">
                     <div class="col-2 col-sm-1">
                         <i class="fas fa-user-graduate fa-3x"></i>

@@ -121,6 +121,7 @@ if (document.getElementById("app")) {
             },
             cancel: function cancel() {
                 this.table = false;
+                this.gradeBachelor = '';
             }
         },
         computed: {

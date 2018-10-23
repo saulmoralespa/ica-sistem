@@ -37,6 +37,7 @@ if(document.getElementById("app")){
             },
             cancel: function () {
                 this.table = false;
+                this.gradeBachelor = '';
             }
         },
         computed: {
