@@ -138,26 +138,26 @@
                                         <tr>
                                             <td>@{{ service.name }}</td>
                                             <td>
-                                                <input type="text" name="serviceCost[]" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="service.cost">
+                                                <input type="text" name="serviceCost[]" class="form-control" @role('Administrator') readonly @endrole v-model="service.cost">
                                             </td>
                                         </tr>
                                     </template>
                                     <tr>
                                         <td>{{ __("Matricula") }}</td>
                                         <td>
-                                            <input type="text" name="enrollmentCost" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="enrollmentCost">
+                                            <input type="text" name="enrollmentCost" class="form-control" @role('Administrator') readonly @endrole v-model="enrollmentCost">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Anualidad") }}</td>
                                         <td>
-                                            <input type="text" name="enrollmentCost" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="annuity.cost">
+                                            <input type="text" name="enrollmentCost" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.cost">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Descuento") }}</td>
                                         <td>
-                                            <input type="text" name="annuityDiscount" class="form-control" @can('isSuperAdmin', \App\User::class) @else readonly @endcan v-model="annuity.discount">
+                                            <input type="text" name="annuityDiscount" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.discount">
                                         </td>
                                     </tr>
                                     <tr>
@@ -171,7 +171,8 @@
                             </div>
                             <button class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
                         </form>
-                    </div>
+                    </div>0i
+
                 </div>
             </div>
         </div>

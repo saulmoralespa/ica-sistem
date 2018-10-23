@@ -24,6 +24,7 @@ class ContractController extends Controller
 
         $annuity = Annuity::where('year', '=', $year)->select('cost', 'discount')->get();
 
+
         return response()->json([
                 'services' => $services,
                 'enrollmentCost' => $enrollment[0]['cost'],
