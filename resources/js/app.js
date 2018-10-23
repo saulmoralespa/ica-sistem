@@ -34,6 +34,9 @@ if(document.getElementById("app")){
                 }else{
                     this.table = false;
                 }
+            },
+            cancel: function () {
+                this.table = false;
             }
         },
         computed: {

@@ -175,7 +175,7 @@
                 </div>
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <button class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
+                <button @click="cancel" class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
                 <button v-show="table" class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
             </div>
         </div>

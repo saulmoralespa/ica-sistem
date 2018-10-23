@@ -118,6 +118,9 @@ if (document.getElementById("app")) {
                 } else {
                     this.table = false;
                 }
+            },
+            cancel: function cancel() {
+                this.table = false;
             }
         },
         computed: {
