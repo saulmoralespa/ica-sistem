@@ -136,7 +136,10 @@
                                 <tbody v-show="table">
                                     <template v-for="service in services">
                                         <tr>
-                                            <td>@{{ service.name }}</td>
+                                            <td>
+                                                @{{ service.name }}
+                                                <input type="hidden" name="serviceName[]" :value="service.name">
+                                            </td>
                                             <td>
                                                 <input type="text" name="serviceCost[]" class="form-control" @role('Administrator') readonly @endrole v-model="service.cost">
                                             </td>
@@ -151,7 +154,7 @@
                                     <tr>
                                         <td>{{ __("Anualidad") }}</td>
                                         <td>
-                                            <input type="text" name="enrollmentCost" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.cost">
+                                            <input type="text" name="annuityCost" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.cost">
                                         </td>
                                     </tr>
                                     <tr>
@@ -162,7 +165,9 @@
                                     </tr>
                                     <tr>
                                         <td>{{ __("Total") }}</td>
-                                        <td>@{{subtotal + Number(enrollmentCost) + Number(annuity.cost) - Number(annuity.discount) | price}}</td>
+                                        <td>
+                                            @{{subtotal + enrollmentCost + Number(annuity.cost) - Number(annuity.discount) | price}}
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -170,13 +175,15 @@
                                 <label for="observations">{{ __("Observaciones") }}</label>
                                 <textarea name="observations" class="form-control" rows="4"></textarea>
                             </div>
+                            <div class="modal-footer d-flex justify-content-center">
+                                <input type="hidden" name="totalAnnuity" :value="Number(annuity.cost) - Number(annuity.discount) | price">
+                                <input type="hidden" name="id" id="student_id" value="" />
+                                <button @click="cancel" class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
+                                <button v-show="table" class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
+                            </div>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer d-flex justify-content-center">
-                <button @click="cancel" class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
-                <button v-show="table" class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
             </div>
         </div>
     </div>

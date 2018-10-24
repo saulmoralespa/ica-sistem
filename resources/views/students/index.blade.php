@@ -127,6 +127,7 @@
                         $(view).find('.idpersonal').text(res.idPersonal);
                         $(view).find('.phone').text(res.phone);
                         $(view).find('.attendant').text(res.attendant);
+                        $(view).find('#student_id').val(id);
 
                         if (res.contracts.length > 0){
                             $('#notContracts').hide();
@@ -185,12 +186,12 @@
 
             $('form#createContract').submit(function (e){
                 e.preventDefault();
+                console.log($(this).serialize());
                 $.ajax({
                     url: '{{ route('create.contract') }}',
                     type: 'post',
                     data: $(this).serialize(),
                     success: (res) =>{
-
                 }
                 });
             });

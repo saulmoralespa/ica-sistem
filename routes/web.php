@@ -71,5 +71,6 @@ Route::group(['middleware' => ['auth'] ], function () {
 
     Route::post('/contract/getenrollmentannuity', 'ContractController@dataCreateContract')->name('student.enrollmentAnnuity');
     Route::post('/contract/create', 'ContractController@create')->name('create.contract');
+    Route::get('/contract/test', 'ContractController@test')->name('test.contract');
 
 });
