@@ -128,6 +128,13 @@
                                     <tr>
                                         <td>{{ __("Matrícula") }}</td>
                                         <td>@{{ enrollmentCost }}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td>
@@ -136,6 +143,13 @@
                                         <td>
                                             @{{ service.cost }}
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </template>
                                 <template v-for="(fee, key) in fees">
@@ -144,11 +158,25 @@
                                         <td>
                                             <input type="text" name="fees[]" class="form-control" @role('Administrator') readonly @endrole v-model="fee.price">
                                         </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
                                     </tr>
                                 </template>
                                 <tr>
                                     <td>{{ __("Total") }}</td>
                                     <td>@{{ subtotal + Number(enrollmentCost) + totalfees | price }}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
                                 </tr>
                                 </tbody>
                             </table>
