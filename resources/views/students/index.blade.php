@@ -58,6 +58,7 @@
         let dt;
         const dataCreateContract = '{{ route('student.enrollmentAnnuity') }}';
         let form_msj = $('span#form_output');
+        const view = $('#view');
         $(document).ready(function(){
             dt = $('#students-table').DataTable({
                 processing: true,
@@ -112,7 +113,6 @@
             $(document).on("click", ".view-modal", function(e){
                 e.preventDefault();
                 const id = $(this).data('id');
-                const view = $('#view');
                 $.ajax({
                     type: 'post',
                     url: '{{ route('get.student') }}',
@@ -186,16 +186,41 @@
 
             $('form#createContract').submit(function (e){
                 e.preventDefault();
-                console.log($(this).serialize());
+                let nameContract = $("#gradeBachelor option:selected").text();
+                $("#nameContract").val(nameContract);
+                let student_id = $("#student_id").val();
+                let year = $("#year").val();
                 $.ajax({
                     url: '{{ route('create.contract') }}',
                     type: 'post',
                     data: $(this).serialize(),
+                    beforeSend: () => {
+                        $(this).find('button').prop( "disabled", true );
+                        $(view).css('cursor', 'wait');
+                    },
                     success: (res) =>{
+                        $(view).css('cursor', 'default');
+                        $("#newContract").hide();
+                        $('#contracts').show().text("{{ __("Cargando el nuevo contrato espere, por favor...") }}");
+                        loadContract(student_id, year);
                 }
                 });
             });
 
+            function loadContract(student_id, year){
+                $.ajax({
+                    url: '{{ route('show.contract') }}',
+                    type: 'post',
+                    data: {
+                        id:  student_id,
+                        year: year,
+                        '_token': $('meta[name=csrf-token]').attr('content')
+                    },
+                    success: (res) =>{
+                        console.log(res);
+                    }
+                });
+            }
         });
     </script>
 @endpush

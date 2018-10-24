@@ -15,6 +15,8 @@ class CreateContractsTable extends Migration
     {
         Schema::create('contracts', function (Blueprint $table) {
             $table->increments('id');
+            $table->string('name');
+            $table->year('year');
             $table->decimal('enrollment_cost', 10, 2)->default(0.00);
             $table->json('services');
             $table->unsignedInteger('student_id');

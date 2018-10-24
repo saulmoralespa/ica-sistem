@@ -107,8 +107,7 @@
                         <h2>{{ __("No hay contratos activos") }}</h2>
                         <button id="createContract"  class="btn btn-primary">{{ __("crear contrato") }}</button>
                     </div>
-                    <div id="contracts">
-                        have contracts
+                    <div id="contracts" class="mx-auto">
                     </div>
                     <div style="display: none;" id="newContract" class="mx-auto">
                         <div class="float-left"><p>{{ __("Crear contracto") }}</p></div>
@@ -176,6 +175,8 @@
                                 <textarea name="observations" class="form-control" rows="4"></textarea>
                             </div>
                             <div class="modal-footer d-flex justify-content-center">
+                                <input type="hidden" id="year" name="year" :value="year">
+                                <input type="hidden" id="nameContract" name="name">
                                 <input type="hidden" name="totalAnnuity" :value="Number(annuity.cost) - Number(annuity.discount) | price">
                                 <input type="hidden" name="id" id="student_id" value="" />
                                 <button @click="cancel" class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>

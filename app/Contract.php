@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Contract extends Model
 {
     protected $fillable = [
-        'enrollment_cost', 'services',
+        'name','year','enrollment_cost', 'services',
         'student_id', 'user_id', 'observations'
     ];
 
@@ -16,8 +16,9 @@ class Contract extends Model
         return $this->belongsToMany(Student::class);
     }
 
-    public function fees()
+    public function fee()
     {
         return $this->hasOne(Fee::class);
     }
+
 }

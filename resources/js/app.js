@@ -25,6 +25,7 @@ if(document.getElementById("app")){
             services: '',
             enrollmentCost: '',
             annuity: '',
+            year: '',
             table: false,
             totalAnnuity: 0
         },
@@ -55,6 +56,7 @@ if(document.getElementById("app")){
                    this.services = res.services;
                    this.enrollmentCost = Number(res.enrollmentCost);
                    this.annuity = res.annuity;
+                   this.year = res.year;
                    this.table = true;
                    }.bind(this));
            },
