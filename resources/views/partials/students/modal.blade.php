@@ -108,6 +108,11 @@
                         <button id="createContract"  class="btn btn-primary">{{ __("crear contrato") }}</button>
                     </div>
                     <div id="contracts" class="mx-auto">
+                        <div class="float-left">
+                            <p>{{ __("Bachillerato:") }} @{{ nameContract }}</p>
+                            <p>{{ __("Numero de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
+                            | {{ __("Creado por") }} @{{ username }}</p>
+                        </div>
                         <div class="table-responsive">
                             <table class="table table-bordered" cellspacing="0" id="contractShowTable">
                                 <thead>

@@ -134,6 +134,7 @@
                         if (res.contracts.length > 0){
                             $('#notContracts').hide();
                             $('#contracts').show();
+                            app.viewContract();
                         }else{
                             $('#notContracts').show();
                             $('#contracts').hide();

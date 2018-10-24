@@ -6,7 +6,8 @@
  */
 
 require('./bootstrap');
-
+//import PerfectScrollbar from 'perfect-scrollbar';
+window.PerfectScrollbar = require('perfect-scrollbar').default;
 window.Vue = require('vue');
 
 /**
@@ -28,7 +29,11 @@ if(document.getElementById("app")){
             year: '',
             table: false,
             totalAnnuity: 0,
-            fees: ''
+            fees: '',
+            nameContract: '',
+            idContract: '',
+            date_created_at: '',
+            username: ''
         },
         methods: {
             onChange:function(){
@@ -41,6 +46,9 @@ if(document.getElementById("app")){
             cancel: function () {
                 this.table = false;
                 this.gradeBachelor = '';
+            },
+            viewContract: function(){
+                alert();
             },
             contractForm: function(e){
                 e.preventDefault();
@@ -78,6 +86,10 @@ if(document.getElementById("app")){
                    this.enrollmentCost = res.enrollment_cost,
                    this.services = res.services;
                    this.fees = res.fees;
+                   this.nameContract = res.name,
+                   this.idContract = res.id,
+                   this.date_created_at = res.date_created
+                   this.username = res.username
                 }.bind(this));
             }
         },

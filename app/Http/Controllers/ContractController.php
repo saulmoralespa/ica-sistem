@@ -116,10 +116,11 @@ class ContractController extends Controller
         $user = User::find($contract->user_id);
 
         return response()->json([
+            'id' => $contract->id,
             'name' => $contract->name,
             'enrollment_cost' => $contract->enrollment_cost,
             'services' => json_decode($contract->services),
-            'user_create' => $user->name,
+            'username' => $user->username,
             'date_created' => $contract->created_at->format('d/m/y g:i a'),
             'fees' => json_decode($contract->fee->fees)
         ]);
