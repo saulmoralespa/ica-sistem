@@ -78,17 +78,17 @@ class ContractController extends Controller
             $costFee = bcdiv(2990 / 11, '1', 2);
 
             $fees = [
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee,
-                $costFee
+                array('name' => __("Cuota 1"), 'price' => $costFee),
+                array('name' => __("Cuota 2"), 'price' => $costFee),
+                array('name' => __("Cuota 3"), 'price' => $costFee),
+                array('name' => __("Cuota 4"), 'price' => $costFee),
+                array('name' => __("Cuota 5"), 'price' => $costFee),
+                array('name' => __("Cuota 6"), 'price' => $costFee),
+                array('name' => __("Cuota 7"), 'price' => $costFee),
+                array('name' => __("Cuota 8"), 'price' => $costFee),
+                array('name' => __("Cuota 9"), 'price' => $costFee),
+                array('name' => __("Cuota 10"), 'price' => $costFee),
+                array('name' => __("Cuota 11"), 'price' => $costFee),
             ];
 
             $fees = Fee::create([

@@ -57,6 +57,8 @@
     <script>
         let dt;
         const dataCreateContract = '{{ route('student.enrollmentAnnuity') }}';
+        const createContract = '{{ route('create.contract') }}';
+        const showContract = '{{ route('show.contract') }}';
         let form_msj = $('span#form_output');
         const view = $('#view');
         $(document).ready(function(){
@@ -183,44 +185,6 @@
                 $("#notContracts").hide();
                 $("#newContract").show();
             });
-
-            $('form#createContract').submit(function (e){
-                e.preventDefault();
-                let nameContract = $("#gradeBachelor option:selected").text();
-                $("#nameContract").val(nameContract);
-                let student_id = $("#student_id").val();
-                let year = $("#year").val();
-                $.ajax({
-                    url: '{{ route('create.contract') }}',
-                    type: 'post',
-                    data: $(this).serialize(),
-                    beforeSend: () => {
-                        $(this).find('button').prop( "disabled", true );
-                        $(view).css('cursor', 'wait');
-                    },
-                    success: (res) =>{
-                        $(view).css('cursor', 'default');
-                        $("#newContract").hide();
-                        $('#contracts').show().text("{{ __("Cargando el nuevo contrato espere, por favor...") }}");
-                        loadContract(student_id, year);
-                }
-                });
-            });
-
-            function loadContract(student_id, year){
-                $.ajax({
-                    url: '{{ route('show.contract') }}',
-                    type: 'post',
-                    data: {
-                        id:  student_id,
-                        year: year,
-                        '_token': $('meta[name=csrf-token]').attr('content')
-                    },
-                    success: (res) =>{
-                        console.log(res);
-                    }
-                });
-            }
         });
     </script>
 @endpush

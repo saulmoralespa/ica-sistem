@@ -15,7 +15,7 @@ window.Vue = require('vue');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+//Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 if(document.getElementById("app")){
     const app = new Vue({
@@ -27,7 +27,8 @@ if(document.getElementById("app")){
             annuity: '',
             year: '',
             table: false,
-            totalAnnuity: 0
+            totalAnnuity: 0,
+            fees: ''
         },
         methods: {
             onChange:function(){
@@ -40,6 +41,44 @@ if(document.getElementById("app")){
             cancel: function () {
                 this.table = false;
                 this.gradeBachelor = '';
+            },
+            contractForm: function(e){
+                e.preventDefault();
+                let nameContract = $("#gradeBachelor option:selected").text();
+                $("#nameContract").val(nameContract);
+                let student_id = $(view).find('#student_id').val();
+                let year = $(view).find('#year').val();
+                $.ajax({
+                    url: createContract,
+                    type: 'post',
+                    data: $('form#createContract').serialize(),
+                    beforeSend: () => {
+                    $(this).find('button').prop( "disabled", true );
+                    $(view).css('cursor', 'wait');
+                },
+                    success: (res) =>{
+                    $(view).css('cursor', 'default');
+                    $("#newContract").hide();
+                    $('#contracts').show();
+                    this.loadContract(student_id, year);
+                }
+            });
+            },
+            loadContract: async function(student_id, year){
+               await $.ajax({
+                    url: showContract,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        id:  student_id,
+                        year: year,
+                        _token: $('meta[name=csrf-token]').attr('content')
+                    },
+                }).then(function(res){
+                   this.enrollmentCost = res.enrollment_cost,
+                   this.services = res.services;
+                   this.fees = res.fees;
+                }.bind(this));
             }
         },
         computed: {
@@ -63,6 +102,11 @@ if(document.getElementById("app")){
             subtotal: function() {
                 return _.reduce(this.services, function(memo, service) {
                     return memo + Number(service.cost);
+                }, 0)
+            },
+            totalfees: function() {
+                return _.reduce(this.fees, function(memo, fee) {
+                    return memo + Number(fee.price);
                 }, 0)
             }
         },

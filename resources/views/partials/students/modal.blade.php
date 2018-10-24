@@ -108,11 +108,56 @@
                         <button id="createContract"  class="btn btn-primary">{{ __("crear contrato") }}</button>
                     </div>
                     <div id="contracts" class="mx-auto">
+                        <div class="table-responsive">
+                            <table class="table table-bordered" cellspacing="0" id="contractShowTable">
+                                <thead>
+                                <tr>
+                                    <th scope="col">{{ __("Descrpción") }}</th>
+                                    <th scope="col">{{ __("Total") }}</th>
+                                    <th scope="col">{{ __("R15") }}</th>
+                                    <th scope="col">{{ __("R1") }}</th>
+                                    <th scope="col">{{ __("Pagos") }}</th>
+                                    <th scope="col">{{ __("Fecha") }}</th>
+                                    <th scope="col">{{ __("Recibo") }}</th>
+                                    <th scope="col">{{ __("N° operación") }}</th>
+                                    <th scope="col">{{ __("Saldo") }}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <template v-for="service in services">
+                                    <tr>
+                                        <td>{{ __("Matrícula") }}</td>
+                                        <td>@{{ enrollmentCost }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            @{{ service.name }}
+                                        </td>
+                                        <td>
+                                            @{{ service.cost }}
+                                        </td>
+                                    </tr>
+                                </template>
+                                <template v-for="(fee, key) in fees">
+                                    <tr>
+                                        <td>@{{ fee.name }}</td>
+                                        <td>
+                                            <input type="text" name="fees[]" class="form-control" @role('Administrator') readonly @endrole v-model="fee.price">
+                                        </td>
+                                    </tr>
+                                </template>
+                                <tr>
+                                    <td>{{ __("Total") }}</td>
+                                    <td>@{{ subtotal + Number(enrollmentCost) + totalfees | price }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                     <div style="display: none;" id="newContract" class="mx-auto">
                         <div class="float-left"><p>{{ __("Crear contracto") }}</p></div>
                         <div class="float-right"></div>
-                        <form id="createContract">
+                        <form id="createContract" @submit="contractForm">
                             @csrf
                             <div class="form-group">
                                 <select v-model="gradeBachelor" name="gradeBachelor" id="gradeBachelor" class="form-control" @change="onChange()" required>
@@ -178,7 +223,7 @@
                                 <input type="hidden" id="year" name="year" :value="year">
                                 <input type="hidden" id="nameContract" name="name">
                                 <input type="hidden" name="totalAnnuity" :value="Number(annuity.cost) - Number(annuity.discount) | price">
-                                <input type="hidden" name="id" id="student_id" value="" />
+                                <input type="hidden" name="id" id="student_id" value="">
                                 <button @click="cancel" class="btn btn-default" type="button" data-dismiss="modal">{{ __("Cancelar") }}</button>
                                 <button v-show="table" class="btn btn-primary" type="submit">{{ __("Crear") }}</button>
                             </div>
