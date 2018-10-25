@@ -6,7 +6,6 @@
  */
 
 require('./bootstrap');
-//import PerfectScrollbar from 'perfect-scrollbar';
 window.PerfectScrollbar = require('perfect-scrollbar').default;
 window.Vue = require('vue');
 
@@ -19,7 +18,7 @@ window.Vue = require('vue');
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 if(document.getElementById("app")){
-    const app = new Vue({
+    window.contractStudent = new Vue({
         el: '#app',
         data: {
             gradeBachelor: '',
@@ -47,9 +46,6 @@ if(document.getElementById("app")){
                 this.table = false;
                 this.gradeBachelor = '';
             },
-            viewContract: function(){
-                alert();
-            },
             contractForm: function(e){
                 e.preventDefault();
                 let nameContract = $("#gradeBachelor option:selected").text();
@@ -72,7 +68,7 @@ if(document.getElementById("app")){
                 }
             });
             },
-            loadContract: async function(student_id, year){
+            loadContract: async function(student_id, year = ''){
                await $.ajax({
                     url: showContract,
                     type: 'post',

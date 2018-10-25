@@ -13901,7 +13901,6 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
  */
 
 __webpack_require__(16);
-//import PerfectScrollbar from 'perfect-scrollbar';
 window.PerfectScrollbar = __webpack_require__(39).default;
 window.Vue = __webpack_require__(40);
 
@@ -13914,7 +13913,7 @@ window.Vue = __webpack_require__(40);
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 if (document.getElementById("app")) {
-    var app = new Vue({
+    window.contractStudent = new Vue({
         el: '#app',
         data: {
             gradeBachelor: '',
@@ -13942,9 +13941,6 @@ if (document.getElementById("app")) {
                 this.table = false;
                 this.gradeBachelor = '';
             },
-            viewContract: function viewContract() {
-                alert();
-            },
             contractForm: function contractForm(e) {
                 var _this = this;
 
@@ -13970,7 +13966,8 @@ if (document.getElementById("app")) {
                 });
             },
             loadContract: function () {
-                var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(student_id, year) {
+                var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(student_id) {
+                    var year = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
                         while (1) {
                             switch (_context.prev = _context.next) {
@@ -14000,7 +13997,7 @@ if (document.getElementById("app")) {
                     }, _callee, this);
                 }));
 
-                function loadContract(_x, _x2) {
+                function loadContract(_x2) {
                     return _ref.apply(this, arguments);
                 }
 

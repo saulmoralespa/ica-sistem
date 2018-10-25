@@ -112,7 +112,13 @@ class ContractController extends Controller
     {
 
         $student = Student::find($request->id);
-        $contract = $student->contracts()->where('year', $request->year)->get()->first();
+
+        if ($request->year != ''){
+            $contract = $student->contracts()->where('year', $request->year)->get()->first();
+        }else{
+            $contract = $student->contracts()->get()->last();
+        }
+
         $user = User::find($contract->user_id);
 
         return response()->json([
@@ -128,7 +134,7 @@ class ContractController extends Controller
     }
 
 
-    public function test()
+    public function test(Request $request)
     {
         $contract = Contract::find(1);
         $user = User::find($contract->user_id);
@@ -140,12 +146,18 @@ class ContractController extends Controller
         ]);*/
 
 
+        if (empty($request->has('id'))){
+            echo 'Hello';
+        }else{
+            echo 'nada';
+        }
+
         $student = Student::find(1);
 
-        $contract = $student->contracts()->where('year', 2019)->get()->first();
+        $contract = $student->contracts()->get()->last();
 
 
-        dd($contract);
+        dd($contract->user_id);
 
     }
 

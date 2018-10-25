@@ -93,13 +93,13 @@
                         <i class="fas fa-user-graduate fa-3x"></i>
                     </div>
                     <div class="col-10 col-sm-2 col-md-4">
-                        <p>{{ __("Estudiante:") }} <small class="name"></small></p>
-                        <p>{{ __("ID personal:") }} <small class="idpersonal"></small></p>
-                        <p>{{ __("Acudiente:") }} <small class="attendant"></small></p>
+                        <p class="h5">{{ __("Estudiante:") }} <small class="name"></small></p>
+                        <p class="h5">{{ __("ID personal:") }} <small class="idpersonal"></small></p>
+                        <p class="h5">{{ __("Acudiente:") }} <small class="attendant"></small></p>
                     </div>
                     <div class="col-6 col-sm-2 col-md-4">
-                        <p>{{ __("Teléfono:") }} <small class="phone"></small></p>
-                        <p>{{ __("Email:") }} <small class="email"></small></p>
+                        <p class="h5">{{ __("Teléfono:") }} <small class="phone"></small></p>
+                        <p class="h5">{{ __("Email:") }} <small class="email"></small></p>
                     </div>
                 </div>
                 <div class="row">
@@ -109,8 +109,8 @@
                     </div>
                     <div id="contracts" class="mx-auto">
                         <div class="float-left">
-                            <p>{{ __("Bachillerato:") }} @{{ nameContract }}</p>
-                            <p>{{ __("Numero de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
+                            <p class="h5">{{ __("Bachillerato:") }} @{{ nameContract }}</p>
+                            <p class="h5">{{ __("Número de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
                             | {{ __("Creado por") }} @{{ username }}</p>
                         </div>
                         <div class="table-responsive">
@@ -188,7 +188,7 @@
                         </div>
                     </div>
                     <div style="display: none;" id="newContract" class="mx-auto">
-                        <div class="float-left"><p>{{ __("Crear contracto") }}</p></div>
+                        <div class="float-left"><p class="h5">{{ __("Crear contracto") }}</p></div>
                         <div class="float-right"></div>
                         <form id="createContract" @submit="contractForm">
                             @csrf

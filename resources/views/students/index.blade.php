@@ -133,8 +133,7 @@
 
                         if (res.contracts.length > 0){
                             $('#notContracts').hide();
-                            $('#contracts').show();
-                            app.viewContract();
+                            contractStudent.loadContract(id);
                         }else{
                             $('#notContracts').show();
                             $('#contracts').hide();
