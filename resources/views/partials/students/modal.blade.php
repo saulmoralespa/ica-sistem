@@ -114,11 +114,11 @@
                             | {{ __("Creado por") }} @{{ username }}</p>
                         </div>
                         <div class="float-right">
-                            <p class="h5 mr-5">{{ __("Año") }} @{{ year }}
+                            <p class="h5 mr-5">{{ __("Año") }} <span v-for="(year, index) in years" v-if="index === 0 && yearChange == ''">@{{ year.year }}</span>@{{ yearChange }}
                                 <template v-if="years.length > 1">
-                                    <select v-model="year" @change="onChangeYear()">
+                                    <select v-model="yearChange" @change="onChangeYear()">
                                         <option value="">{{ __("Cambiar año") }}</option>
-                                        <option v-for="(year, index) in years" :value="year.year">@{{ year.year }}</option>
+                                        <option v-for="year in years" :value="year.year">@{{ year.year }}</option>
                                     </select>
                                 </template>
                             </p>

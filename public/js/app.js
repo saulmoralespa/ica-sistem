@@ -13921,6 +13921,7 @@ if (document.getElementById("app")) {
             enrollmentCost: '',
             annuity: '',
             year: '',
+            yearChange: '',
             table: false,
             totalAnnuity: 0,
             fees: '',
@@ -13964,7 +13965,6 @@ if (document.getElementById("app")) {
                     $(view).css('cursor', 'default');
                     $("#newContract").hide();
                     $('#contracts').show();
-                    this.year = year;
                     this.loadContract(student_id, year);
                 }.bind(this));
             },
@@ -14012,7 +14012,7 @@ if (document.getElementById("app")) {
                 return loadContract;
             }(),
             onChangeYear: function onChangeYear() {
-                if (this.year) this.loadContract(this.student_id, this.year);
+                if (this.yearChange) this.loadContract(this.student_id, this.yearChange);
             }
         },
         computed: {
