@@ -14013,6 +14013,18 @@ if (document.getElementById("app")) {
             }(),
             onChangeYear: function onChangeYear() {
                 if (this.yearChange) this.loadContract(this.student_id, this.yearChange);
+            },
+            changeFees: function changeFees() {
+                $.ajax({
+                    url: updateFee,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: this.idContract,
+                        fees: JSON.stringify(this.fees),
+                        _token: $('meta[name=csrf-token]').attr('content')
+                    }
+                });
             }
         },
         computed: {

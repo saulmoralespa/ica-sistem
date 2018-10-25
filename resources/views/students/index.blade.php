@@ -59,6 +59,7 @@
         const dataCreateContract = '{{ route('student.enrollmentAnnuity') }}';
         const createContract = '{{ route('create.contract') }}';
         const showContract = '{{ route('show.contract') }}';
+        const updateFee = '{{ route('update.fee') }}';
         let form_msj = $('span#form_output');
         const view = $('#view');
         $(document).ready(function(){

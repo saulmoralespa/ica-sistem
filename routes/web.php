@@ -74,4 +74,6 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/contract/show', 'ContractController@show')->name('show.contract');
     Route::get('/contract/test', 'ContractController@test')->name('test.contract');
 
+    Route::post('/fee/update', 'FeeController@update')->name('update.fee');
+
 });

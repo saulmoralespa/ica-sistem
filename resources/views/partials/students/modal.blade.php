@@ -101,6 +101,9 @@
                         <p class="h5">{{ __("Teléfono:") }} <small class="phone"></small></p>
                         <p class="h5">{{ __("Email:") }} <small class="email"></small></p>
                     </div>
+                    <div class="col">
+                        <button class="btn btn-danger">{{ __("Cancelar contrato") }}</button>
+                    </div>
                 </div>
                 <div class="row">
                     <div id="notContracts" class="col text-center">
@@ -171,7 +174,7 @@
                                     <tr>
                                         <td>@{{ fee.name }}</td>
                                         <td>
-                                            <input type="text" name="fees[]" class="form-control" @role('Administrator') readonly @endrole v-model="fee.price">
+                                            <input type="text" name="fees[]"  @keyup="changeFees" class="form-control" @role('Administrator') readonly @endrole v-model="fee.price">
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -191,7 +194,7 @@
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
+                                    <td>@{{ subtotal + Number(enrollmentCost) + totalfees | price }}</td>
                                 </tr>
                                 </tbody>
                             </table>
