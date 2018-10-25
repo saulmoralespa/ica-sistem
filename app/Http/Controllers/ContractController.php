@@ -11,8 +11,6 @@ use App\Student;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Yajra\DataTables\DataTables;
 
 class ContractController extends Controller
 {
@@ -123,6 +121,8 @@ class ContractController extends Controller
             $contract = $student->contracts()->get()->last();
         }
 
+        $years = $student->contracts()->select('year')->orderBy('year', 'desc')->get();
+
         $user = User::find($contract->user_id);
 
         return response()->json([
@@ -130,9 +130,10 @@ class ContractController extends Controller
             'name' => $contract->name,
             'enrollment_cost' => $contract->enrollment_cost,
             'services' => json_decode($contract->services),
+            'fees' => json_decode($contract->fee->fees),
+            'years' => $years,
             'username' => $user->username,
             'date_created' => $contract->created_at->format('d/m/y g:i a'),
-            'fees' => json_decode($contract->fee->fees)
         ]);
 
     }
@@ -147,14 +148,8 @@ class ContractController extends Controller
             'user_id' => $user->name
         ]);*/
 
-        $annuity = Annuity::where('year', '=', 2019)->select('cost', 'discount', 'maximum_date')->get()->first();
-
-        $today = date("d-m-y");
-        $dateget = date("d-m-y", strtotime($annuity->maximum_date));
-
-
-        if ($today > $dateget)
-            echo 'Hello';
+        $student = Student::find(1);
+        $years = $student->contracts()->select('year')->orderBy('year', 'desc')->get();
 
     }
 

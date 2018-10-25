@@ -33,6 +33,7 @@ if(document.getElementById("app")){
             idContract: '',
             date_created_at: '',
             username: '',
+            years: '',
             isReadOnly: false
         },
         methods: {
@@ -56,18 +57,20 @@ if(document.getElementById("app")){
                 $.ajax({
                     url: createContract,
                     type: 'post',
+                    dataType: 'json',
                     data: $('form#createContract').serialize(),
                     beforeSend: () => {
-                    $(this).find('button').prop( "disabled", true );
-                    $(view).css('cursor', 'wait');
-                },
-                    success: (res) =>{
+                        $(this).find('button').prop( "disabled", true );
+                        $(view).css('cursor', 'wait');
+                    }
+                }).then(function(res){
                     $(view).css('cursor', 'default');
                     $("#newContract").hide();
                     $('#contracts').show();
+                    this.year = year
                     this.loadContract(student_id, year);
-                }
-            });
+                }.bind(this));
+
             },
             loadContract: async function(student_id, year = ''){
                await $.ajax({
@@ -80,14 +83,20 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                 }).then(function(res){
-                   this.enrollmentCost = res.enrollment_cost,
+                   this.student_id = student_id;
+                   this.enrollmentCost = res.enrollment_cost;
                    this.services = res.services;
                    this.fees = res.fees;
-                   this.nameContract = res.name,
-                   this.idContract = res.id,
-                   this.date_created_at = res.date_created
-                   this.username = res.username
+                   this.nameContract = res.name;
+                   this.idContract = res.id;
+                   this.date_created_at = res.date_created;
+                   this.username = res.username;
+                   this.years = res.years;
                 }.bind(this));
+            },
+            onChangeYear: function () {
+                if (this.year)
+                this.loadContract(this.student_id,this.year);
             }
         },
         computed: {
@@ -105,7 +114,7 @@ if(document.getElementById("app")){
                    this.enrollmentCost = Number(res.enrollmentCost);
                    this.annuity = res.annuity;
                    this.year = res.year;
-                   this.isReadOnly = res.annuity.discount_edit
+                   this.isReadOnly = res.annuity.discount_edit;
                    this.table = true;
                    }.bind(this));
            },

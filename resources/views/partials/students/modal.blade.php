@@ -109,9 +109,19 @@
                     </div>
                     <div id="contracts" class="mx-auto">
                         <div class="float-left">
-                            <p class="h5">{{ __("Bachillerato:") }} @{{ nameContract }}</p>
-                            <p class="h5">{{ __("Número de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
+                            <p class="h5 ml-5">{{ __("Bachillerato:") }} @{{ nameContract }}</p>
+                            <p class="h5 ml-5">{{ __("Número de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
                             | {{ __("Creado por") }} @{{ username }}</p>
+                        </div>
+                        <div class="float-right">
+                            <p class="h5 mr-5">{{ __("Año") }} @{{ year }}
+                                <template v-if="years.length > 1">
+                                    <select v-model="year" @change="onChangeYear()">
+                                        <option value="">{{ __("Cambiar año") }}</option>
+                                        <option v-for="(year, index) in years" :value="year.year">@{{ year.year }}</option>
+                                    </select>
+                                </template>
+                            </p>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-bordered" cellspacing="0" id="contractShowTable">
