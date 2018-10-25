@@ -101,7 +101,7 @@
                         <p class="h5">{{ __("Teléfono:") }} <small class="phone"></small></p>
                         <p class="h5">{{ __("Email:") }} <small class="email"></small></p>
                     </div>
-                    <div class="col">
+                    <div v-if="nameContract" class="col">
                         <click-confirm :messages="{title: '¿Seguro desea cancelar este contrato?', yes: 'Si, seguro', no: 'No'}">
                             <button @click="cancelContract" class="btn btn-danger">{{ __("Cancelar contrato") }}</button>
                         </click-confirm>
@@ -258,7 +258,7 @@
                                     <tr>
                                         <td>{{ __("Total") }}</td>
                                         <td>
-                                            @{{subtotal + enrollmentCost + Number(annuity.cost) - Number(annuity.discount) | price}}
+                                            @{{subtotal + Number(enrollmentCost) + Number(annuity.cost) - Number(annuity.discount) | price}}
                                         </td>
                                     </tr>
                                 </tbody>

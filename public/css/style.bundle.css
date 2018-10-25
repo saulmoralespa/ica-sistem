@@ -12887,12 +12887,6 @@ button:focus {
     outline: none !important
 }
 
-.btn.btn-default,
-.btn.btn-secondary {
-    background: white;
-    border-color: #ebedf2
-}
-
 .btn.btn-default i,
 .btn.btn-secondary i {
     color: #6f727d
@@ -12903,7 +12897,6 @@ button:focus {
 .btn.btn-default:active,
 .btn.btn-default:focus,
 .show>.btn.btn-default.dropdown-toggle,
-.btn.btn-secondary:hover:not(:disabled),
 .btn.btn-secondary.active,
 .btn.btn-secondary:active,
 .btn.btn-secondary:focus,

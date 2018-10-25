@@ -118,12 +118,14 @@ if(document.getElementById("app")){
                 $.ajax({
                     url: deleteContract,
                     type: 'post',
-                    dataType: 'json',
                     data: {
                         id: this.idContract,
                         _token: $('meta[name=csrf-token]').attr('content')
-                    },
-                });
+                    }
+                }).then(function(res){
+                    this.nameContract = '';
+                    $(view).modal('hide');
+                }.bind(this));
             }
         },
         computed: {

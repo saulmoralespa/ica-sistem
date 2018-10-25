@@ -9,6 +9,7 @@ use App\Fee;
 use App\Service;
 use App\Student;
 use App\User;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -141,6 +142,9 @@ class ContractController extends Controller
     public function delete(Request $request)
     {
         $contract = Contract::find($request->id);
+        $contract->fee()->delete();
+        $contract->delete();
+        return;
     }
 
 
@@ -152,8 +156,6 @@ class ContractController extends Controller
             'fees' => json_decode($contract->fees->fees),
             'user_id' => $user->name
         ]);*/
-
-        $contract = Contract::find(1)->delete();
 
     }
 

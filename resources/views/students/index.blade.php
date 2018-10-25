@@ -60,6 +60,7 @@
         const createContract = '{{ route('create.contract') }}';
         const showContract = '{{ route('show.contract') }}';
         const updateFee = '{{ route('update.fee') }}';
+        const deleteContract = '{{ route('delete.contract') }}';
         let form_msj = $('span#form_output');
         const view = $('#view');
         $(document).ready(function(){
