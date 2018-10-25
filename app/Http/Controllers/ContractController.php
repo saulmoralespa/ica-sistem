@@ -19,7 +19,7 @@ class ContractController extends Controller
     public function dataCreateContract(Request $request)
     {
         $services = Service::where('status', '=', \App\Service::REQUIRED)->select('name', 'cost')->get();
-        $enrollment = Enrollment::where('id', '=', $request->id)->select('cost')->get();
+        $enrollment = Enrollment::where('id', '=', $request->id)->select('cost')->get()->first();
 
         $month = date("n");
         $year = date('Y');
@@ -28,15 +28,19 @@ class ContractController extends Controller
             $year++;
         }
 
-        $annuity = Annuity::where('year', '=', $year)->select('cost', 'discount')->get();
+        $annuity = Annuity::where('year', '=', $year)->select('cost', 'discount', 'maximum_date')->get()->first();
+
+        $today = date("d-m-y");
+        $dateget = date("d-m-y", strtotime($annuity->maximum_date));
 
 
         return response()->json([
                 'services' => $services,
-                'enrollmentCost' => $enrollment[0]['cost'],
+                'enrollmentCost' => $enrollment->cost,
                 'annuity' => [
-                    'cost' => $annuity[0]['cost'],
-                    'discount' => $annuity[0]['discount'],
+                    'cost' => $annuity->cost,
+                    'discount' => $annuity->discount,
+                    'discount_edit' => ($today < $dateget) ? false : true
                 ],
                 'year' => $year
             ]
@@ -136,8 +140,6 @@ class ContractController extends Controller
 
     public function test(Request $request)
     {
-        $contract = Contract::find(1);
-        $user = User::find($contract->user_id);
         /*return response()->json([
             'enrollment_cost' => $contract->enrollment_cost,
             'services' => json_decode($contract->services),
@@ -145,19 +147,14 @@ class ContractController extends Controller
             'user_id' => $user->name
         ]);*/
 
+        $annuity = Annuity::where('year', '=', 2019)->select('cost', 'discount', 'maximum_date')->get()->first();
 
-        if (empty($request->has('id'))){
+        $today = date("d-m-y");
+        $dateget = date("d-m-y", strtotime($annuity->maximum_date));
+
+
+        if ($today > $dateget)
             echo 'Hello';
-        }else{
-            echo 'nada';
-        }
-
-        $student = Student::find(1);
-
-        $contract = $student->contracts()->get()->last();
-
-
-        dd($contract->user_id);
 
     }
 

@@ -237,7 +237,7 @@
                                     <tr>
                                         <td>{{ __("Descuento") }}</td>
                                         <td>
-                                            <input type="text" name="annuityDiscount" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.discount">
+                                            <input type="text" name="annuityDiscount" class="form-control" :readonly="isReadOnly"  @role('Administrator') readonly @endrole v-model="annuity.discount">
                                         </td>
                                     </tr>
                                     <tr>

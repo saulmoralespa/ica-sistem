@@ -32,7 +32,8 @@ if(document.getElementById("app")){
             nameContract: '',
             idContract: '',
             date_created_at: '',
-            username: ''
+            username: '',
+            isReadOnly: false
         },
         methods: {
             onChange:function(){
@@ -104,6 +105,7 @@ if(document.getElementById("app")){
                    this.enrollmentCost = Number(res.enrollmentCost);
                    this.annuity = res.annuity;
                    this.year = res.year;
+                   this.isReadOnly = res.annuity.discount_edit
                    this.table = true;
                    }.bind(this));
            },
