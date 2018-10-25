@@ -8,6 +8,10 @@
 require('./bootstrap');
 window.PerfectScrollbar = require('perfect-scrollbar').default;
 window.Vue = require('vue');
+import BootstrapVue from 'bootstrap-vue'
+import ClickConfirm from 'click-confirm'
+Vue.component('clickConfirm', ClickConfirm);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -106,6 +110,17 @@ if(document.getElementById("app")){
                     data: {
                         id: this.idContract,
                         fees: JSON.stringify(this.fees),
+                        _token: $('meta[name=csrf-token]').attr('content')
+                    },
+                });
+            },
+            cancelContract: function(){
+                $.ajax({
+                    url: deleteContract,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        id: this.idContract,
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                 });

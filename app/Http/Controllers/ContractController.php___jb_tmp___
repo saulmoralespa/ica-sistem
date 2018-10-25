@@ -153,7 +153,8 @@ class ContractController extends Controller
             'user_id' => $user->name
         ]);*/
 
-        $contract = Contract::find(1)->delete();
+        $student = Student::find(1);
+        $years = $student->contracts()->select('year')->orderBy('year', 'desc')->get();
 
     }
 

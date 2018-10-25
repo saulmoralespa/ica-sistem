@@ -102,7 +102,9 @@
                         <p class="h5">{{ __("Email:") }} <small class="email"></small></p>
                     </div>
                     <div class="col">
-                        <button class="btn btn-danger">{{ __("Cancelar contrato") }}</button>
+                        <click-confirm :messages="{title: '¿Seguro desea cancelar este contrato?', yes: 'Si, seguro', no: 'No'}">
+                            <button @click="cancelContract" class="btn btn-danger">{{ __("Cancelar contrato") }}</button>
+                        </click-confirm>
                     </div>
                 </div>
                 <div class="row">

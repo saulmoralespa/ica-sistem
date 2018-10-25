@@ -108,26 +108,6 @@
                 });
             });
 
-            $(document).on("click", ".delete-modal", function(e){
-                e.preventDefault();
-                const id = $(this).data('id');
-                $('#delete').modal({ backdrop: 'static', keyboard: false })
-                    .on('click', '#delete-btn', function(){
-                        $.ajax({
-                            type: 'post',
-                            url: '{{ route('delete.annuity') }}',
-                            data: {
-                                '_token': $('meta[name=csrf-token]').attr('content'),
-                                'id': id
-                            },
-                            success: (res) =>{
-                                $('#delete').modal('hide');
-                                dt.ajax.reload();
-                            }
-                        });
-                    });
-            });
-
             $(formData).submit(function(e){
                 e.preventDefault();
                 form_msj.empty();
