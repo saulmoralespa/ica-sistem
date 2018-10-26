@@ -149,9 +149,13 @@ class ContractController extends Controller
 
     public function delete(Request $request)
     {
-        $contract = Contract::find($request->id);
+        $student = Student::find($request->idstudent);
+        $contract = $student->contracts()->find($request->idContract);
         $contract->fee()->delete();
         $contract->delete();
+        $student->peace_save = Student::DISCOUNTINUED;
+        $student->status = Student::INACTIVE;
+        $student->save();
         return;
     }
 

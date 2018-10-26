@@ -20246,8 +20246,6 @@ if (document.getElementById("app")) {
                 this.nameContract = '';
             },
             contractForm: function contractForm(e) {
-                var _this = this;
-
                 e.preventDefault();
                 var nameContract = $("#gradeBachelor option:selected").text();
                 $("#nameContract").val(nameContract);
@@ -20259,7 +20257,7 @@ if (document.getElementById("app")) {
                     dataType: 'json',
                     data: $('form#createContract').serialize(),
                     beforeSend: function beforeSend() {
-                        $(_this).find('button').prop("disabled", true);
+                        $('form#createContract').find('button').prop("disabled", true);
                         $(view).css('cursor', 'wait');
                     }
                 }).then(function (res) {
@@ -20333,12 +20331,14 @@ if (document.getElementById("app")) {
                     url: deleteContract,
                     type: 'post',
                     data: {
-                        id: this.idContract,
+                        idContract: this.idContract,
+                        idstudent: this.student_id,
                         _token: $('meta[name=csrf-token]').attr('content')
                     }
                 }).then(function (res) {
                     this.nameContract = '';
                     $(view).modal('hide');
+                    dt.ajax.reload();
                 }.bind(this));
             },
             changeSelectStudent: function changeSelectStudent() {
