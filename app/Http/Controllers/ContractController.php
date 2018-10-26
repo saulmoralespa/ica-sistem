@@ -5,11 +5,9 @@ namespace App\Http\Controllers;
 use App\Annuity;
 use App\Contract;
 use App\Enrollment;
-use App\Fee;
 use App\Service;
 use App\Student;
 use App\User;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -102,6 +100,8 @@ class ContractController extends Controller
             ];
 
             $contract->fee()->create($data);
+            $student->status = Student::ACTIVE;
+            $student->save();
 
             $success_output = __("Se ha creado exitosamente el contracto");
         }
@@ -154,7 +154,7 @@ class ContractController extends Controller
 
     public function test(Request $request)
     {
-        
+
     }
 
 }

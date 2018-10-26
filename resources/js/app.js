@@ -72,6 +72,7 @@ if(document.getElementById("app")){
                     $(view).css('cursor', 'default');
                     $("#newContract").hide();
                     $('#contracts').show();
+                    dt.ajax.reload();
                     this.loadContract(student_id, year);
                 }.bind(this));
 
