@@ -78,7 +78,9 @@ class ContractController extends Controller
 
             $contract = $student->contracts()->create($data);
 
-            $costFee = bcdiv(2990 / 11, '1', 2);
+            $price = $request->totalAnnuity  / 11;
+
+            $costFee = number_format($price,2,".",".");
 
             $fees = [
                 array('name' => __("Cuota 1"), 'price' => $costFee),
