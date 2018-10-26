@@ -100,6 +100,7 @@ class ContractController extends Controller
             ];
 
             $contract->fee()->create($data);
+            $student->peace_save = Student::INACTIVE;
             $student->status = Student::ACTIVE;
             $student->save();
 
@@ -118,6 +119,7 @@ class ContractController extends Controller
     public function show(Request $request)
     {
 
+        //verif if student have a contract
         $student = Student::find($request->id);
 
         if ($request->year != ''){

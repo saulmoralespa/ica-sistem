@@ -18,8 +18,12 @@ class CreateStudentsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('idPersonal')->unique();
-            $table->string('attendant');
             $table->string('phone');
+            $table->string('attendant');
+            $table->enum('peace_save', [
+                \App\Student::ACTIVE, \App\Student::INACTIVE,
+                \App\Student::DISCOUNTINUED
+            ])->default(\App\Student::DISCOUNTINUED);
             $table->enum('status', [
                 \App\Student::ACTIVE, \App\Student::INACTIVE,
                 \App\Student::DISCOUNTINUED

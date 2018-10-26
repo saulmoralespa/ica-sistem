@@ -20223,12 +20223,14 @@ if (document.getElementById("app")) {
             table: false,
             totalAnnuity: 0,
             fees: '',
+            student_id: '',
             nameContract: '',
             idContract: '',
             date_created_at: '',
             username: '',
             years: '',
-            isReadOnly: false
+            isReadOnly: false,
+            amount_deposit: ''
         },
         methods: {
             onChange: function onChange() {
@@ -20337,6 +20339,9 @@ if (document.getElementById("app")) {
                     this.nameContract = '';
                     $(view).modal('hide');
                 }.bind(this));
+            },
+            changeSelectStudent: function changeSelectStudent() {
+                if (this.student_id) this.loadContract(this.student_id);
             }
         },
         computed: {

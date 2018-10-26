@@ -21,10 +21,6 @@ Route::group(['middleware' => ['auth'] ], function () {
         return view('dashboard.profile');
     })->name('profile');
 
-    Route::get('/payments', function () {
-        return view('payments.index');
-    })->name('payments');
-
 
 
     Route::get('/reports', function () {
@@ -76,5 +72,9 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::get('/contract/test', 'ContractController@test')->name('test.contract');
 
     Route::post('/fee/update', 'FeeController@update')->name('update.fee');
+
+    Route::get('/payments', 'PaymentController@show')->name('payments');
+
+    //payments.index
 
 });

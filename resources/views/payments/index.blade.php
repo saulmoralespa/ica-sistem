@@ -1,6 +1,16 @@
 @extends('partials.template')
 @push('styles')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/css/bootstrap-select.min.css">
+    <style>
+        #add  .modal-dialog {
+            max-width: 90%!important;
+        }
+        #add .modal-body {
+            overflow-y: auto!important;
+        }
+    </style>
 @endpush
 @section('bodycontent')
     <div class="container">
@@ -38,6 +48,9 @@
 @endsection
 @push('scripts')
     <script src="https://cdn.datatables.net/1.10.18/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.2/js/bootstrap-select.min.js"></script>
     <script>
         /*
         * orden desc
@@ -46,6 +59,7 @@
         * */
         let dt;
         let form_msj = $('span#form_output');
+        const showContract = '{{ route('show.contract') }}';
         $(document).ready(function() {
             dt = $('#payments-table').DataTable({
                 pagingType: "numbers",
@@ -53,6 +67,26 @@
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
                 }
             });
+
+            $(document).on("click", ".add-modal", function(e){
+                $('#add').modal({ backdrop: 'static', keyboard: false })
+            });
+
+            let date = new Date();
+            date.setDate(date.getDate());
+
+            $('#date_deposit').datepicker({
+                startDate: date,
+                autoclose: true,
+                language: 'es',
+                format: 'dd/m/yy'
+            });
+
+            $('.selectStudent').selectpicker({
+                noneSelectedText : '{{ __("Seleccione estudiante") }}',
+                noneResultsText: '{{ __("No hay resultados {0}") }}',
+            });
+
         });
     </script>
 @endpush

@@ -73,6 +73,31 @@ class DatabaseSeeder extends Seeder
 
 
         $student = Student::create([
+            'name' => 'Andrea Betancur',
+            'email' => 'andreabetancur@gmail.com',
+            'idPersonal' => '108346895',
+            'attendant' => 'Andres Betancur',
+            'phone' => '3155354572'
+        ]);
+
+        $student = Student::create([
+            'name' => 'Brayan Alvarez',
+            'email' => 'brayanalvarez@gmail.com',
+            'idPersonal' => '118346795',
+            'attendant' => 'Mario Alvarez',
+            'phone' => '3185354576'
+        ]);
+
+        $student = Student::create([
+            'name' => 'Carlos Zapata',
+            'email' => 'carloszapata@gmail.com',
+            'idPersonal' => '118346895',
+            'attendant' => 'Andres Zapata',
+            'phone' => '3155354573'
+        ]);
+
+
+        $student = Student::create([
             'name' => 'Julio Monsalve',
             'email' => 'juliomonsalve@gmail.com',
             'idPersonal' => '10424253465',
@@ -82,14 +107,26 @@ class DatabaseSeeder extends Seeder
 
 
         $service = Service::create([
-            'name' => 'Segueduc',
+            'name' => 'Sigueduc',
             'cost' => 30.50,
             'status' => Service::REQUIRED
         ]);
 
         $service = Service::create([
-            'name' => 'Libros',
-            'cost' => 40.50,
+            'name' => 'Cartas (migración y embajada)',
+            'cost' => 15.00,
+            'status' => Service::ACTIVE
+        ]);
+
+        $service = Service::create([
+            'name' => 'Cartas (estudios y conducta)',
+            'cost' => 25.00,
+            'status' => Service::INACTIVE
+        ]);
+
+        $service = Service::create([
+            'name' => 'Cartas permiso de rehabilitación',
+            'cost' => 25.00,
             'status' => Service::ACTIVE
         ]);
 

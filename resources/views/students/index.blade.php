@@ -33,7 +33,7 @@
                             <th scope="col">{{ __("Estudiante") }}</th>
                             <th scope="col">{{ __("ID Personal") }}</th>
                             <th scope="col">{{ __("Acudiente") }}</th>
-                            {{--<th scope="col">{{ __("Paz y salvo") }}</th>--}}
+                            <th scope="col">{{ __("Paz y salvo") }}</th>
                             <th scope="col">
                                 <select name="status" id="status">
                                     <option value="">{{ __("Filtrar por estado") }}</option>
@@ -76,6 +76,7 @@
                     {data: 'name'},
                     {data: 'idPersonal'},
                     {data: 'attendant'},
+                    {data: 'peaceSave'},
                     {data: "status_formatted"},
                     {data: 'actions'},
                 ]
@@ -160,7 +161,7 @@
             $("form#user_form").submit(function(e){
                 e.preventDefault();
                 form_msj.empty();
-                const form_data = $(this).serialize()
+                const form_data = $(this).serialize();
                 $.ajax({
                     type: 'post',
                     url: $('div#add').is(':visible') ? '{{ route('add.student') }}' : '{{ route('update.student') }}',

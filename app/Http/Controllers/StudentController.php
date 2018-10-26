@@ -17,7 +17,7 @@ class StudentController extends Controller
 
     public function show(Request $request)
     {
-        $select = ['id', 'name', 'idPersonal', 'attendant', 'status'];
+        $select = ['id', 'name', 'idPersonal', 'attendant', 'peace_save','status'];
 
         if ($request->status){
             $students = Student::where('status', $request->status)->select($select)->get();
@@ -26,10 +26,12 @@ class StudentController extends Controller
         }
 
         $actions = 'students.datatables.actions';
+        $peaceSave = 'students.datatables.peaceSave';
         $status = 'status.datatables.students.index';
 
         return DataTables::of($students)
             ->addColumn('actions', $actions)
+            ->addColumn('peaceSave', $peaceSave)
             ->addColumn('status_formatted', $status)
             ->rawColumns(['actions', 'status_formatted'])
             ->make(true);
