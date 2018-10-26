@@ -19,8 +19,8 @@ class CreateContractsTable extends Migration
             $table->year('year');
             $table->decimal('enrollment_cost', 10, 2)->default(0.00);
             $table->json('services');
-            $table->json('r15')->default("[{}]");
-            $table->json('r1')->default("[{}]");
+            $table->json('r15');
+            $table->json('r1');
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
             $table->unsignedInteger('user_id');
