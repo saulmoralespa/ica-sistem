@@ -54,6 +54,7 @@ if(document.getElementById("app")){
             cancel: function () {
                 this.table = false;
                 this.gradeBachelor = '';
+                this.nameContract = '';
             },
             contractForm: function(e){
                 e.preventDefault();
@@ -145,6 +146,9 @@ if(document.getElementById("app")){
                    data: {
                        '_token': $('meta[name=csrf-token]').attr('content'),
                        'id': this.gradeBachelor
+                   },
+                   beforeSend: () => {
+                       $(view).css('cursor', 'wait');
                    }
                }).then(function(res){
                    this.services = res.services;
@@ -153,6 +157,7 @@ if(document.getElementById("app")){
                    this.year = res.year;
                    this.isReadOnly = res.annuity.discount_edit;
                    this.table = true;
+                   $(view).css('cursor', 'default');
                    }.bind(this));
            },
             subtotal: function() {
