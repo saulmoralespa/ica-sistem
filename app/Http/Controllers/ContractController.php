@@ -50,7 +50,8 @@ class ContractController extends Controller
     public function create(Request $request)
     {
 
-        $checkContractExist = Contract::where('year', '=', $request->year)->where('student_id', '=', $request->id)->first();
+        $student = Student::find($request->id);
+        $checkContractExist = $student->contracts()->where('year', '=', $request->year)->first();
 
         $error_array = array();
         $success_output = '';
@@ -67,16 +68,17 @@ class ContractController extends Controller
                 $services[] = array('name' => $serviceName[$i], 'cost' => $serviceCost[$i]);
             }
 
-            $contract = Contract::create([
+            $data = [
                 'name' => $request->name,
                 'year' => $request->year,
                 'enrollment_cost' => $request->enrollmentCost,
                 'services' => json_encode($services),
-                'student_id' => $request->id,
+                'student_id' => $student->id,
                 'observations' => $request->observations,
                 'user_id' => Auth::id()
-            ]);
+            ];
 
+            $contract = $student->contracts()->create($data);
 
             $costFee = bcdiv(2990 / 11, '1', 2);
 
@@ -94,10 +96,12 @@ class ContractController extends Controller
                 array('name' => __("Cuota 11"), 'price' => $costFee),
             ];
 
-            $fees = Fee::create([
+            $data = [
                 'contract_id' => $contract->id,
                 'fees' => json_encode($fees)
-            ]);
+            ];
+
+            $contract->fee()->create($data);
 
             $success_output = __("Se ha creado exitosamente el contracto");
         }
@@ -150,13 +154,7 @@ class ContractController extends Controller
 
     public function test(Request $request)
     {
-        /*return response()->json([
-            'enrollment_cost' => $contract->enrollment_cost,
-            'services' => json_decode($contract->services),
-            'fees' => json_decode($contract->fees->fees),
-            'user_id' => $user->name
-        ]);*/
-
+        
     }
 
 }
