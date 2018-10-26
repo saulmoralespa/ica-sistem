@@ -14,7 +14,6 @@
         "laravel/tinker": "^1.0",
         "laravelcollective/html": "^5.4.0",
         "spatie/laravel-permission": "^2.21",
-        "uxweb/sweet-alert": "^2.0",
         "yajra/laravel-datatables-oracle": "~8.0",
         "barryvdh/laravel-debugbar": "^3.2"
     },
