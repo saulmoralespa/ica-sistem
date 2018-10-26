@@ -13,5 +13,4 @@ heroku config:set MAIL_USERNAME=6562f3bf34856d
 heroku config:set MAIL_PASSWORD=20855b2660ab27
 heroku config:set MAIL_ENCRYPTION=tls
 
-heroku run php artisan migrate:fresh
-heroku run php artisan migrate --seed
+heroku run php artisan migrate:fresh --seed

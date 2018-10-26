@@ -1,0 +1,17 @@
+1. Adjunto en el documento de word el texto de los avisos No. 1, 2, y 3.  En este caso el texto es el mismo, lo unico que cambia es el No. del aviso.
+
+2. Los textos que te puse en rojo son textos dinamicos que cambiaran dependiendo del cliente, el dia o cualquier otra condicion. Me parece que se entiende por si mismo.
+
+3. en los avisos necesito en un area de configuración la posibilidad de cambiar el nombre del responsable del dpto de contabilidad y la imagen de la firma.   Tambien necesito controlar el nombre y firma que aparecerá en el paz y salvo.
+
+4. Necesito la posibilidad de imprimir estos avisos. No se que me  recomiendas, de repente que el sistema guarde el email enviado y de la opcion de imprimirlo.  Por eso fue que hice la hoja html que cuando se imprimera saliera bien en una pagina tamaño carta.
+
+5. te adjunte el zip html que tiene el codigo de los email y que se puede imprimir. Entiendo puedes usar esto mismo y solo agregar las variables para sacar los valores dinamicamente.
+
+6. logo adjunto
+
+7. el paz y salvo quiero tener la opcion de imprimirlo o enviarlo al email.
+
+
+Cualquier duda me avisas
+
