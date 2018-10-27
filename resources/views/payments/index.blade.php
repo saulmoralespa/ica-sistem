@@ -82,7 +82,8 @@
                     { data: 'student' },
                     { data: 'attendant' },
                     { data: 'id' },
-                    { data: 'amount' }
+                    { data: 'amount' },
+                    { data: 'actions' }
                 ]
             });
 

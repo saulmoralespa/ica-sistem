@@ -17,6 +17,8 @@ class PaymentController extends Controller
     public function fetch(Request $request)
     {
 
+        $actions = 'payments.datatables.actions';
+
         $payments = Payment::with('student')
             ->whereHas('student', function ($q) {
             })->select('id','date_deposit', 'student_id', 'receipt', 'amount', 'created_at');
@@ -35,6 +37,8 @@ class PaymentController extends Controller
             ->addColumn('attendant', function ($payment){
                 return $payment->student->attendant;
             })
+            ->addColumn('actions', $actions)
+            ->rawColumns(['actions'])
             ->make(true);
     }
 
@@ -42,7 +46,6 @@ class PaymentController extends Controller
     {
         $payments = \App\Payment::with('student')
             ->whereHas('student', function ($q) {
-
             })->select('id','date_deposit', 'student_id', 'receipt', 'amount', 'created_at')->get();
 
         dd($payments[0]->student);
