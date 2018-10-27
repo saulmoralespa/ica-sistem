@@ -24846,12 +24846,6 @@ td>.m-checkbox.m-checkbox--single {
 .m--skin-dark .m-checkbox.m-checkbox--air .m-radio--solid>span,
 .m--skin-dark .m-radio.m-radio--air .m-radio--solid>span {}
 
-.form-control {
-    font-family: sans-serif, Arial;
-    border-radius: 0;
-    border-radius: .25rem
-}
-
 .form-control.m-input--pill {
     border-radius: 1.3rem
 }

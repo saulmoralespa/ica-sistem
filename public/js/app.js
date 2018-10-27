@@ -20249,8 +20249,8 @@ if (document.getElementById("app")) {
                 e.preventDefault();
                 var nameContract = $("#gradeBachelor option:selected").text();
                 $("#nameContract").val(nameContract);
-                var student_id = $(view).find('#student_id').val();
-                var year = $(view).find('#year').val();
+                var student_id = $('#student_id').val();
+                var year = $('#year').val();
                 $.ajax({
                     url: createContract,
                     type: 'post',
@@ -20258,14 +20258,11 @@ if (document.getElementById("app")) {
                     data: $('form#createContract').serialize(),
                     beforeSend: function beforeSend() {
                         $('form#createContract').find('button').prop("disabled", true);
-                        $(view).css('cursor', 'wait');
+                        $('body').css('cursor', 'wait');
                     }
                 }).then(function (res) {
-                    $(view).css('cursor', 'default');
-                    $("#newContract").hide();
-                    $('#contracts').show();
-                    dt.ajax.reload();
-                    this.loadContract(student_id, year);
+                    $('body').css('cursor', 'default');
+                    window.location.reload();
                 }.bind(this));
             },
             loadContract: function () {
@@ -20336,9 +20333,7 @@ if (document.getElementById("app")) {
                         _token: $('meta[name=csrf-token]').attr('content')
                     }
                 }).then(function (res) {
-                    this.nameContract = '';
-                    $(view).modal('hide');
-                    dt.ajax.reload();
+                    window.location.reload();
                 }.bind(this));
             },
             changeSelectStudent: function changeSelectStudent() {
@@ -20362,7 +20357,7 @@ if (document.getElementById("app")) {
                                             'id': this.gradeBachelor
                                         },
                                         beforeSend: function beforeSend() {
-                                            $(view).css('cursor', 'wait');
+                                            $('body').css('cursor', 'wait');
                                         }
                                     }).then(function (res) {
                                         this.services = res.services;
@@ -20371,7 +20366,7 @@ if (document.getElementById("app")) {
                                         this.year = res.year;
                                         this.isReadOnly = res.annuity.discount_edit;
                                         this.table = true;
-                                        $(view).css('cursor', 'default');
+                                        $('body').css('cursor', 'default');
                                     }.bind(this));
 
                                 case 2:
