@@ -36,6 +36,12 @@ class StudentController extends Controller
             ->make(true);
     }
 
+
+    public function view(Student $student)
+    {
+        return  view('partials.students.view',compact('student'));
+    }
+
     public function add(Request $request)
     {
         $validation = Validator::make($request->all(),

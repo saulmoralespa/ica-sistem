@@ -1,1 +1,1 @@
-<button data-id="{{ $id }}" class="view-modal btn btn-dark"><i class="fas fa-eye"></i> {{ __("Ver") }}</button> <button data-id="{{ $id }}" class="edit-modal btn btn-info"><i class="fas fa-edit"></i> {{ __("Editar") }}</button>
+<a href="{{ route('view.student', $id) }}" class="btn btn-dark"><i class="fas fa-eye"></i> {{ __("Ver") }}</a> <button data-id="{{ $id }}" class="edit-modal btn btn-info"><i class="fas fa-edit"></i> {{ __("Editar") }}</button>

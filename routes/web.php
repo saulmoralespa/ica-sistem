@@ -43,6 +43,7 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::post('/students/add', 'StudentController@add')->name('add.student');
     Route::post('/students/get', 'StudentController@get')->name('get.student');
     Route::post('/students/update', 'StudentController@update')->name('update.student');
+    Route::get('/students/{student}','StudentController@view')->name('view.student');
 
     Route::get('/costs/enrollments', 'CostController@enrollments')->name('costs.enrollments');
     Route::get('/costs/enrollments/fetch', 'EnrollmentController@fetch')->name('enrollments.fetch');
