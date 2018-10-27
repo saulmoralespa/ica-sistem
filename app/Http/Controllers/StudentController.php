@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Student;
+use function foo\func;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Validator;
@@ -41,6 +42,11 @@ class StudentController extends Controller
     {
         $student = Student::where('idPersonal','=', $id)
                    ->firstOrFail();
+
+        $student->load([
+            'contracts'
+        ])->get();
+
         return  view('partials.students.view',compact('student'));
     }
 
