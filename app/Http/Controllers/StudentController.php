@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Contract;
 use App\Student;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;

@@ -176,7 +176,7 @@
                                     <tr>
                                         <td>@{{ fee.name }}</td>
                                         <td>
-                                            <input type="text" name="fees[]"  @keyup="changeFees" class="form-control" @role('Administrator') readonly @endrole v-model="fee.price">
+                                            <input type="text" name="fees[]"  @keyup="changeFees" class="form-control" @role('Administrator') readonly @endrole v-model.number="fee.price">
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -233,26 +233,26 @@
                                                 <input type="hidden" name="serviceName[]" :value="service.name">
                                             </td>
                                             <td>
-                                                <input type="text" name="serviceCost[]" class="form-control" @role('Administrator') readonly @endrole v-model="service.cost">
+                                                <input type="text" name="serviceCost[]" class="form-control" @role('Administrator') readonly @endrole v-model.number="service.cost">
                                             </td>
                                         </tr>
                                     </template>
                                     <tr>
                                         <td>{{ __("Matricula") }}</td>
                                         <td>
-                                            <input type="text" name="enrollmentCost" class="form-control" @role('Administrator') readonly @endrole v-model="enrollmentCost">
+                                            <input type="text" name="enrollmentCost" class="form-control" @role('Administrator') readonly @endrole v-model.number="enrollmentCost">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Anualidad") }}</td>
                                         <td>
-                                            <input type="text" name="annuityCost" class="form-control" @role('Administrator') readonly @endrole v-model="annuity.cost">
+                                            <input type="text" name="annuityCost" class="form-control" @role('Administrator') readonly @endrole v-model.number="annuity.cost">
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>{{ __("Descuento") }}</td>
                                         <td>
-                                            <input type="text" name="annuityDiscount" class="form-control" :readonly="isReadOnly"  @role('Administrator') readonly @endrole v-model="annuity.discount">
+                                            <input type="text" name="annuityDiscount" class="form-control" :readonly="isReadOnly"  @role('Administrator') readonly @endrole v-model.number="annuity.discount">
                                         </td>
                                     </tr>
                                     <tr>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Annuity;
 use App\Contract;
 use App\Enrollment;
+use App\Payment;
 use App\Service;
 use App\Student;
 use App\User;
@@ -158,11 +159,4 @@ class ContractController extends Controller
         $student->save();
         return;
     }
-
-
-    public function test(Request $request)
-    {
-
-    }
-
 }

@@ -1,5 +1,5 @@
 <?php
 
-$number = 2990  / 11;
+$today = time();
 
-echo number_format($number,2,".",".");
+echo $today;

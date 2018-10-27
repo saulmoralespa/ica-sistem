@@ -16,8 +16,14 @@
                                     <input type="text" name="date_deposit" id="date_deposit" class="form-control" required />
                                 </div>
                                 <div class="form-group">
-                                    <label>{{ __("N° de operación") }}</label>
-                                    <input type="number" name="number_operation" id="number_operation" class="form-control" required />
+                                    <label>{{ __("Pendiente por asignar") }}</label>
+                                    <input type="text" name="assign_deposit" id="assign_deposit"  :value="Number(amount_deposit) | price" class="form-control" readonly />
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                <div class="form-group">
+                                    <label>{{ __("Monto a depositar") }}</label>
+                                    <input type="text" name="amount_deposit" id="amount_deposit" v-model.number="amount_deposit" class="form-control" required />
                                 </div>
                                 <div class="form-group">
                                     <select class="selectStudent" v-model="student_id" @change="changeSelectStudent" data-live-search="true" data-size="2">
@@ -25,20 +31,10 @@
                                             <option value="{{ $id }}">
                                                 {{ $name }}
                                             </option>
-                                            @empty
+                                        @empty
                                             <option value="">{{ __("No hay estudiantes registrados") }}</option>
                                         @endforelse
                                     </select>
-                                </div>
-                            </div>
-                            <div class="float-right">
-                                <div class="form-group">
-                                    <label>{{ __("Monto a depositar") }}</label>
-                                    <input type="text" name="amount_deposit" id="amount_deposit" v-model="amount_deposit" class="form-control" required />
-                                </div>
-                                <div class="form-group">
-                                    <label>{{ __("Pendiente por asignar") }}</label>
-                                    <input type="text" name="assign_deposit" id="assign_deposit"  :value="amount_deposit" class="form-control" readonly />
                                 </div>
                             </div>
                         </form>

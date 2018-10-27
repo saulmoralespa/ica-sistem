@@ -62,21 +62,35 @@
         const showContract = '{{ route('show.contract') }}';
         $(document).ready(function() {
             dt = $('#payments-table').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: '{{ route('fetch.payments') }}',
                 pagingType: "numbers",
                 language: {
                     url: "https://cdn.datatables.net/plug-ins/1.10.19/i18n/Spanish.json"
-                }
+                },
+                columns: [
+                    {
+                        data: 'created_at',
+                        type: 'num',
+                        render: {
+                            _: 'display'
+                        }
+                    },
+                    { data: 'date_deposit' },
+                    { data: 'receipt' },
+                    { data: 'student' },
+                    { data: 'attendant' },
+                    { data: 'id' },
+                    { data: 'amount' }
+                ]
             });
 
             $(document).on("click", ".add-modal", function(e){
                 $('#add').modal({ backdrop: 'static', keyboard: false })
             });
 
-            let date = new Date();
-            date.setDate(date.getDate());
-
             $('#date_deposit').datepicker({
-                startDate: date,
                 autoclose: true,
                 language: 'es',
                 format: 'dd/m/yy'
