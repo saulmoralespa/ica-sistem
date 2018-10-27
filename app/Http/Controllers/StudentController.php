@@ -11,7 +11,7 @@ class StudentController extends Controller
 {
     public function index()
     {
-        return view('students.index');
+        return view('students.index', compact('student'));
     }
 
     public function show(Request $request)
@@ -37,8 +37,10 @@ class StudentController extends Controller
     }
 
 
-    public function view(Student $student)
+    public function view($id)
     {
+        $student = Student::where('idPersonal','=', $id)
+                   ->firstOrFail();
         return  view('partials.students.view',compact('student'));
     }
 
