@@ -21,6 +21,8 @@ Vue.component('clickConfirm', ClickConfirm);
 
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
+Vue.component('datepicker', require('./components/datepicker'));
+
 if(document.getElementById("app")){
     window.contractStudent = new Vue({
         el: '#app',
@@ -41,7 +43,8 @@ if(document.getElementById("app")){
             username: '',
             years: '',
             isReadOnly: false,
-            amount_deposit: ''
+            amount_deposit: '',
+            date: '',
         },
         methods: {
             onChange:function(){
@@ -88,15 +91,19 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                 }).then(function(res){
-                   this.student_id = student_id;
-                   this.enrollmentCost = res.enrollment_cost;
-                   this.services = res.services;
-                   this.fees = res.fees;
-                   this.nameContract = res.name;
-                   this.idContract = res.id;
-                   this.date_created_at = res.date_created;
-                   this.username = res.username;
-                   this.years = res.years;
+                    if (res.length > 0){
+                        this.student_id = student_id;
+                        this.enrollmentCost = res.enrollment_cost;
+                        this.services = res.services;
+                        this.fees = res.fees;
+                        this.nameContract = res.name;
+                        this.idContract = res.id;
+                        this.date_created_at = res.date_created;
+                        this.username = res.username;
+                        this.years = res.years;
+                    }else{
+                        console.log('no hay contractos');
+                    }
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -132,6 +139,15 @@ if(document.getElementById("app")){
                 if (this.student_id)
                     this.loadContract(this.student_id);
 
+            },
+            statusSelectStudent: function(disable = true){
+                if (disable){
+                    $('.selectStudent').removeAttr('disabled');
+                    $('.selectStudent').selectpicker('refresh');
+                }else{
+                    $('.selectStudent').attr('disabled',true);
+                    $('.selectStudent').selectpicker('refresh');
+                }
             }
         },
         computed: {
@@ -171,6 +187,23 @@ if(document.getElementById("app")){
         filters:{
             price: function(value){
                 return value.toFixed(2);
+            }
+        },
+        watch: {
+            amount_deposit: function(val, oldVal) {
+                if (val && this.date){
+                    this.statusSelectStudent()
+                }else{
+                    this.statusSelectStudent(false)
+                }
+
+            },
+            date: function(val, oldVal){
+                if (val && this.amount_deposit){
+                    this.statusSelectStudent()
+                }else{
+                    this.statusSelectStudent(false)
+                }
             }
         }
     });

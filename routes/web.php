@@ -75,6 +75,7 @@ Route::group(['middleware' => ['auth'] ], function () {
 
     Route::get('/payments', 'PaymentController@show')->name('payments');
     Route::get('/payments/fetch', 'PaymentController@fetch')->name('fetch.payments');
+    Route::get('/payments/add', 'PaymentController@add')->name('add.payments');
 
     Route::get('/payments/test', 'PaymentController@test')->name('test.payments');
 

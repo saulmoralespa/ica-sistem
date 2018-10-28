@@ -11,7 +11,7 @@
 </style>
 @endpush
 @section('bodycontent')
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col">
                 <div class="page-header">

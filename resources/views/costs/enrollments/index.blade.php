@@ -3,7 +3,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.18/css/dataTables.bootstrap4.min.css">
 @endpush
 @section('bodycontent')
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col">
                 <div class="page-header">

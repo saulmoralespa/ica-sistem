@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/css/bootstrap-datepicker.min.css">
 @endpush
 @section('bodycontent')
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col">
                 <div class="page-header">

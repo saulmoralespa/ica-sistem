@@ -123,6 +123,9 @@ class ContractController extends Controller
     {
 
         //verif if student have a contract
+
+
+
         $student = Student::find($request->id);
 
         if ($request->year != ''){
@@ -131,20 +134,25 @@ class ContractController extends Controller
             $contract = $student->contracts()->get()->last();
         }
 
-        $years = $student->contracts()->select('year')->orderBy('year', 'desc')->get();
 
-        $user = User::find($contract->user_id);
+        $data = [];
 
-        return response()->json([
-            'id' => $contract->id,
-            'name' => $contract->name,
-            'enrollment_cost' => $contract->enrollment_cost,
-            'services' => $contract->services,
-            'fees' => $contract->fee->fees,
-            'years' => $years,
-            'username' => $user->username,
-            'date_created' => $contract->created_at->format('d/m/y g:i a'),
-        ]);
+        if (isset($contract)){
+            $years = $student->contracts()->select('year')->orderBy('year', 'desc')->get();
+            $user = User::find($contract->user_id);
+            $data = [
+                'id' => $contract->id,
+                'name' => $contract->name,
+                'enrollment_cost' => $contract->enrollment_cost,
+                'services' => $contract->services,
+                'fees' => $contract->fee->fees,
+                'years' => $years,
+                'username' => $user->username,
+                'date_created' => $contract->created_at->format('d/m/y g:i a'),
+            ];
+        }
+
+        return response()->json($data);
 
     }
 

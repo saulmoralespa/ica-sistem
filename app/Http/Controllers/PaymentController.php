@@ -42,12 +42,18 @@ class PaymentController extends Controller
             ->make(true);
     }
 
+    public function add()
+    {
+        return view('partials.payments.index');
+    }
+
     public function test(Request $request)
     {
-        $payments = \App\Payment::with('student')
-            ->whereHas('student', function ($q) {
-            })->select('id','date_deposit', 'student_id', 'receipt', 'amount', 'created_at')->get();
+        $student = Student::find(1);
 
-        dd($payments[0]->student);
+        $contract = $student->contracts()->get()->last();
+
+        if (is_null($contract))
+            echo "Hell";
     }
 }

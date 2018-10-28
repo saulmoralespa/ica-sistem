@@ -13,7 +13,7 @@
     </style>
 @endpush
 @section('bodycontent')
-    <div class="container">
+    <div class="container mt-5">
         <div class="row">
             <div class="col">
                 <div class="page-header">
@@ -21,7 +21,7 @@
                 </div>
             </div>
             <div class="col">
-                <button class="add-modal btn btn-primary btn-lg pull-right"><i class="fas fa-plus"></i> {{ __("Agregar Pago") }}</button>
+                <a href="{{ route('add.payments') }}" class="btn btn-primary btn-lg pull-right"><i class="fas fa-plus"></i> {{ __("Agregar Pago") }}</a>
             </div>
             <div class="w-100"></div>
             <div class="col">
