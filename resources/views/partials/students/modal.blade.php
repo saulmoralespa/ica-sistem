@@ -21,7 +21,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __("ID Personal") }}</label>
-                        <input type="number" name="idPersonal" id="idPersonal" class="form-control" required />
+                        <input type="text" name="idPersonal" id="idPersonal" class="form-control" required />
                     </div>
                     <div class="form-group">
                         <label>{{ __("Teléfono") }}</label>
@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group">
                         <label>{{ __("ID Personal") }}</label>
-                        <input type="number" name="idPersonal" id="idPersonal" class="form-control" required />
+                        <input type="text" name="idPersonal" id="idPersonal" class="form-control" required />
                     </div>
                     <div class="form-group">
                         <label>{{ __("Teléfono") }}</label>
