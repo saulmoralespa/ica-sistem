@@ -7,7 +7,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-10 mx-auto">
-                <form id="addPayment">
+                <form id="addPayment" ref="formAddPay">
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <p class="h5">{{ __("Agregar pago") }}</p>
@@ -43,6 +43,23 @@
                                     <option value="">{{ __("No hay estudiantes registrados") }}</option>
                                 @endforelse
                             </select>
+                        </div>
+                        <div class="col-12 border-top mt-2">
+                            <div class="col-4">
+                                <div class="float-left mt-3">
+                                    <p ref="nameStudent" class="h6">{{ __("Estudiante: ") }}</p>
+                                </div>
+                            </div>
+                            <div class="float-right mt-3">
+                                <div class="col-4">
+                                    <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ __("Reembolso") }}</button>
+                                </div>
+                            </div>
+                            <div class="float-right mt-3">
+                                <div class="col-4">
+                                    <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ __("Servicios") }}</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </form>

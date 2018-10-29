@@ -20346,6 +20346,12 @@ if (document.getElementById("app")) {
                 }.bind(this));
             },
             changeSelectStudent: function changeSelectStudent() {
+                console.log(this.$refs.formAddPay);
+                var textStudent = this.$refs.nameStudent.text;
+                this.$refs.nameStudent.textContent = textStudent + ' Name student';
+                var select = this.$refs.formAddPay[4];
+                var nameStudent = select.options[select.selectedIndex].text;
+
                 if (this.student_id) this.loadContract(this.student_id);
             },
             statusSelectStudent: function statusSelectStudent() {

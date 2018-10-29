@@ -138,6 +138,12 @@ if(document.getElementById("app")){
                 }.bind(this));
             },
             changeSelectStudent: function(){
+                console.log(this.$refs.formAddPay);
+                let textStudent = this.$refs.nameStudent.text;
+                this.$refs.nameStudent.textContent = `${textStudent} Name student`;
+                const select = this.$refs.formAddPay[4];
+                const nameStudent = select.options[select.selectedIndex].text;
+
                 if (this.student_id)
                     this.loadContract(this.student_id);
 
