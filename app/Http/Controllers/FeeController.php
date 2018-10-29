@@ -10,7 +10,7 @@ class FeeController extends Controller
     public function update(Request $request)
     {
         $fee = Fee::find($request->id);
-        $fee->fees = $request->fees;
+        $fee->fees = json_decode($request->fees);
         $fee->save();
     }
 }

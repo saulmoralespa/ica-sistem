@@ -30,6 +30,7 @@ if(document.getElementById("app")){
             gradeBachelor: '',
             services: '',
             enrollmentCost: '',
+            observations: '',
             annuity: '',
             year: '',
             yearChange: '',
@@ -95,6 +96,7 @@ if(document.getElementById("app")){
                         this.student_id = student_id;
                         this.enrollmentCost = res.enrollment_cost;
                         this.services = res.services;
+                        this.observations = res.observations;
                         this.fees = res.fees;
                         this.nameContract = res.name;
                         this.idContract = res.id;

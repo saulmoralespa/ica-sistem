@@ -25,6 +25,7 @@
                     <p class="h5 ml-5">{{ __("Bachillerato:") }} @{{ nameContract }}</p>
                     <p class="h5 ml-5">{{ __("Número de contrato:") }} @{{ idContract }}&nbsp;&nbsp; | &nbsp;&nbsp;@{{ date_created_at }}
                         | {{ __("Creado por") }} @{{ username }}</p>
+                    <p class="h5 ml-5" v-if="observations">{{ __("Observaciones: ") }} @{{ observations }}</p>
                 </div>
                 <div class="float-right">
                     <p class="h5 mr-5">{{ __("Año") }} <span v-for="(year, index) in years" v-if="index === 0 && yearChange == ''">@{{ year.year }}</span>@{{ yearChange }}
