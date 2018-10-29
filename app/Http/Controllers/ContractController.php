@@ -71,7 +71,7 @@ class ContractController extends Controller
                 'name' => $request->name,
                 'year' => $request->year,
                 'enrollment_cost' => $request->enrollmentCost,
-                'services' => $services,
+                'services' => json_encode($services),
                 'student_id' => $student->id,
                 'observations' => $request->observations,
                 'user_id' => Auth::id()
@@ -99,7 +99,7 @@ class ContractController extends Controller
 
             $data = [
                 'contract_id' => $contract->id,
-                'fees' => $fees
+                'fees' => json_encode($fees)
             ];
 
             $contract->fee()->create($data);
@@ -142,8 +142,8 @@ class ContractController extends Controller
                 'id' => $contract->id,
                 'name' => $contract->name,
                 'enrollment_cost' => $contract->enrollment_cost,
-                'services' => $contract->services,
-                'fees' => $contract->fee->fees,
+                'services' => json_decode($contract->services),
+                'fees' => json_decode($contract->fee->fees),
                 'years' => $years,
                 'username' => $user->username,
                 'date_created' => $contract->created_at->format('d/m/y g:i a'),

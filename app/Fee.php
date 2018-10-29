@@ -10,10 +10,6 @@ class Fee extends Model
         'contract_id', 'fees'
     ];
 
-    protected $casts = [
-        'fees' => 'array'
-    ];
-
     public function contract()
     {
         return $this->belongsTo(Contract::class);
