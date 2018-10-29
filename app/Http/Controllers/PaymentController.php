@@ -53,7 +53,7 @@ class PaymentController extends Controller
 
         $contract = $student->contracts()->get()->last();
 
-        if (is_null($contract))
-            echo "Hell";
+        if(isset($contract))
+            dd($contract);
     }
 }

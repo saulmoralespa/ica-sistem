@@ -91,7 +91,7 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                 }).then(function(res){
-                    if (res.length > 0){
+                    if (res.constructor !== Array){
                         this.student_id = student_id;
                         this.enrollmentCost = res.enrollment_cost;
                         this.services = res.services;

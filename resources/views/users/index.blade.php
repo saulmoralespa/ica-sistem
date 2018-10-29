@@ -140,8 +140,8 @@
             }
 
             $("form#user_form").submit(function(e){
-                e.preventDefault()
-                const form_data = $(this).serialize()
+                e.preventDefault();
+                const form_data = $(this).serialize();
                 $.ajax({
                     type: 'post',
                     url: $('div#add').is(':visible') ? '{{ route('add.user') }}' : '{{ route('update.user') }}',

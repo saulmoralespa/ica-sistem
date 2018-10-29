@@ -124,8 +124,6 @@ class ContractController extends Controller
 
         //verif if student have a contract
 
-
-
         $student = Student::find($request->id);
 
         if ($request->year != ''){
