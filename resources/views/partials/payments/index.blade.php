@@ -47,7 +47,7 @@
                         <div class="col-12 border-top mt-2">
                             <div class="col-4">
                                 <div class="float-left mt-3">
-                                    <p ref="nameStudent" class="h6">{{ __("Estudiante: ") }}</p>
+                                    <p ref="nameStudent" class="h6">{{ __("Estudiante: ") }} <em></em></p>
                                 </div>
                             </div>
                             <div class="float-right mt-3">

@@ -20234,7 +20234,8 @@ if (document.getElementById("app")) {
             years: '',
             isReadOnly: false,
             amount_deposit: '',
-            date: ''
+            date: '',
+            elSelectStudent: ''
         },
         methods: {
             onChange: function onChange() {
@@ -20281,6 +20282,7 @@ if (document.getElementById("app")) {
                                         url: showContract,
                                         type: 'post',
                                         dataType: 'json',
+                                        async: true,
                                         data: {
                                             id: student_id,
                                             year: year,
@@ -20300,6 +20302,12 @@ if (document.getElementById("app")) {
                                             this.years = res.years;
                                         } else {
                                             console.log('no hay contractos');
+                                        }
+
+                                        if (this.amount_deposit) {
+                                            var select = this.$refs.formAddPay[4];
+                                            var nameStudent = select.options[select.selectedIndex].text;
+                                            $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
                                         }
                                     }.bind(this));
 
@@ -20345,13 +20353,8 @@ if (document.getElementById("app")) {
                     window.location.reload();
                 }.bind(this));
             },
-            changeSelectStudent: function changeSelectStudent() {
-                console.log(this.$refs.formAddPay);
-                var textStudent = this.$refs.nameStudent.text;
-                this.$refs.nameStudent.textContent = textStudent + ' Name student';
-                var select = this.$refs.formAddPay[4];
-                var nameStudent = select.options[select.selectedIndex].text;
-
+            changeSelectStudent: function changeSelectStudent(e) {
+                this.elSelectStudent = e.originalTarget;
                 if (this.student_id) this.loadContract(this.student_id);
             },
             statusSelectStudent: function statusSelectStudent() {

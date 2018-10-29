@@ -46,6 +46,7 @@ if(document.getElementById("app")){
             isReadOnly: false,
             amount_deposit: '',
             date: '',
+            elSelectStudent: ''
         },
         methods: {
             onChange:function(){
@@ -86,6 +87,7 @@ if(document.getElementById("app")){
                     url: showContract,
                     type: 'post',
                     dataType: 'json',
+                    async: true,
                     data: {
                         id:  student_id,
                         year: year,
@@ -106,6 +108,13 @@ if(document.getElementById("app")){
                     }else{
                         console.log('no hay contractos');
                     }
+
+                    if (this.amount_deposit){
+                        const select = this.$refs.formAddPay[4];
+                        const nameStudent = select.options[select.selectedIndex].text;
+                        $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
+                    }
+
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -137,15 +146,10 @@ if(document.getElementById("app")){
                     window.location.reload();
                 }.bind(this));
             },
-            changeSelectStudent: function(){
-                console.log(this.$refs.formAddPay);
-                let textStudent = this.$refs.nameStudent.text;
-                this.$refs.nameStudent.textContent = `${textStudent} Name student`;
-                const select = this.$refs.formAddPay[4];
-                const nameStudent = select.options[select.selectedIndex].text;
-
+            changeSelectStudent: function(e){
+                this.elSelectStudent = e.originalTarget;
                 if (this.student_id)
-                    this.loadContract(this.student_id);
+                   this.loadContract(this.student_id);
 
             },
             statusSelectStudent: function(disable = true){
