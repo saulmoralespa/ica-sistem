@@ -7,14 +7,14 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-10 mx-auto">
-                <form id="addPayment" ref="formAddPay">
+                <form @submit.prevent="addPayment"  id="addPayment" ref="formAddPay">
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <p class="h5">{{ __("Agregar pago") }}</p>
                         </div>
                         <div class="col-sm-6">
                             <div class="float-right">
-                                <button class="btn btn-primary"><li class="fas fa-save"></li> {{ __("Guardar") }}</button>
+                                <button type="submit" class="btn btn-primary"><li class="fas fa-save"></li> {{ __("Guardar") }}</button>
                             </div>
                         </div>
                     </div>
@@ -31,10 +31,10 @@
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>{{ __("Pendiente por asignar") }}</label>
-                            <input type="text" name="assign_deposit" id="assign_deposit" :value="Number(amount_deposit) | price" class="form-control" readonly />
+                            <input type="text" id="assign_deposit" :value="Number(amount_deposit) | price" class="form-control" readonly />
                         </div>
                         <div class="col-sm-6">
-                            <select disabled class="selectStudent form-control" v-model="student_id" @change="changeSelectStudent" data-live-search="true" data-size="2">
+                            <select name="student_id" disabled class="selectStudent form-control" v-model="student_id" @change="changeSelectStudent" data-live-search="true" data-size="2" required>
                                 @forelse(\App\Student::pluck('name', 'id') as $id => $name)
                                     <option value="{{ $id }}">
                                         {{ $name }}
@@ -59,6 +59,90 @@
                                 <div class="col-4">
                                     <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ __("Servicios") }}</button>
                                 </div>
+                            </div>
+                        </div>
+                        <div id="tableDebt" style="display: none;" class="col-12 mt-2">
+                            <div class="table-responsive">
+                                <table class="table table-bordered" cellspacing="0">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ __("Descrpción") }}</th>
+                                        <th scope="col">{{ __("Total") }}</th>
+                                        <th scope="col">{{ __("Pago") }}</th>
+                                        <th scope="col">{{ __("Cuota 1") }}</th>
+                                        <th scope="col">{{ __("Cuota 2") }}</th>
+                                        <th scope="col">{{ __("Cuota 3") }}</th>
+                                        <th scope="col">{{ __("Cuota 4") }}</th>
+                                        <th scope="col">{{ __("Cuota 5") }}</th>
+                                        <th scope="col">{{ __("Cuota 6") }}</th>
+                                        <th scope="col">{{ __("Cuota 7") }}</th>
+                                        <th scope="col">{{ __("Cuota 8") }}</th>
+                                        <th scope="col">{{ __("Cuota 9") }}</th>
+                                        <th scope="col">{{ __("Cuota 10") }}</th>
+                                        <th scope="col">{{ __("Cuota 11") }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <template v-for="service in services">
+                                        <tr>
+                                            <td>
+                                                @{{ service.name }}
+                                            </td>
+                                            <td>
+                                                @{{ service.cost }}
+                                            </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </template>
+                                    <tr>
+                                        <td>{{ __("Matricula") }}</td>
+                                        <td>
+                                            @{{ enrollmentCost }}
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>{{ __("Anualidad") }}</td>
+                                        <td>
+                                            @{{ totalfees | price }}
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

@@ -20240,11 +20240,53 @@ if (document.getElementById("app")) {
         methods: {
             onChange: function onChange() {
                 if (this.gradeBachelor) {
-                    this.getData;
+                    this.getData();
                 } else {
                     this.table = false;
                 }
             },
+            getData: function () {
+                var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee() {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                        while (1) {
+                            switch (_context.prev = _context.next) {
+                                case 0:
+                                    _context.next = 2;
+                                    return jQuery.ajax({
+                                        url: dataCreateContract,
+                                        type: 'post',
+                                        dataType: 'json',
+                                        data: {
+                                            '_token': $('meta[name=csrf-token]').attr('content'),
+                                            'id': this.gradeBachelor
+                                        },
+                                        beforeSend: function beforeSend() {
+                                            $('body').css('cursor', 'wait');
+                                        }
+                                    }).then(function (res) {
+                                        this.services = res.services;
+                                        this.enrollmentCost = Number(res.enrollmentCost);
+                                        this.annuity = res.annuity;
+                                        this.year = res.year;
+                                        this.isReadOnly = res.annuity.discount_edit;
+                                        this.table = true;
+                                        $('body').css('cursor', 'default');
+                                    }.bind(this));
+
+                                case 2:
+                                case 'end':
+                                    return _context.stop();
+                            }
+                        }
+                    }, _callee, this);
+                }));
+
+                function getData() {
+                    return _ref.apply(this, arguments);
+                }
+
+                return getData;
+            }(),
             cancel: function cancel() {
                 this.table = false;
                 this.gradeBachelor = '';
@@ -20271,13 +20313,13 @@ if (document.getElementById("app")) {
                 }.bind(this));
             },
             loadContract: function () {
-                var _ref = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee(student_id) {
+                var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2(student_id) {
                     var year = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : '';
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee$(_context) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
                         while (1) {
-                            switch (_context.prev = _context.next) {
+                            switch (_context2.prev = _context2.next) {
                                 case 0:
-                                    _context.next = 2;
+                                    _context2.next = 2;
                                     return $.ajax({
                                         url: showContract,
                                         type: 'post',
@@ -20308,19 +20350,24 @@ if (document.getElementById("app")) {
                                             var select = this.$refs.formAddPay[4];
                                             var nameStudent = select.options[select.selectedIndex].text;
                                             $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
+                                            if (this.services) {
+                                                $(this.elSelectStudent).parents('form').find('#tableDebt').show();
+                                            } else {
+                                                $(this.elSelectStudent).parents('form').find('#tableDebt').hide();
+                                            }
                                         }
                                     }.bind(this));
 
                                 case 2:
                                 case 'end':
-                                    return _context.stop();
+                                    return _context2.stop();
                             }
                         }
-                    }, _callee, this);
+                    }, _callee2, this);
                 }));
 
                 function loadContract(_x2) {
-                    return _ref.apply(this, arguments);
+                    return _ref2.apply(this, arguments);
                 }
 
                 return loadContract;
@@ -20354,6 +20401,7 @@ if (document.getElementById("app")) {
                 }.bind(this));
             },
             changeSelectStudent: function changeSelectStudent(e) {
+                this.services = "";
                 this.elSelectStudent = e.originalTarget;
                 if (this.student_id) this.loadContract(this.student_id);
             },
@@ -20367,51 +20415,13 @@ if (document.getElementById("app")) {
                     $('.selectStudent').attr('disabled', true);
                     $('.selectStudent').selectpicker('refresh');
                 }
+            },
+            addPayment: function addPayment(e) {
+                var form = $(e.originalTarget);
+                console.log($(form).serialize());
             }
         },
         computed: {
-            getData: function () {
-                var _ref2 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee2() {
-                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee2$(_context2) {
-                        while (1) {
-                            switch (_context2.prev = _context2.next) {
-                                case 0:
-                                    _context2.next = 2;
-                                    return jQuery.ajax({
-                                        url: dataCreateContract,
-                                        type: 'post',
-                                        dataType: 'json',
-                                        data: {
-                                            '_token': $('meta[name=csrf-token]').attr('content'),
-                                            'id': this.gradeBachelor
-                                        },
-                                        beforeSend: function beforeSend() {
-                                            $('body').css('cursor', 'wait');
-                                        }
-                                    }).then(function (res) {
-                                        this.services = res.services;
-                                        this.enrollmentCost = Number(res.enrollmentCost);
-                                        this.annuity = res.annuity;
-                                        this.year = res.year;
-                                        this.isReadOnly = res.annuity.discount_edit;
-                                        this.table = true;
-                                        $('body').css('cursor', 'default');
-                                    }.bind(this));
-
-                                case 2:
-                                case 'end':
-                                    return _context2.stop();
-                            }
-                        }
-                    }, _callee2, this);
-                }));
-
-                function getData() {
-                    return _ref2.apply(this, arguments);
-                }
-
-                return getData;
-            }(),
             subtotal: function subtotal() {
                 return _.reduce(this.services, function (memo, service) {
                     return memo + Number(service.cost);

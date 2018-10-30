@@ -51,10 +51,32 @@ if(document.getElementById("app")){
         methods: {
             onChange:function(){
                 if (this.gradeBachelor){
-                    this.getData;
+                    this.getData();
                 }else{
                     this.table = false;
                 }
+            },
+            getData: async function() {
+                await jQuery.ajax({
+                    url: dataCreateContract,
+                    type: 'post',
+                    dataType: 'json',
+                    data: {
+                        '_token': $('meta[name=csrf-token]').attr('content'),
+                        'id': this.gradeBachelor
+                    },
+                    beforeSend: () => {
+                        $('body').css('cursor', 'wait');
+                    }
+                }).then(function(res){
+                    this.services = res.services;
+                    this.enrollmentCost = Number(res.enrollmentCost);
+                    this.annuity = res.annuity;
+                    this.year = res.year;
+                    this.isReadOnly = res.annuity.discount_edit;
+                    this.table = true;
+                    $('body').css('cursor', 'default');
+                }.bind(this));
             },
             cancel: function () {
                 this.table = false;
@@ -113,6 +135,11 @@ if(document.getElementById("app")){
                         const select = this.$refs.formAddPay[4];
                         const nameStudent = select.options[select.selectedIndex].text;
                         $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
+                        if(this.services){
+                            $(this.elSelectStudent).parents('form').find('#tableDebt').show();
+                        }else{
+                            $(this.elSelectStudent).parents('form').find('#tableDebt').hide();
+                        }
                     }
 
                 }.bind(this));
@@ -147,6 +174,7 @@ if(document.getElementById("app")){
                 }.bind(this));
             },
             changeSelectStudent: function(e){
+                this.services = "";
                 this.elSelectStudent = e.originalTarget;
                 if (this.student_id)
                    this.loadContract(this.student_id);
@@ -160,31 +188,13 @@ if(document.getElementById("app")){
                     $('.selectStudent').attr('disabled',true);
                     $('.selectStudent').selectpicker('refresh');
                 }
+            },
+            addPayment: function(e){
+                let form = $(e.originalTarget);
+                console.log($(form).serialize());
             }
         },
         computed: {
-           getData: async function() {
-               await jQuery.ajax({
-                   url: dataCreateContract,
-                   type: 'post',
-                   dataType: 'json',
-                   data: {
-                       '_token': $('meta[name=csrf-token]').attr('content'),
-                       'id': this.gradeBachelor
-                   },
-                   beforeSend: () => {
-                       $('body').css('cursor', 'wait');
-                   }
-               }).then(function(res){
-                   this.services = res.services;
-                   this.enrollmentCost = Number(res.enrollmentCost);
-                   this.annuity = res.annuity;
-                   this.year = res.year;
-                   this.isReadOnly = res.annuity.discount_edit;
-                   this.table = true;
-                   $('body').css('cursor', 'default');
-                   }.bind(this));
-           },
             subtotal: function() {
                 return _.reduce(this.services, function(memo, service) {
                     return memo + Number(service.cost);
