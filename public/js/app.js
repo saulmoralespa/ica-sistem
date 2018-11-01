@@ -20372,6 +20372,57 @@ if (document.getElementById("app")) {
 
                 return loadContract;
             }(),
+            loadContractPay: function () {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(student_id) {
+                    return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
+                        while (1) {
+                            switch (_context3.prev = _context3.next) {
+                                case 0:
+                                    _context3.next = 2;
+                                    return $.ajax({
+                                        url: showContract,
+                                        type: 'post',
+                                        dataType: 'json',
+                                        async: true,
+                                        data: {
+                                            id: student_id,
+                                            _token: $('meta[name=csrf-token]').attr('content')
+                                        }
+                                    }).then(function (res) {
+                                        var form = $(this.elSelectStudent).parents('form');
+                                        if (res.constructor !== Array) {
+                                            var table = form.find('table');
+                                            var services = res.services;
+
+                                            services.forEach(function (service) {
+                                                table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
+                                            });
+                                            table.find('.enrollment').html('\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            $('#tableDebt').show();
+                                        } else {
+                                            $('#tableDebt').hide();
+                                            console.log('no hay contractos');
+                                        }
+                                        var select = this.$refs.formAddPay[4];
+                                        var nameStudent = select.options[select.selectedIndex].text;
+                                        $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
+                                    }.bind(this));
+
+                                case 2:
+                                case 'end':
+                                    return _context3.stop();
+                            }
+                        }
+                    }, _callee3, this);
+                }));
+
+                function loadContractPay(_x3) {
+                    return _ref3.apply(this, arguments);
+                }
+
+                return loadContractPay;
+            }(),
             onChangeYear: function onChangeYear() {
                 if (this.yearChange) this.loadContract(this.student_id, this.yearChange);
             },
@@ -20403,7 +20454,7 @@ if (document.getElementById("app")) {
             changeSelectStudent: function changeSelectStudent(e) {
                 this.services = "";
                 this.elSelectStudent = e.originalTarget;
-                if (this.student_id) this.loadContract(this.student_id);
+                if (this.student_id) this.loadContractPay(this.student_id);
             },
             statusSelectStudent: function statusSelectStudent() {
                 var disable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -20417,6 +20468,7 @@ if (document.getElementById("app")) {
                 }
             },
             addPayment: function addPayment(e) {
+                //submit form add pay
                 var form = $(e.originalTarget);
                 console.log($(form).serialize());
             }

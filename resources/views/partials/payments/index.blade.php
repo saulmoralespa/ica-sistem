@@ -83,63 +83,11 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <template v-for="service in services">
-                                        <tr>
-                                            <td>
-                                                @{{ service.name }}
-                                            </td>
-                                            <td>
-                                                @{{ service.cost }}
-                                            </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                    </template>
-                                    <tr>
-                                        <td>{{ __("Matricula") }}</td>
-                                        <td>
-                                            @{{ enrollmentCost }}
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr class="services">
                                     </tr>
-                                    <tr>
-                                        <td>{{ __("Anualidad") }}</td>
-                                        <td>
-                                            @{{ totalfees | price }}
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                    <tr class="enrollment">
+                                    </tr>
+                                    <tr class="contract">
                                     </tr>
                                     </tbody>
                                 </table>
@@ -161,6 +109,7 @@
         const showContract = '{{ route('show.contract') }}';
         const updateFee = '{{ route('update.fee') }}';
         const deleteContract = '{{ route('delete.contract') }}';
+        const textEnrollment = '{{ __("Matricula") }}';
         $(document).ready(function(){
             $('#date').datepicker({
                 autoclose: true,
@@ -173,5 +122,10 @@
                 noneResultsText: '{{ __("No hay resultados {0}") }}',
             });
         });
+        function totalAnnuity(fees){
+            return _.reduce(fees, function(memo, fee) {
+                return memo + Number(fee.price);
+            }, 0)
+        }
     </script>
 @endpush
