@@ -22,6 +22,8 @@ Vue.component('clickConfirm', ClickConfirm);
 //Vue.component('example-component', require('./components/ExampleComponent.vue'));
 
 Vue.component('datepicker', require('./components/datepicker'));
+Vue.component('main-contract-student', require('./components/mainContractStudent'));
+Vue.component('select-student', require('./components/selectStudent'));
 
 if(document.getElementById("app")){
     window.contractStudent = new Vue({
@@ -212,9 +214,9 @@ if(document.getElementById("app")){
                         $('#tableDebt').hide();
                         this.assign_deposit = this.amount_deposit;
                     }
-                    const select = this.$refs.formAddPay[4];
+                    const select = this.$refs.addPay;
                     const nameStudent = select.options[select.selectedIndex].text;
-                    $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
+                    $(this.elSelectStudent).parents('form').find('p').text(`${textStudent} ${nameStudent}`);
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -288,18 +290,18 @@ if(document.getElementById("app")){
         watch: {
             amount_deposit: function(val, oldVal) {
                 if (val && this.date){
-                    this.statusSelectStudent();
+                    //this.statusSelectStudent();
                 }else{
-                    this.statusSelectStudent(false)
+                    //this.statusSelectStudent(false)
                 }
                 this.assign_deposit = this.amount_deposit;
 
             },
             date: function(val, oldVal){
                 if (val && this.amount_deposit){
-                    this.statusSelectStudent();
+                    //this.statusSelectStudent();
                 }else{
-                    this.statusSelectStudent(false)
+                    //this.statusSelectStudent(false)
                 }
                 this.assign_deposit = this.amount_deposit;
             }
