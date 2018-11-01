@@ -20343,19 +20343,6 @@ if (document.getElementById("app")) {
                                             this.date_created_at = res.date_created;
                                             this.username = res.username;
                                             this.years = res.years;
-                                        } else {
-                                            console.log('no hay contractos');
-                                        }
-
-                                        if (this.amount_deposit) {
-                                            var select = this.$refs.formAddPay[4];
-                                            var nameStudent = select.options[select.selectedIndex].text;
-                                            $(this.elSelectStudent).parents('form').find('p em').text(nameStudent);
-                                            if (this.services) {
-                                                $(this.elSelectStudent).parents('form').find('#tableDebt').show();
-                                            } else {
-                                                $(this.elSelectStudent).parents('form').find('#tableDebt').hide();
-                                            }
                                         }
                                     }.bind(this));
 
@@ -20394,7 +20381,6 @@ if (document.getElementById("app")) {
                                         if (res.constructor !== Array) {
                                             var table = form.find('table');
                                             var services = res.services;
-
                                             services.forEach(function (service) {
                                                 table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" value="' + assignValueService(service.cost) + '" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
                                             });
@@ -20403,7 +20389,7 @@ if (document.getElementById("app")) {
                                             $('#tableDebt').show();
                                         } else {
                                             $('#tableDebt').hide();
-                                            console.log('no hay contractos');
+                                            this.assign_deposit = this.amount_deposit;
                                         }
                                         var select = this.$refs.formAddPay[4];
                                         var nameStudent = select.options[select.selectedIndex].text;
@@ -20495,18 +20481,18 @@ if (document.getElementById("app")) {
             amount_deposit: function amount_deposit(val, oldVal) {
                 if (val && this.date) {
                     this.statusSelectStudent();
-                    this.assign_deposit = this.amount_deposit;
                 } else {
                     this.statusSelectStudent(false);
                 }
+                this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
                 if (val && this.amount_deposit) {
                     this.statusSelectStudent();
-                    this.assign_deposit = this.amount_deposit;
                 } else {
                     this.statusSelectStudent(false);
                 }
+                this.assign_deposit = this.amount_deposit;
             }
         }
     });
