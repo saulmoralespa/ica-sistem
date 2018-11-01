@@ -31,7 +31,7 @@
                     <div class="form-group row">
                         <div class="col-sm-6">
                             <label>{{ __("Pendiente por asignar") }}</label>
-                            <input type="text" id="assign_deposit" :value="Number(amount_deposit) | price" class="form-control" readonly />
+                            <input type="text" id="assign_deposit" v-model.number="assign_deposit" class="form-control" readonly />
                         </div>
                         <div class="col-sm-6">
                             <select name="student_id" disabled class="selectStudent form-control" v-model="student_id" @change="changeSelectStudent" data-live-search="true" data-size="2" required>
@@ -126,6 +126,24 @@
             return _.reduce(fees, function(memo, fee) {
                 return memo + Number(fee.price);
             }, 0)
+        }
+        function assignValueEnrollment(enrollmentCost){
+            let cost = Number(enrollmentCost);
+            cost = cost.toFixed(2);
+            if(contractStudent.assign_deposit > cost){
+                const newValue = contractStudent.assign_deposit - cost;
+                contractStudent.assign_deposit = newValue.toFixed(2);
+                return cost;
+            }
+        }
+        function assignValueService(serviceCost){
+            let cost = Number(serviceCost);
+            cost = cost.toFixed(2);
+            if(contractStudent.assign_deposit > cost){
+                const newValue = contractStudent.assign_deposit - cost;
+                contractStudent.assign_deposit = newValue.toFixed(2);
+                return cost;
+            }
         }
     </script>
 @endpush

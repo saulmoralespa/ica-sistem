@@ -20234,6 +20234,7 @@ if (document.getElementById("app")) {
             years: '',
             isReadOnly: false,
             amount_deposit: '',
+            assign_deposit: '',
             date: '',
             elSelectStudent: ''
         },
@@ -20395,9 +20396,9 @@ if (document.getElementById("app")) {
                                             var services = res.services;
 
                                             services.forEach(function (service) {
-                                                table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
+                                                table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" value="' + assignValueService(service.cost) + '" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
                                             });
-                                            table.find('.enrollment').html('\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            table.find('.enrollment').html('\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" value="' + assignValueEnrollment(res.enrollment_cost) + '" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
                                             table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
                                             $('#tableDebt').show();
                                         } else {
@@ -20494,6 +20495,7 @@ if (document.getElementById("app")) {
             amount_deposit: function amount_deposit(val, oldVal) {
                 if (val && this.date) {
                     this.statusSelectStudent();
+                    this.assign_deposit = this.amount_deposit;
                 } else {
                     this.statusSelectStudent(false);
                 }
@@ -20501,6 +20503,7 @@ if (document.getElementById("app")) {
             date: function date(val, oldVal) {
                 if (val && this.amount_deposit) {
                     this.statusSelectStudent();
+                    this.assign_deposit = this.amount_deposit;
                 } else {
                     this.statusSelectStudent(false);
                 }

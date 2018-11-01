@@ -45,6 +45,7 @@ if(document.getElementById("app")){
             years: '',
             isReadOnly: false,
             amount_deposit: '',
+            assign_deposit: '',
             date: '',
             elSelectStudent: ''
         },
@@ -169,7 +170,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text" readonly>
+                                            <input type="text" value="${assignValueService(service.cost)}" readonly>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -189,7 +190,7 @@ if(document.getElementById("app")){
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" readonly>
+                                        <input type="text" value="${assignValueEnrollment(res.enrollment_cost)}" readonly>
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -302,7 +303,8 @@ if(document.getElementById("app")){
         watch: {
             amount_deposit: function(val, oldVal) {
                 if (val && this.date){
-                    this.statusSelectStudent()
+                    this.statusSelectStudent();
+                    this.assign_deposit = this.amount_deposit;
                 }else{
                     this.statusSelectStudent(false)
                 }
@@ -310,7 +312,8 @@ if(document.getElementById("app")){
             },
             date: function(val, oldVal){
                 if (val && this.amount_deposit){
-                    this.statusSelectStudent()
+                    this.statusSelectStudent();
+                    this.assign_deposit = this.amount_deposit;
                 }else{
                     this.statusSelectStudent(false)
                 }
