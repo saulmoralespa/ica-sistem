@@ -90,5 +90,8 @@
                 return cost.toFixed(2);
             }
         }
+        function assignValueAnnuity(annuityCost){
+
+        }
     </script>
 @endpush

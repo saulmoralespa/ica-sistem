@@ -202,7 +202,7 @@ if(document.getElementById("app")){
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" readonly>
+                                        <input type="text" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" readonly>
                                         </td>
                                         <td></td>
                                         <td></td>
