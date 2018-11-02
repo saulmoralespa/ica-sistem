@@ -76,20 +76,18 @@
         }
         function assignValueEnrollment(enrollmentCost){
             let cost = Number(enrollmentCost);
-            cost = cost.toFixed(2);
-            if(contractStudent.assign_deposit > cost){
+            if(contractStudent.assign_deposit >= cost){
                 const newValue = contractStudent.assign_deposit - cost;
                 contractStudent.assign_deposit = newValue.toFixed(2);
-                return cost;
+                return cost.toFixed(2);
             }
         }
         function assignValueService(serviceCost){
             let cost = Number(serviceCost);
-            cost = cost.toFixed(2);
-            if(contractStudent.assign_deposit > cost){
+            if(contractStudent.assign_deposit >= cost){
                 const newValue = contractStudent.assign_deposit - cost;
                 contractStudent.assign_deposit = newValue.toFixed(2);
-                return cost;
+                return cost.toFixed(2);
             }
         }
     </script>
