@@ -33,22 +33,15 @@
                             <label>{{ __("Pendiente por asignar") }}</label>
                             <input type="text" id="assign_deposit" v-model.number="assign_deposit" class="form-control" readonly />
                         </div>
-                        <div class="col-sm-6">
-                            {{--<select ref="addPay" name="student_id" disabled class="selectStudent form-control" v-model="student_id" @change="changeSelectStudent" data-live-search="true" data-size="2" required>
-                                @forelse(\App\Student::pluck('name', 'id') as $id => $name)
-                                    <option value="{{ $id }}">
-                                        {{ $name }}
-                                    </option>
-                                @empty
-                                    <option value="">{{ __("No hay estudiantes registrados") }}</option>
-                                @endforelse
-                            </select>--}}
-                            <select-student v-model="student_id" @change="changeSelectStudent">
-                            </select-student>
-                        </div>
                     </div>
-                    <main-contract-student servicetext="{{ __("Servicios") }}" refundtext="{{ __("Reembolso") }}" descriptiontext="{{ __("Descripción") }}" totaltext="{{ __("Total") }}"  paytext="{{ __("Pago") }}"  feetext="{{ __("Cuota") }}"></main-contract-student>
-                    <!-- load table -->
+                    <div class="mainStudent">
+                        <div class="form-group row">
+                            <div class="col-sm-6">
+                                <select-student></select-student>
+                            </div>
+                        </div>
+                        <main-contract-student servicetext="{{ __("Servicios") }}" refundtext="{{ __("Reembolso") }}" descriptiontext="{{ __("Descripción") }}" totaltext="{{ __("Total") }}"  paytext="{{ __("Pago") }}"  feetext="{{ __("Cuota") }}"></main-contract-student>
+                    </div>
                 </form>
             </div>
         </div>
@@ -64,7 +57,11 @@
         const showContract = '{{ route('show.contract') }}';
         const updateFee = '{{ route('update.fee') }}';
         const deleteContract = '{{ route('delete.contract') }}';
-        const studentShow = '{{ route('students.admin') }}';
+        const studentsList = '{{ route('list.students') }}';
+        const noneSelectedTextShow = '{{ __("Seleccione estudiante") }}';
+        const noneResultsTextShow = '{{ __("No hay resultados {0}") }}';
+        const textEnrollment = '{{ __("Matrícula") }}';
+        const textStudent = '{{ __("Estudiante:") }}';
         $(document).ready(function(){
             $('#date').datepicker({
                 autoclose: true,
@@ -97,57 +94,3 @@
         }
     </script>
 @endpush
-
-
-
-
-{{--
-<div class="col-12 border-top mt-2">
-    <div class="col-4">
-        <div class="float-left mt-3">
-            <p class="h6"></p>
-        </div>
-    </div>
-    <div class="float-right mt-3">
-        <div class="col-4">
-            <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ __("Reembolso") }}</button>
-        </div>
-    </div>
-    <div class="float-right mt-3">
-        <div class="col-4">
-            <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ __("Servicios") }}</button>
-        </div>
-    </div>
-</div>
-<div id="tableDebt" style="display: none;" class="col-12 mt-2">
-    <div class="table-responsive">
-        <table class="table table-bordered" cellspacing="0">
-            <thead>
-            <tr>
-                <th scope="col">{{ __("Descrpción") }}</th>
-                <th scope="col">{{ __("Total") }}</th>
-                <th scope="col">{{ __("Pago") }}</th>
-                <th scope="col">{{ __("Cuota 1") }}</th>
-                <th scope="col">{{ __("Cuota 2") }}</th>
-                <th scope="col">{{ __("Cuota 3") }}</th>
-                <th scope="col">{{ __("Cuota 4") }}</th>
-                <th scope="col">{{ __("Cuota 5") }}</th>
-                <th scope="col">{{ __("Cuota 6") }}</th>
-                <th scope="col">{{ __("Cuota 7") }}</th>
-                <th scope="col">{{ __("Cuota 8") }}</th>
-                <th scope="col">{{ __("Cuota 9") }}</th>
-                <th scope="col">{{ __("Cuota 10") }}</th>
-                <th scope="col">{{ __("Cuota 11") }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr class="services">
-            </tr>
-            <tr class="enrollment">
-            </tr>
-            <tr class="contract">
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>--}}

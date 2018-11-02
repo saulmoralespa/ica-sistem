@@ -49,6 +49,7 @@ if(document.getElementById("app")){
             amount_deposit: '',
             assign_deposit: '',
             date: '',
+            students: '',
             elSelectStudent: ''
         },
         methods: {
@@ -133,7 +134,7 @@ if(document.getElementById("app")){
                     }
                 }.bind(this));
             },
-            loadContractPay: async function(student_id){
+            loadContractPay: async function(student_id, el){
                 await $.ajax({
                     url: showContract,
                     type: 'post',
@@ -144,9 +145,11 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                 }).then(function(res){
-                    const form = $(this.elSelectStudent).parents('form');
+                    const select = el;
+                    const divStudent = $(select).parents('div.mainStudent');
+
                     if (res.constructor !== Array){
-                        const table = form.find('table');
+                        const table = divStudent.find('table');
                         const services = res.services;
                         services.forEach(function(service){
                             table.find(".services").html(`
@@ -209,14 +212,12 @@ if(document.getElementById("app")){
                                         <td></td>
                                         <td></td>
                                         <td></td>`);
-                        $('#tableDebt').show();
+                        divStudent.find('.tableDebt').show();
                     }else{
-                        $('#tableDebt').hide();
-                        this.assign_deposit = this.amount_deposit;
+                        divStudent.find('.tableDebt').hide();
                     }
-                    const select = this.$refs.addPay;
                     const nameStudent = select.options[select.selectedIndex].text;
-                    $(this.elSelectStudent).parents('form').find('p').text(`${textStudent} ${nameStudent}`);
+                    $(divStudent).find('p').text(`${textStudent} ${nameStudent}`);
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -249,10 +250,9 @@ if(document.getElementById("app")){
                 }.bind(this));
             },
             changeSelectStudent: function(e){
-                this.services = "";
-                this.elSelectStudent = e.originalTarget;
-                if (this.student_id)
-                   this.loadContractPay(this.student_id);
+                let select = e.target;
+                let student_id = select.options[select.selectedIndex].value;
+                this.loadContractPay(student_id, select);
 
             },
             statusSelectStudent: function(disable = true){
@@ -290,18 +290,18 @@ if(document.getElementById("app")){
         watch: {
             amount_deposit: function(val, oldVal) {
                 if (val && this.date){
-                    //this.statusSelectStudent();
+                    this.statusSelectStudent();
                 }else{
-                    //this.statusSelectStudent(false)
+                    this.statusSelectStudent(false)
                 }
                 this.assign_deposit = this.amount_deposit;
 
             },
             date: function(val, oldVal){
                 if (val && this.amount_deposit){
-                    //this.statusSelectStudent();
+                    this.statusSelectStudent();
                 }else{
-                    //this.statusSelectStudent(false)
+                    this.statusSelectStudent(false)
                 }
                 this.assign_deposit = this.amount_deposit;
             }

@@ -1,42 +1,33 @@
 <template>
-    <select ref="addPay" :is="loadOptions()" v-selectstudent name="student_id[]" class="selectStudent form-control" data-live-search="true" data-size="2" required>
+    <select ref="addPay" disabled @change="this.$parent.changeSelectStudent" v-selectstudent name="student_id[]" class="selectStudent form-control" data-live-search="true" data-size="2" required>
     </select>
 </template>
 
 <script>
     export default {
+        name: "selectStudent",
         directives: {
             selectstudent: {
                 inserted(el, binding, vNode){
                     $(document).ready(function(){
-                        //$(el).html(`<option value="1">Adriana</option>`);
-                        (el).selectpicker({
-                            noneSelectedText : 'Seleccione estudiante',
-                            noneResultsText: 'No hay resultados {0}',
-                        });
-                    });
-                }
-            }
-        },
-        data(){
-            return {
-                students: ''
-            }
-        },
-        methods: {
-            loadOptions(){
-                if (!this.students){
-                    $(document).ready(function(){
                         $.ajax({
-                            url: studentShow,
-                            type: 'get',
+                            url: studentsList,
+                            type: 'POST',
                             dataType: 'json',
                             data: {
                                 _token: $('meta[name=csrf-token]').attr('content')
                             }
-                        }).then(function(res){
-                            this.students = res;
-                        }.bind(this));
+                        }).then(function(students){
+                            let htmlStudents = `<option value="">${noneSelectedTextShow}</option>`;
+                            students.forEach(function (student){
+                                htmlStudents  += `<option value="${student.id}">${student.name}</option>`;
+                            });
+                            if($(el).html(htmlStudents)){
+                                $(el).selectpicker({
+                                    noneResultsText: noneResultsTextShow,
+                                });
+                            }
+                        });
                     });
                 }
             }

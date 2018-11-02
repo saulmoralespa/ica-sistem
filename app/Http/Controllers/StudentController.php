@@ -138,4 +138,10 @@ class StudentController extends Controller
 
         return response()->json($output);
     }
+
+    public function list()
+    {
+        $students = Student::select('id', 'name')->get();
+        return response()->json($students);
+    }
 }

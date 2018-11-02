@@ -42,6 +42,7 @@ Route::group(['middleware' => ['auth'] ], function () {
     Route::get('/students/admin/{status}', 'StudentController@show')->name('students.admin.status');
     Route::post('/students/add', 'StudentController@add')->name('add.student');
     Route::post('/students/get', 'StudentController@get')->name('get.student');
+    Route::post('/students/list', 'StudentController@list')->name('list.students');
     Route::post('/students/update', 'StudentController@update')->name('update.student');
     Route::get('/students/{student}','StudentController@view')->name('view.student');
 

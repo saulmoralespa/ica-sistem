@@ -20575,6 +20575,7 @@ if (document.getElementById("app")) {
             amount_deposit: '',
             assign_deposit: '',
             date: '',
+            students: '',
             elSelectStudent: ''
         },
         methods: {
@@ -20700,7 +20701,7 @@ if (document.getElementById("app")) {
                 return loadContract;
             }(),
             loadContractPay: function () {
-                var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(student_id) {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(student_id, el) {
                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                         while (1) {
                             switch (_context3.prev = _context3.next) {
@@ -20716,23 +20717,23 @@ if (document.getElementById("app")) {
                                             _token: $('meta[name=csrf-token]').attr('content')
                                         }
                                     }).then(function (res) {
-                                        var form = $(this.elSelectStudent).parents('form');
+                                        var select = el;
+                                        var divStudent = $(select).parents('div.mainStudent');
+
                                         if (res.constructor !== Array) {
-                                            var table = form.find('table');
+                                            var table = divStudent.find('table');
                                             var services = res.services;
                                             services.forEach(function (service) {
                                                 table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" value="' + assignValueService(service.cost) + '" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
                                             });
                                             table.find('.enrollment').html('\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" value="' + assignValueEnrollment(res.enrollment_cost) + '" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
                                             table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
-                                            $('#tableDebt').show();
+                                            divStudent.find('.tableDebt').show();
                                         } else {
-                                            $('#tableDebt').hide();
-                                            this.assign_deposit = this.amount_deposit;
+                                            divStudent.find('.tableDebt').hide();
                                         }
-                                        var select = this.$refs.addPay;
                                         var nameStudent = select.options[select.selectedIndex].text;
-                                        $(this.elSelectStudent).parents('form').find('p').text(textStudent + ' ' + nameStudent);
+                                        $(divStudent).find('p').text(textStudent + ' ' + nameStudent);
                                     }.bind(this));
 
                                 case 2:
@@ -20743,7 +20744,7 @@ if (document.getElementById("app")) {
                     }, _callee3, this);
                 }));
 
-                function loadContractPay(_x3) {
+                function loadContractPay(_x3, _x4) {
                     return _ref3.apply(this, arguments);
                 }
 
@@ -20778,9 +20779,9 @@ if (document.getElementById("app")) {
                 }.bind(this));
             },
             changeSelectStudent: function changeSelectStudent(e) {
-                this.services = "";
-                this.elSelectStudent = e.originalTarget;
-                if (this.student_id) this.loadContractPay(this.student_id);
+                var select = e.target;
+                var student_id = select.options[select.selectedIndex].value;
+                this.loadContractPay(student_id, select);
             },
             statusSelectStudent: function statusSelectStudent() {
                 var disable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -20819,18 +20820,18 @@ if (document.getElementById("app")) {
         watch: {
             amount_deposit: function amount_deposit(val, oldVal) {
                 if (val && this.date) {
-                    //this.statusSelectStudent();
+                    this.statusSelectStudent();
                 } else {
-                        //this.statusSelectStudent(false)
-                    }
+                    this.statusSelectStudent(false);
+                }
                 this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
                 if (val && this.amount_deposit) {
-                    //this.statusSelectStudent();
+                    this.statusSelectStudent();
                 } else {
-                        //this.statusSelectStudent(false)
-                    }
+                    this.statusSelectStudent(false);
+                }
                 this.assign_deposit = this.amount_deposit;
             }
         }
@@ -67711,7 +67712,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67729,39 +67730,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    name: "selectStudent",
     directives: {
         selectstudent: {
             inserted: function inserted(el, binding, vNode) {
                 $(document).ready(function () {
-                    //$(el).html(`<option value="1">Adriana</option>`);
-                    el.selectpicker({
-                        noneSelectedText: 'Seleccione estudiante',
-                        noneResultsText: 'No hay resultados {0}'
-                    });
-                });
-            }
-        }
-    },
-    data: function data() {
-        return {
-            students: ''
-        };
-    },
-
-    methods: {
-        loadOptions: function loadOptions() {
-            if (!this.students) {
-                $(document).ready(function () {
                     $.ajax({
-                        url: studentShow,
-                        type: 'get',
+                        url: studentsList,
+                        type: 'POST',
                         dataType: 'json',
                         data: {
                             _token: $('meta[name=csrf-token]').attr('content')
                         }
-                    }).then(function (res) {
-                        this.students = res;
-                    }.bind(this));
+                    }).then(function (students) {
+                        var htmlStudents = '<option value="">' + noneSelectedTextShow + '</option>';
+                        students.forEach(function (student) {
+                            htmlStudents += '<option value="' + student.id + '">' + student.name + '</option>';
+                        });
+                        if ($(el).html(htmlStudents)) {
+                            $(el).selectpicker({
+                                noneResultsText: noneResultsTextShow
+                            });
+                        }
+                    });
                 });
             }
         }
@@ -67776,17 +67767,18 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(_vm.loadOptions(), {
+  return _c("select", {
     directives: [{ name: "selectstudent", rawName: "v-selectstudent" }],
     ref: "addPay",
-    tag: "select",
     staticClass: "selectStudent form-control",
     attrs: {
+      disabled: "",
       name: "student_id[]",
       "data-live-search": "true",
       "data-size": "2",
       required: ""
-    }
+    },
+    on: { change: this.$parent.changeSelectStudent }
   })
 }
 var staticRenderFns = []
