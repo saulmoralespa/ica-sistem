@@ -20723,10 +20723,13 @@ if (document.getElementById("app")) {
                                         if (res.constructor !== Array) {
                                             var table = divStudent.find('table');
                                             var services = res.services;
+                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" value="' + assignValueEnrollment(res.enrollment_cost) + '" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
+                                            var obligatoryServices = '';
                                             services.forEach(function (service) {
-                                                table.find(".services").html('\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" value="' + assignValueService(service.cost) + '" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>');
+                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text" value="' + assignValueService(service.cost) + '" readonly>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
                                             });
-                                            table.find('.enrollment').html('\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" value="' + assignValueEnrollment(res.enrollment_cost) + '" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            table.find('.enrollment').html(enrollment);
+                                            table.find(".obligatoryServices").html(obligatoryServices);
                                             table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" readonly>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
                                             divStudent.find('.tableDebt').show();
                                         } else {
@@ -67441,7 +67444,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67452,6 +67455,10 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
 //
 //
 //
@@ -67609,11 +67616,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("tbody", [
-      _c("tr", { staticClass: "services" }),
+      _c("tr", { staticClass: "obligatoryServices" }),
       _vm._v(" "),
       _c("tr", { staticClass: "enrollment" }),
       _vm._v(" "),
-      _c("tr", { staticClass: "contract" })
+      _c("tr", { staticClass: "contract" }),
+      _vm._v(" "),
+      _c("tr", {
+        staticClass: "surcharge-15",
+        staticStyle: { display: "none" }
+      }),
+      _vm._v(" "),
+      _c("tr", { staticClass: "surcharge-1", staticStyle: { display: "none" } })
     ])
   }
 ]
@@ -67712,7 +67726,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67749,6 +67763,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         });
                         if ($(el).html(htmlStudents)) {
                             $(el).selectpicker({
+                                noneSelectedText: noneSelectedTextShow,
                                 noneResultsText: noneResultsTextShow
                             });
                         }

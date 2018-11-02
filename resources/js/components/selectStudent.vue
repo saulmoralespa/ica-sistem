@@ -24,6 +24,7 @@
                             });
                             if($(el).html(htmlStudents)){
                                 $(el).selectpicker({
+                                    noneSelectedText: noneSelectedTextShow,
                                     noneResultsText: noneResultsTextShow,
                                 });
                             }

@@ -151,8 +151,28 @@ if(document.getElementById("app")){
                     if (res.constructor !== Array){
                         const table = divStudent.find('table');
                         const services = res.services;
+                        const enrollment = `
+                        <td>${textEnrollment}</td>    
+                        <td>
+                                            ${res.enrollment_cost}
+                                        </td>
+                                        <td class="enrollmentCostPay">
+                                        <input type="text" value="${  assignValueEnrollment(res.enrollment_cost) }" readonly>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>`;
+                        let obligatoryServices = '';
                         services.forEach(function(service){
-                            table.find(".services").html(`
+                            obligatoryServices += `
                                             <td>
                                                 ${service.name}
                                             </td>
@@ -160,7 +180,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text" value="${assignValueService(service.cost)}" readonly>
+                                            <input type="text" value="${ assignValueService(service.cost) }" readonly>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -172,27 +192,10 @@ if(document.getElementById("app")){
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>`);
+                                            <td></td>`;
                         });
-                        table.find('.enrollment').html(`
-                        <td>${textEnrollment}</td>    
-                        <td>
-                                            ${res.enrollment_cost}
-                                        </td>
-                                        <td class="enrollmentCostPay">
-                                        <input type="text" value="${assignValueEnrollment(res.enrollment_cost)}" readonly>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>`);
+                        table.find('.enrollment').html(enrollment);
+                        table.find(".obligatoryServices").html(obligatoryServices);
                         table.find('.contract').html(`
                                         <td>${res.name}</td>
                                         <td>

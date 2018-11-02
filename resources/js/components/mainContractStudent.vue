@@ -31,11 +31,15 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="services">
+                    <tr class="obligatoryServices">
                     </tr>
                     <tr class="enrollment">
                     </tr>
                     <tr class="contract">
+                    </tr>
+                    <tr class="surcharge-15" style="display:none;">
+                    </tr>
+                    <tr class="surcharge-1" style="display:none;">
                     </tr>
                     </tbody>
                 </table>
