@@ -20545,8 +20545,6 @@ Vue.component('clickConfirm', __WEBPACK_IMPORTED_MODULE_2_click_confirm___defaul
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-//Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
 Vue.component('datepicker', __webpack_require__(222));
 Vue.component('main-contract-student', __webpack_require__(228));
 Vue.component('select-student', __webpack_require__(233));
@@ -20717,6 +20715,9 @@ if (document.getElementById("app")) {
                                         data: {
                                             id: student_id,
                                             _token: $('meta[name=csrf-token]').attr('content')
+                                        },
+                                        beforeSend: function beforeSend() {
+                                            $('body').css('cursor', 'wait');
                                         }
                                     }).then(function (res) {
                                         var select = el;
@@ -20745,11 +20746,13 @@ if (document.getElementById("app")) {
                                         if (elementStudentId.length) {
                                             divStudent.find(elementStudentId).val(student_id);
                                         } else {
+                                            //not contracts
                                             divStudent.append('<input type="hidden" name="student_id[]" value="' + student_id + '">');
                                         }
                                         divStudent.find('.studentDetail').show();
                                         var nameStudent = select.options[select.selectedIndex].text;
                                         $(divStudent).find('p').text(textStudent + ' ' + nameStudent);
+                                        $('body').css('cursor', 'default');
                                     }.bind(this));
 
                                 case 2:
@@ -20798,9 +20801,7 @@ if (document.getElementById("app")) {
                 var select = e.target;
                 this.showSaveButtonpayment(true);
                 if (select.value) {
-                    if (this.previousElementStudent) {
-                        this.getCostsReassingAmount();
-                    }
+                    if (this.previousElementStudent) this.getCostsReassingAmount();
                     var student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
                 } else {
@@ -20811,8 +20812,9 @@ if (document.getElementById("app")) {
             },
             focusSelectStudent: function focusSelectStudent(e) {
                 var select = e.target;
+                var divStudent = $(select).parents('div.mainStudent');
                 if (select.value) {
-                    this.previousElementStudent = $(select).parents('div.mainStudent');
+                    this.previousElementStudent = divStudent;
                 }
             },
             showSaveButtonpayment: function showSaveButtonpayment(amounts) {
@@ -20847,20 +20849,23 @@ if (document.getElementById("app")) {
             getCostsReassingAmount: function getCostsReassingAmount() {
                 var elStudent = this.previousElementStudent;
                 var student_id = $(elStudent).find('input[name^=student_id]').val();
-                var enrollmentCost = $(elStudent).find('input[name=enrollmentCost' + student_id + ']').val();
-                var servicesCostObligatory = 0;
-                $("input[name^=serviceObligatoryCost1]").map(function () {
-                    servicesCostObligatory += Number($(this).val());
-                });
-                var annuityCost = $(elStudent).find('input[name=annuityCost' + student_id + ']').val();
+                var elEnrollmentCost = $('input[name=enrollmentCost' + student_id + ']');
 
-                //sum all cost of student
-                var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+                if (elEnrollmentCost.length) {
+                    var enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
+                    var servicesCostObligatory = 0;
+                    $('input[name^=serviceObligatoryCost' + student_id + ']').map(function () {
+                        servicesCostObligatory += Number($(this).val());
+                    });
+                    var annuityCost = $(elStudent).find('input[name=annuityCost' + student_id + ']').val();
 
-                var leftover = Number(this.assign_deposit);
-                console.log(leftover);
-                var valueReAssign = Number(leftover) + total;
-                this.assign_deposit = valueReAssign.toFixed(2);
+                    //sum all cost of student
+                    var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+
+                    var leftover = Number(this.assign_deposit);
+                    var valueReAssign = Number(leftover) + total;
+                    this.assign_deposit = valueReAssign.toFixed(2);
+                }
             },
             addPayment: function addPayment(e) {
                 //submit form add pay

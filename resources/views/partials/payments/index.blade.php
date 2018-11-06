@@ -93,10 +93,8 @@
         }
         function assignValueAnnuity(annuityCost){
             let cost = Number(annuityCost);
-
             if(contractStudent.assign_deposit > 0){
                 const valueLeftLover = contractStudent.assign_deposit;
-                console.log(valueLeftLover);
                 const newValue = 0;
                 contractStudent.assign_deposit = newValue.toFixed(2);
                 return valueLeftLover;
