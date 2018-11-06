@@ -51,7 +51,8 @@ if(document.getElementById("app")){
             date: '',
             students: '',
             elSelectStudent: '',
-            buttonSavePayment: false
+            buttonSavePayment: false,
+            previousElementStudent: ''
         },
         methods: {
             onChange:function(){
@@ -158,7 +159,7 @@ if(document.getElementById("app")){
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" name="enrollmentCost" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
+                                        <input type="text" name="enrollmentCost${student_id}" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -181,7 +182,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text"  name="serviceObligatoryCost[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                            <input type="text"  name="serviceObligatoryCost${student_id}[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -207,7 +208,7 @@ if(document.getElementById("app")){
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                        <input type="text" name="annuityCost${student_id}" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -223,6 +224,12 @@ if(document.getElementById("app")){
                         divStudent.find('.tableDebt').show();
                     }else{
                         divStudent.find('.tableDebt').hide();
+                    }
+                    const elementStudentId = $('input[name="student_id[]"]');
+                    if (elementStudentId.length){
+                        divStudent.find(elementStudentId).val(student_id);
+                    }else{
+                        divStudent.append(`<input type="hidden" name="student_id[]" value="${student_id}">`);
                     }
                     divStudent.find('.studentDetail').show();
                     const nameStudent = select.options[select.selectedIndex].text;
@@ -262,15 +269,23 @@ if(document.getElementById("app")){
                 let select = e.target;
                 this.showSaveButtonpayment(true);
                 if (select.value){
-                    let student_id = select.options[select.selectedIndex].value;
+                    if (this.previousElementStudent){
+                        this.getCostsReassingAmount();
+                    }
+                    const student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
                 }else{
                     const divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
                     divStudent.find('.tableDebt').hide();
-
                 }
 
+            },
+            focusSelectStudent: function(e){
+                let select = e.target;
+                if (select.value){
+                    this.previousElementStudent = $(select).parents('div.mainStudent');
+                }
             },
             showSaveButtonpayment: function(amounts){
                 if (amounts && this.checkisFirstSelect()){
@@ -298,6 +313,25 @@ if(document.getElementById("app")){
                     $('.selectStudent').attr('disabled',true);
                     $('.selectStudent').selectpicker('refresh');
                 }
+            },
+            getCostsReassingAmount: function(){
+                const elStudent = this.previousElementStudent;
+                const student_id = $(elStudent).find('input[name^=student_id]').val();
+                const enrollmentCost = $(elStudent).find(`input[name=enrollmentCost${student_id}]`).val();
+                let servicesCostObligatory = 0;
+                $("input[name^=serviceObligatoryCost1]").map(function(){
+                    servicesCostObligatory += Number($(this).val());
+                });
+                const annuityCost = $(elStudent).find(`input[name=annuityCost${student_id}]`).val();
+
+                //sum all cost of student
+                const total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+
+                const leftover = Number(this.assign_deposit);
+                console.log(leftover);
+                const valueReAssign = Number(leftover) + total;
+                this.assign_deposit = valueReAssign.toFixed(2);
+
             },
             addPayment: function(e){
                 //submit form add pay

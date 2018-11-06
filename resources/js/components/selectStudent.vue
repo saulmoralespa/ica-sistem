@@ -26,7 +26,9 @@
                                 $(el).selectpicker({
                                     noneSelectedText: noneSelectedTextShow,
                                     noneResultsText: noneResultsTextShow,
-                                });
+                                }).on('shown.bs.select', function(e) {
+                                    contractStudent.focusSelectStudent(e)
+                                })
                             }
                         });
                     });

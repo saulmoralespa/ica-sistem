@@ -20577,7 +20577,8 @@ if (document.getElementById("app")) {
             date: '',
             students: '',
             elSelectStudent: '',
-            buttonSavePayment: false
+            buttonSavePayment: false,
+            previousElementStudent: ''
         },
         methods: {
             onChange: function onChange() {
@@ -20724,10 +20725,10 @@ if (document.getElementById("app")) {
                                         if (res.constructor !== Array) {
                                             var table = divStudent.find('table');
                                             var services = res.services;
-                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
+                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost' + student_id + '" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
                                             var obligatoryServices = '';
                                             services.forEach(function (service) {
-                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
+                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost' + student_id + '[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
                                             });
                                             table.find('.enrollment').html(enrollment);
                                             table.find(".obligatoryServices").html(obligatoryServices);
@@ -20735,10 +20736,16 @@ if (document.getElementById("app")) {
                                             //fees expired
                                             //services
                                             //fees without caducity
-                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" value="' + assignValueAnnuity(totalAnnuity(res.fees)) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost' + student_id + '" value="' + assignValueAnnuity(totalAnnuity(res.fees)) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
                                             divStudent.find('.tableDebt').show();
                                         } else {
                                             divStudent.find('.tableDebt').hide();
+                                        }
+                                        var elementStudentId = $('input[name="student_id[]"]');
+                                        if (elementStudentId.length) {
+                                            divStudent.find(elementStudentId).val(student_id);
+                                        } else {
+                                            divStudent.append('<input type="hidden" name="student_id[]" value="' + student_id + '">');
                                         }
                                         divStudent.find('.studentDetail').show();
                                         var nameStudent = select.options[select.selectedIndex].text;
@@ -20791,12 +20798,21 @@ if (document.getElementById("app")) {
                 var select = e.target;
                 this.showSaveButtonpayment(true);
                 if (select.value) {
+                    if (this.previousElementStudent) {
+                        this.getCostsReassingAmount();
+                    }
                     var student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
                 } else {
                     var divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
                     divStudent.find('.tableDebt').hide();
+                }
+            },
+            focusSelectStudent: function focusSelectStudent(e) {
+                var select = e.target;
+                if (select.value) {
+                    this.previousElementStudent = $(select).parents('div.mainStudent');
                 }
             },
             showSaveButtonpayment: function showSaveButtonpayment(amounts) {
@@ -20827,6 +20843,24 @@ if (document.getElementById("app")) {
                     $('.selectStudent').attr('disabled', true);
                     $('.selectStudent').selectpicker('refresh');
                 }
+            },
+            getCostsReassingAmount: function getCostsReassingAmount() {
+                var elStudent = this.previousElementStudent;
+                var student_id = $(elStudent).find('input[name^=student_id]').val();
+                var enrollmentCost = $(elStudent).find('input[name=enrollmentCost' + student_id + ']').val();
+                var servicesCostObligatory = 0;
+                $("input[name^=serviceObligatoryCost1]").map(function () {
+                    servicesCostObligatory += Number($(this).val());
+                });
+                var annuityCost = $(elStudent).find('input[name=annuityCost' + student_id + ']').val();
+
+                //sum all cost of student
+                var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+
+                var leftover = Number(this.assign_deposit);
+                console.log(leftover);
+                var valueReAssign = Number(leftover) + total;
+                this.assign_deposit = valueReAssign.toFixed(2);
             },
             addPayment: function addPayment(e) {
                 //submit form add pay
@@ -67783,7 +67817,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67822,6 +67856,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             $(el).selectpicker({
                                 noneSelectedText: noneSelectedTextShow,
                                 noneResultsText: noneResultsTextShow
+                            }).on('shown.bs.select', function (e) {
+                                contractStudent.focusSelectStudent(e);
                             });
                         }
                     });
