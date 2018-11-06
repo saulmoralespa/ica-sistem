@@ -60,6 +60,7 @@
         let dt;
         let form_msj = $('span#form_output');
         const showContract = '{{ route('show.contract') }}';
+
         $(document).ready(function() {
             dt = $('#payments-table').DataTable({
                 processing: true,

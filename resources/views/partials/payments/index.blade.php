@@ -62,6 +62,7 @@
         const noneResultsTextShow = '{{ __("No hay resultados {0}") }}';
         const textEnrollment = '{{ __("Matrícula") }}';
         const textStudent = '{{ __("Estudiante:") }}';
+        let isSuperAdmin = false
         $(document).ready(function(){
             $('#date').datepicker({
                 autoclose: true,
@@ -91,7 +92,13 @@
             }
         }
         function assignValueAnnuity(annuityCost){
-
+            let cost = Number(annuityCost);
+            if(contractStudent.assign_deposit > 0){
+                const valueLeftLover = contractStudent.assign_deposit;
+                const newValue = 0;
+                contractStudent.assign_deposit = newValue.toFixed(2);
+                return valueLeftLover;
+            }
         }
     </script>
 @endpush

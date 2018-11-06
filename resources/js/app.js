@@ -157,7 +157,7 @@ if(document.getElementById("app")){
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" value="${  assignValueEnrollment(res.enrollment_cost) }" readonly>
+                                        <input type="text" name="enrollmentCost" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -180,7 +180,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text" value="${ assignValueService(service.cost) }" readonly>
+                                            <input type="text"  name="serviceObligatoryCost[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -196,13 +196,17 @@ if(document.getElementById("app")){
                         });
                         table.find('.enrollment').html(enrollment);
                         table.find(".obligatoryServices").html(obligatoryServices);
+                        //surcharges
+                        //fees expired
+                        //services
+                        //fees without caducity
                         table.find('.contract').html(`
                                         <td>${res.name}</td>
                                         <td>
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" readonly>
+                                        <input type="text" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                         </td>
                                         <td></td>
                                         <td></td>
