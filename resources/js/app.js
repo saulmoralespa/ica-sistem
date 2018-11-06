@@ -260,6 +260,7 @@ if(document.getElementById("app")){
             },
             changeSelectStudent: function(e){
                 let select = e.target;
+                this.showSaveButtonpayment(true);
                 if (select.value){
                     let student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
@@ -270,6 +271,24 @@ if(document.getElementById("app")){
 
                 }
 
+            },
+            showSaveButtonpayment: function(amounts){
+                if (amounts && this.checkisFirstSelect()){
+                    this.buttonSavePayment = true;
+                }else{
+                    this.buttonSavePayment = false;
+                }
+            },
+            checkisFirstSelect: function(){
+                let  val = $('select.selectStudent').map(function(idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if(val[0].length > 0){
+                    return true;
+                }else{
+                    return false;
+                }
             },
             statusSelectStudent: function(disable = true){
                 if (disable){
@@ -307,10 +326,10 @@ if(document.getElementById("app")){
             amount_deposit: function(val, oldVal) {
                 if (val && this.date){
                     this.statusSelectStudent();
-                    this.buttonSavePayment = true;
+                    this.showSaveButtonpayment(true)
                 }else{
-                    this.statusSelectStudent(false)
-                    this.buttonSavePayment = false;
+                    this.statusSelectStudent(false);
+                    this.showSaveButtonpayment(false)
                 }
                 this.assign_deposit = this.amount_deposit;
 
@@ -318,10 +337,10 @@ if(document.getElementById("app")){
             date: function(val, oldVal){
                 if (val && this.amount_deposit){
                     this.statusSelectStudent();
-                    this.buttonSavePayment = true;
+                    this.showSaveButtonpayment(true)
                 }else{
-                    this.statusSelectStudent(false)
-                    this.buttonSavePayment = false;
+                    this.statusSelectStudent(false);
+                    this.showSaveButtonpayment(false)
                 }
                 this.assign_deposit = this.amount_deposit;
             }

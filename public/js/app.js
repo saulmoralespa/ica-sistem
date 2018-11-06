@@ -20789,6 +20789,7 @@ if (document.getElementById("app")) {
             },
             changeSelectStudent: function changeSelectStudent(e) {
                 var select = e.target;
+                this.showSaveButtonpayment(true);
                 if (select.value) {
                     var student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
@@ -20796,6 +20797,24 @@ if (document.getElementById("app")) {
                     var divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
                     divStudent.find('.tableDebt').hide();
+                }
+            },
+            showSaveButtonpayment: function showSaveButtonpayment(amounts) {
+                if (amounts && this.checkisFirstSelect()) {
+                    this.buttonSavePayment = true;
+                } else {
+                    this.buttonSavePayment = false;
+                }
+            },
+            checkisFirstSelect: function checkisFirstSelect() {
+                var val = $('select.selectStudent').map(function (idx, elem) {
+                    return $(elem).val();
+                }).get();
+
+                if (val[0].length > 0) {
+                    return true;
+                } else {
+                    return false;
                 }
             },
             statusSelectStudent: function statusSelectStudent() {
@@ -20836,20 +20855,20 @@ if (document.getElementById("app")) {
             amount_deposit: function amount_deposit(val, oldVal) {
                 if (val && this.date) {
                     this.statusSelectStudent();
-                    this.buttonSavePayment = true;
+                    this.showSaveButtonpayment(true);
                 } else {
                     this.statusSelectStudent(false);
-                    this.buttonSavePayment = false;
+                    this.showSaveButtonpayment(false);
                 }
                 this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
                 if (val && this.amount_deposit) {
                     this.statusSelectStudent();
-                    this.buttonSavePayment = true;
+                    this.showSaveButtonpayment(true);
                 } else {
                     this.statusSelectStudent(false);
-                    this.buttonSavePayment = false;
+                    this.showSaveButtonpayment(false);
                 }
                 this.assign_deposit = this.amount_deposit;
             }
