@@ -20576,7 +20576,8 @@ if (document.getElementById("app")) {
             assign_deposit: '',
             date: '',
             students: '',
-            elSelectStudent: ''
+            elSelectStudent: '',
+            buttonSavePayment: false
         },
         methods: {
             onChange: function onChange() {
@@ -20739,6 +20740,7 @@ if (document.getElementById("app")) {
                                         } else {
                                             divStudent.find('.tableDebt').hide();
                                         }
+                                        divStudent.find('.studentDetail').show();
                                         var nameStudent = select.options[select.selectedIndex].text;
                                         $(divStudent).find('p').text(textStudent + ' ' + nameStudent);
                                     }.bind(this));
@@ -20787,8 +20789,14 @@ if (document.getElementById("app")) {
             },
             changeSelectStudent: function changeSelectStudent(e) {
                 var select = e.target;
-                var student_id = select.options[select.selectedIndex].value;
-                this.loadContractPay(student_id, select);
+                if (select.value) {
+                    var student_id = select.options[select.selectedIndex].value;
+                    this.loadContractPay(student_id, select);
+                } else {
+                    var divStudent = $(select).parents('div.mainStudent');
+                    divStudent.find('.studentDetail').hide();
+                    divStudent.find('.tableDebt').hide();
+                }
             },
             statusSelectStudent: function statusSelectStudent() {
                 var disable = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : true;
@@ -20828,16 +20836,20 @@ if (document.getElementById("app")) {
             amount_deposit: function amount_deposit(val, oldVal) {
                 if (val && this.date) {
                     this.statusSelectStudent();
+                    this.buttonSavePayment = true;
                 } else {
                     this.statusSelectStudent(false);
+                    this.buttonSavePayment = false;
                 }
                 this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
                 if (val && this.amount_deposit) {
                     this.statusSelectStudent();
+                    this.buttonSavePayment = true;
                 } else {
                     this.statusSelectStudent(false);
+                    this.buttonSavePayment = false;
                 }
                 this.assign_deposit = this.amount_deposit;
             }
@@ -67537,36 +67549,43 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "col-12 border-top mt-2" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c("div", { staticClass: "float-right mt-3" }, [
-        _c("div", { staticClass: "col-4" }, [
-          _c("button", { staticClass: "btn btn-danger" }, [
-            _c("li", { staticClass: "fas fa-minus" }),
-            _vm._v(" " + _vm._s(_vm.removetext))
+    _c(
+      "div",
+      {
+        staticClass: "col-12 border-top mt-2 studentDetail",
+        staticStyle: { display: "none" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", { staticClass: "float-right mt-3" }, [
+          _c("div", { staticClass: "col-4" }, [
+            _c("button", { staticClass: "btn btn-danger" }, [
+              _c("li", { staticClass: "fas fa-minus" }),
+              _vm._v(" " + _vm._s(_vm.removetext))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "float-right mt-3" }, [
+          _c("div", { staticClass: "col-4" }, [
+            _c("button", { staticClass: "btn btn-primary" }, [
+              _c("li", { staticClass: "fas fa-plus" }),
+              _vm._v(" " + _vm._s(_vm.servicetext))
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "float-right mt-3" }, [
+          _c("div", { staticClass: "col-4" }, [
+            _c("button", { staticClass: "btn btn-primary" }, [
+              _c("li", { staticClass: "fas fa-plus" }),
+              _vm._v(" " + _vm._s(_vm.refundtext))
+            ])
           ])
         ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "float-right mt-3" }, [
-        _c("div", { staticClass: "col-4" }, [
-          _c("button", { staticClass: "btn btn-primary" }, [
-            _c("li", { staticClass: "fas fa-plus" }),
-            _vm._v(" " + _vm._s(_vm.servicetext))
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "float-right mt-3" }, [
-        _c("div", { staticClass: "col-4" }, [
-          _c("button", { staticClass: "btn btn-primary" }, [
-            _c("li", { staticClass: "fas fa-plus" }),
-            _vm._v(" " + _vm._s(_vm.refundtext))
-          ])
-        ])
-      ])
-    ]),
+      ]
+    ),
     _vm._v(" "),
     _c(
       "div",

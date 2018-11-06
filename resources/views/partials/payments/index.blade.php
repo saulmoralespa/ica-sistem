@@ -13,7 +13,7 @@
                             <p class="h5">{{ __("Agregar pago") }}</p>
                         </div>
                         <div class="col-sm-6">
-                            <div class="float-right">
+                            <div v-show="buttonSavePayment" class="float-right">
                                 <button type="submit" class="btn btn-primary"><li class="fas fa-save"></li> {{ __("Guardar") }}</button>
                             </div>
                         </div>

@@ -50,7 +50,8 @@ if(document.getElementById("app")){
             assign_deposit: '',
             date: '',
             students: '',
-            elSelectStudent: ''
+            elSelectStudent: '',
+            buttonSavePayment: false
         },
         methods: {
             onChange:function(){
@@ -223,6 +224,7 @@ if(document.getElementById("app")){
                     }else{
                         divStudent.find('.tableDebt').hide();
                     }
+                    divStudent.find('.studentDetail').show();
                     const nameStudent = select.options[select.selectedIndex].text;
                     $(divStudent).find('p').text(`${textStudent} ${nameStudent}`);
                 }.bind(this));
@@ -258,8 +260,15 @@ if(document.getElementById("app")){
             },
             changeSelectStudent: function(e){
                 let select = e.target;
-                let student_id = select.options[select.selectedIndex].value;
-                this.loadContractPay(student_id, select);
+                if (select.value){
+                    let student_id = select.options[select.selectedIndex].value;
+                    this.loadContractPay(student_id, select);
+                }else{
+                    const divStudent = $(select).parents('div.mainStudent');
+                    divStudent.find('.studentDetail').hide();
+                    divStudent.find('.tableDebt').hide();
+
+                }
 
             },
             statusSelectStudent: function(disable = true){
@@ -298,8 +307,10 @@ if(document.getElementById("app")){
             amount_deposit: function(val, oldVal) {
                 if (val && this.date){
                     this.statusSelectStudent();
+                    this.buttonSavePayment = true;
                 }else{
                     this.statusSelectStudent(false)
+                    this.buttonSavePayment = false;
                 }
                 this.assign_deposit = this.amount_deposit;
 
@@ -307,8 +318,10 @@ if(document.getElementById("app")){
             date: function(val, oldVal){
                 if (val && this.amount_deposit){
                     this.statusSelectStudent();
+                    this.buttonSavePayment = true;
                 }else{
                     this.statusSelectStudent(false)
+                    this.buttonSavePayment = false;
                 }
                 this.assign_deposit = this.amount_deposit;
             }

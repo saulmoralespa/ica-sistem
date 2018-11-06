@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="col-12 border-top mt-2">
+        <div style="display: none;" class="col-12 border-top mt-2 studentDetail">
             <div class="col-4">
                 <div class="float-left mt-3">
                     <p class="h6"></p>
