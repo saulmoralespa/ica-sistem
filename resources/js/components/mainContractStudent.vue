@@ -8,6 +8,11 @@
             </div>
             <div class="float-right mt-3">
                 <div class="col-4">
+                    <button class="btn btn-danger"><li class="fas fa-minus"></li> {{ removetext }}</button>
+                </div>
+            </div>
+            <div class="float-right mt-3">
+                <div class="col-4">
                     <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ servicetext }}</button>
                 </div>
             </div>
@@ -54,6 +59,7 @@
         props: {
             refundtext: String,
             servicetext: String,
+            removetext: String,
             feetext: String,
             descriptiontext: String,
             totaltext: String,

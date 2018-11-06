@@ -67448,7 +67448,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67509,12 +67509,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     name: "mainContractStudent",
     props: {
         refundtext: String,
         servicetext: String,
+        removetext: String,
         feetext: String,
         descriptiontext: String,
         totaltext: String,
@@ -67533,6 +67539,15 @@ var render = function() {
   return _c("div", [
     _c("div", { staticClass: "col-12 border-top mt-2" }, [
       _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "float-right mt-3" }, [
+        _c("div", { staticClass: "col-4" }, [
+          _c("button", { staticClass: "btn btn-danger" }, [
+            _c("li", { staticClass: "fas fa-minus" }),
+            _vm._v(" " + _vm._s(_vm.removetext))
+          ])
+        ])
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "float-right mt-3" }, [
         _c("div", { staticClass: "col-4" }, [
