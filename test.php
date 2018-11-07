@@ -1,5 +1,8 @@
 <?php
 
-$today = time();
+$price = 3000.00 / 2;
 
-echo $today;
+
+$costFee = number_format((float)$price,2,".",".");
+
+echo $costFee;

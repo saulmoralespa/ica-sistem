@@ -81,7 +81,7 @@ class ContractController extends Controller
 
             $price = $request->totalAnnuity  / 11;
 
-            $costFee = number_format($price,2,".",".");
+            $costFee = (float)number_format((float)$price,2,".",".");
 
             $fees = [
                 array('name' => __("Cuota 1"), 'price' => $costFee),

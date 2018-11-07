@@ -154,13 +154,14 @@ if(document.getElementById("app")){
                     if (res.constructor !== Array){
                         const table = divStudent.find('table');
                         const services = res.services;
+                        const fees = res.fees;
                         const enrollment = `
                         <td>${textEnrollment}</td>    
                         <td>
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" name="enrollmentCost${student_id}" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
+                                        <input type="text" name="enrollmentCost" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -183,7 +184,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text"  name="serviceObligatoryCost${student_id}[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                            <input type="text"  name="serviceObligatoryCost[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -209,29 +210,29 @@ if(document.getElementById("app")){
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" name="annuityCost${student_id}" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                        <input type="text" name="annuityCost" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>`);
+                                        <td class="cuota1"></td>
+                                        <td class="cuota2"></td>
+                                        <td class="cuota3"></td>
+                                        <td class="cuota4"></td>
+                                        <td class="cuota5"></td>
+                                        <td class="cuota6"></td>
+                                        <td class="cuota7"></td>
+                                        <td class="cuota8"></td>
+                                        <td class="cuota9"></td>
+                                        <td class="cuota10"></td>
+                                        <td class="cuota11"></td>`);
                         divStudent.find('.tableDebt').show();
                     }else{
                         divStudent.find('.tableDebt').hide();
                     }
-                    const elementStudentId = $('input[name="student_id[]"]');
+                    const elementStudentId = $('input[name="student_id"]');
                     if (elementStudentId.length){
                         divStudent.find(elementStudentId).val(student_id);
                     }else{
                         //not contracts
-                        divStudent.append(`<input type="hidden" name="student_id[]" value="${student_id}">`);
+                        divStudent.append(`<input type="hidden" name="student_id" value="${student_id}">`);
                     }
                     divStudent.find('.studentDetail').show();
                     const nameStudent = select.options[select.selectedIndex].text;
@@ -321,16 +322,15 @@ if(document.getElementById("app")){
             },
             getCostsReassingAmount: function(reset = false){
                 const elStudent = this.previousElementStudent;
-                const student_id = $(elStudent).find('input[name^=student_id]').val();
-                const elEnrollmentCost = $(`input[name=enrollmentCost${student_id}]`);
+                const elEnrollmentCost = $(`input[name=enrollmentCost]`);
 
                 if (elEnrollmentCost.length){
                     const enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
                     let servicesCostObligatory = 0;
-                    $(`input[name^=serviceObligatoryCost${student_id}]`).map(function(){
+                    $(`input[name^=serviceObligatoryCost]`).map(function(){
                         servicesCostObligatory += Number($(this).val());
                     });
-                    const annuityCost = $(elStudent).find(`input[name=annuityCost${student_id}]`).val();
+                    const annuityCost = $(elStudent).find(`input[name=annuityCost]`).val();
 
                     //sum all cost of student
                     const total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);

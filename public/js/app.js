@@ -20726,10 +20726,11 @@ if (document.getElementById("app")) {
                                         if (res.constructor !== Array) {
                                             var table = divStudent.find('table');
                                             var services = res.services;
-                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost' + student_id + '" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
+                                            var fees = res.fees;
+                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
                                             var obligatoryServices = '';
                                             services.forEach(function (service) {
-                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost' + student_id + '[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
+                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
                                             });
                                             table.find('.enrollment').html(enrollment);
                                             table.find(".obligatoryServices").html(obligatoryServices);
@@ -20737,17 +20738,17 @@ if (document.getElementById("app")) {
                                             //fees expired
                                             //services
                                             //fees without caducity
-                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost' + student_id + '" value="' + assignValueAnnuity(totalAnnuity(res.fees)) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>');
+                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost" value="' + assignValueAnnuity(totalAnnuity(res.fees)) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        <td class="cuota1"></td>\n                                        <td class="cuota2"></td>\n                                        <td class="cuota3"></td>\n                                        <td class="cuota4"></td>\n                                        <td class="cuota5"></td>\n                                        <td class="cuota6"></td>\n                                        <td class="cuota7"></td>\n                                        <td class="cuota8"></td>\n                                        <td class="cuota9"></td>\n                                        <td class="cuota10"></td>\n                                        <td class="cuota11"></td>');
                                             divStudent.find('.tableDebt').show();
                                         } else {
                                             divStudent.find('.tableDebt').hide();
                                         }
-                                        var elementStudentId = $('input[name="student_id[]"]');
+                                        var elementStudentId = $('input[name="student_id"]');
                                         if (elementStudentId.length) {
                                             divStudent.find(elementStudentId).val(student_id);
                                         } else {
                                             //not contracts
-                                            divStudent.append('<input type="hidden" name="student_id[]" value="' + student_id + '">');
+                                            divStudent.append('<input type="hidden" name="student_id" value="' + student_id + '">');
                                         }
                                         divStudent.find('.studentDetail').show();
                                         var nameStudent = select.options[select.selectedIndex].text;
@@ -20851,16 +20852,15 @@ if (document.getElementById("app")) {
                 var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
 
                 var elStudent = this.previousElementStudent;
-                var student_id = $(elStudent).find('input[name^=student_id]').val();
-                var elEnrollmentCost = $('input[name=enrollmentCost' + student_id + ']');
+                var elEnrollmentCost = $('input[name=enrollmentCost]');
 
                 if (elEnrollmentCost.length) {
                     var enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
                     var servicesCostObligatory = 0;
-                    $('input[name^=serviceObligatoryCost' + student_id + ']').map(function () {
+                    $('input[name^=serviceObligatoryCost]').map(function () {
                         servicesCostObligatory += Number($(this).val());
                     });
-                    var annuityCost = $(elStudent).find('input[name=annuityCost' + student_id + ']').val();
+                    var annuityCost = $(elStudent).find('input[name=annuityCost]').val();
 
                     //sum all cost of student
                     var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
