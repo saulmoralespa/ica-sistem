@@ -20808,6 +20808,7 @@ if (document.getElementById("app")) {
                     var divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
                     divStudent.find('.tableDebt').hide();
+                    if (this.previousElementStudent) this.getCostsReassingAmount(true);
                 }
             },
             focusSelectStudent: function focusSelectStudent(e) {
@@ -20847,6 +20848,8 @@ if (document.getElementById("app")) {
                 }
             },
             getCostsReassingAmount: function getCostsReassingAmount() {
+                var reset = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
                 var elStudent = this.previousElementStudent;
                 var student_id = $(elStudent).find('input[name^=student_id]').val();
                 var elEnrollmentCost = $('input[name=enrollmentCost' + student_id + ']');
@@ -20865,6 +20868,7 @@ if (document.getElementById("app")) {
                     var leftover = Number(this.assign_deposit);
                     var valueReAssign = Number(leftover) + total;
                     this.assign_deposit = valueReAssign.toFixed(2);
+                    if (reset) this.previousElementStudent = '';
                 }
             },
             addPayment: function addPayment(e) {

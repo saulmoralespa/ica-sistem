@@ -280,6 +280,8 @@ if(document.getElementById("app")){
                     const divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
                     divStudent.find('.tableDebt').hide();
+                    if (this.previousElementStudent)
+                        this.getCostsReassingAmount(true)
                 }
 
             },
@@ -317,7 +319,7 @@ if(document.getElementById("app")){
                     $('.selectStudent').selectpicker('refresh');
                 }
             },
-            getCostsReassingAmount: function(){
+            getCostsReassingAmount: function(reset = false){
                 const elStudent = this.previousElementStudent;
                 const student_id = $(elStudent).find('input[name^=student_id]').val();
                 const elEnrollmentCost = $(`input[name=enrollmentCost${student_id}]`);
@@ -336,6 +338,8 @@ if(document.getElementById("app")){
                     const leftover = Number(this.assign_deposit);
                     const valueReAssign = Number(leftover) + total;
                     this.assign_deposit = valueReAssign.toFixed(2);
+                    if (reset)
+                        this.previousElementStudent = ''
                 }
 
             },
