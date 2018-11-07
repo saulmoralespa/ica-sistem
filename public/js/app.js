@@ -67522,7 +67522,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67533,17 +67533,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -67615,35 +67604,33 @@ var render = function() {
       "div",
       {
         staticClass: "col-12 border-top mt-2 studentDetail",
-        staticStyle: { display: "none" }
+        staticStyle: { display: "block" }
       },
       [
-        _vm._m(0),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mt-3" }, [
-          _c("div", { staticClass: "col-4" }, [
-            _c("button", { staticClass: "btn btn-danger" }, [
-              _c("li", { staticClass: "fas fa-minus" }),
-              _vm._v(" " + _vm._s(_vm.removetext))
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mt-3" }, [
-          _c("div", { staticClass: "col-4" }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("li", { staticClass: "fas fa-plus" }),
-              _vm._v(" " + _vm._s(_vm.servicetext))
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "float-right mt-3" }, [
-          _c("div", { staticClass: "col-4" }, [
-            _c("button", { staticClass: "btn btn-primary" }, [
-              _c("li", { staticClass: "fas fa-plus" }),
-              _vm._v(" " + _vm._s(_vm.refundtext))
-            ])
+        _c("div", { staticClass: "row justify-content-between" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6 col-sm-4 mt-3" }, [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary mr-3 mb-2 mb-lg-0",
+                attrs: { type: "button" }
+              },
+              [
+                _c("li", { staticClass: "fas fa-plus" }),
+                _vm._v(" " + _vm._s(_vm.servicetext))
+              ]
+            ),
+            _vm._v(" "),
+            _c(
+              "button",
+              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              [
+                _c("li", { staticClass: "fas fa-plus" }),
+                _vm._v(" " + _vm._s(_vm.refundtext))
+              ]
+            )
           ])
         ])
       ]
@@ -67705,10 +67692,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4" }, [
-      _c("div", { staticClass: "float-left mt-3" }, [
-        _c("p", { staticClass: "h6" })
-      ])
+    return _c("div", { staticClass: "col-6 col-sm-4 mt-3" }, [
+      _c("p", { staticClass: "h6" })
     ])
   },
   function() {
