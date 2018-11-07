@@ -141,7 +141,7 @@ class StudentController extends Controller
 
     public function list()
     {
-        $students = Student::select('id', 'name')->get();
+        $students = Student::select('id', 'name')->orderBy('name', 'asc')->get();
         return response()->json($students);
     }
 }
