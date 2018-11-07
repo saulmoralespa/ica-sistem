@@ -40,7 +40,7 @@
                                 <select-student></select-student>
                             </div>
                         </div>
-                        <main-contract-student servicetext="{{ __("Servicios") }}" refundtext="{{ __("Reembolso") }}" removetext="{{ __("Remover") }}"  descriptiontext="{{ __("Descripción") }}" totaltext="{{ __("Total") }}"  paytext="{{ __("Pago") }}"  feetext="{{ __("Cuota") }}"></main-contract-student>
+                        <main-contract-student  :key="mainContractStudentkey"  servicetext="{{ __("Servicios") }}" refundtext="{{ __("Reembolso") }}" removetext="{{ __("Remover") }}"  descriptiontext="{{ __("Descripción") }}" totaltext="{{ __("Total") }}"  paytext="{{ __("Pago") }}"  feetext="{{ __("Cuota") }}"></main-contract-student>
                     </div>
                 </form>
             </div>

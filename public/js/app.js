@@ -20576,7 +20576,8 @@ if (document.getElementById("app")) {
             students: '',
             elSelectStudent: '',
             buttonSavePayment: false,
-            previousElementStudent: ''
+            previousElementStudent: '',
+            mainContractStudentkey: 0
         },
         methods: {
             onChange: function onChange() {
@@ -20636,8 +20637,6 @@ if (document.getElementById("app")) {
             contractForm: function contractForm(e) {
                 e.preventDefault();
                 var nameContract = $("#gradeBachelor option:selected").text();
-                $("#nameContract").val(nameContract);
-                var student_id = $('#student_id').val();
                 var year = $('#year').val();
                 $.ajax({
                     url: createContract,
@@ -20738,7 +20737,50 @@ if (document.getElementById("app")) {
                                             //fees expired
                                             //services
                                             //fees without caducity
-                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost" value="' + assignValueAnnuity(totalAnnuity(res.fees)) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        <td class="cuota1"></td>\n                                        <td class="cuota2"></td>\n                                        <td class="cuota3"></td>\n                                        <td class="cuota4"></td>\n                                        <td class="cuota5"></td>\n                                        <td class="cuota6"></td>\n                                        <td class="cuota7"></td>\n                                        <td class="cuota8"></td>\n                                        <td class="cuota9"></td>\n                                        <td class="cuota10"></td>\n                                        <td class="cuota11"></td>');
+                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost" value="' + (this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees))) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>');
+                                            var feesHTML = '';
+                                            var totalAnnuityInt = Number(this.totalAnnuity);
+
+                                            var _iteratorNormalCompletion = true;
+                                            var _didIteratorError = false;
+                                            var _iteratorError = undefined;
+
+                                            try {
+                                                for (var _iterator = fees[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                                                    var fee = _step.value;
+
+                                                    if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price) {
+                                                        totalAnnuityInt -= fee.price;
+                                                        feesHTML += ' <td>\n                                <input type="text" name="fees[]" value="' + fee.price + '" readonly>\n                                </td>';
+                                                        continue;
+                                                    }
+                                                    if (totalAnnuityInt > 0 && totalAnnuityInt < fee.price) {
+                                                        feesHTML += ' <td>\n                                <input type="text" name="fees[]" value="' + totalAnnuityInt.toFixed(2) + '" readonly>\n                                </td>';
+                                                        totalAnnuityInt = 0;
+                                                        continue;
+                                                    }
+
+                                                    if (totalAnnuityInt === 0) {
+                                                        feesHTML += ' <td>\n                                <input type="text" name="fees[]" value="0.00" readonly>\n                                </td>';
+                                                    }
+                                                }
+                                            } catch (err) {
+                                                _didIteratorError = true;
+                                                _iteratorError = err;
+                                            } finally {
+                                                try {
+                                                    if (!_iteratorNormalCompletion && _iterator.return) {
+                                                        _iterator.return();
+                                                    }
+                                                } finally {
+                                                    if (_didIteratorError) {
+                                                        throw _iteratorError;
+                                                    }
+                                                }
+                                            }
+
+                                            table.find('.contract').append(feesHTML);
+
                                             divStudent.find('.tableDebt').show();
                                         } else {
                                             divStudent.find('.tableDebt').hide();
@@ -20802,6 +20844,8 @@ if (document.getElementById("app")) {
                 var select = e.target;
                 this.showSaveButtonpayment(true);
                 if (select.value) {
+                    var date = new Date();
+                    this.mainContractStudentkey = date.getTime();
                     if (this.previousElementStudent) this.getCostsReassingAmount();
                     var student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay(student_id, select);
@@ -20854,6 +20898,8 @@ if (document.getElementById("app")) {
                 var elStudent = this.previousElementStudent;
                 var elEnrollmentCost = $('input[name=enrollmentCost]');
 
+                //when student have a contract create or assign costs  servicios, etc
+
                 if (elEnrollmentCost.length) {
                     var enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
                     var servicesCostObligatory = 0;
@@ -20862,7 +20908,6 @@ if (document.getElementById("app")) {
                     });
                     var annuityCost = $(elStudent).find('input[name=annuityCost]').val();
 
-                    //sum all cost of student
                     var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
 
                     var leftover = Number(this.assign_deposit);
@@ -67604,7 +67649,7 @@ var render = function() {
       "div",
       {
         staticClass: "col-12 border-top mt-2 studentDetail",
-        staticStyle: { display: "block" }
+        staticStyle: { display: "none" }
       },
       [
         _c("div", { staticClass: "row justify-content-between" }, [

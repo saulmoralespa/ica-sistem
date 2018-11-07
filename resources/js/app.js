@@ -50,7 +50,8 @@ if(document.getElementById("app")){
             students: '',
             elSelectStudent: '',
             buttonSavePayment: false,
-            previousElementStudent: ''
+            previousElementStudent: '',
+            mainContractStudentkey: 0
         },
         methods: {
             onChange:function(){
@@ -90,8 +91,6 @@ if(document.getElementById("app")){
             contractForm: function(e){
                 e.preventDefault();
                 let nameContract = $("#gradeBachelor option:selected").text();
-                $("#nameContract").val(nameContract);
-                let student_id = $('#student_id').val();
                 let year = $('#year').val();
                 $.ajax({
                     url: createContract,
@@ -210,19 +209,37 @@ if(document.getElementById("app")){
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" name="annuityCost" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
-                                        </td>
-                                        <td class="cuota1"></td>
-                                        <td class="cuota2"></td>
-                                        <td class="cuota3"></td>
-                                        <td class="cuota4"></td>
-                                        <td class="cuota5"></td>
-                                        <td class="cuota6"></td>
-                                        <td class="cuota7"></td>
-                                        <td class="cuota8"></td>
-                                        <td class="cuota9"></td>
-                                        <td class="cuota10"></td>
-                                        <td class="cuota11"></td>`);
+                                        <input type="text" name="annuityCost" value="${ this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                        </td>`);
+                        let feesHTML = '';
+                        let  totalAnnuityInt = Number(this.totalAnnuity);
+
+                        for(let fee of fees){
+                            if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price){
+                                totalAnnuityInt -= fee.price;
+                                feesHTML += ` <td>
+                                <input type="text" name="fees[]" value="${fee.price}" readonly>
+                                </td>`;
+                                continue;
+                            }
+                            if(totalAnnuityInt > 0 && totalAnnuityInt < fee.price){
+                                feesHTML += ` <td>
+                                <input type="text" name="fees[]" value="${totalAnnuityInt.toFixed(2)}" readonly>
+                                </td>`;
+                                totalAnnuityInt = 0;
+                                continue;
+                            }
+
+                            if (totalAnnuityInt === 0){
+                                feesHTML += ` <td>
+                                <input type="text" name="fees[]" value="0.00" readonly>
+                                </td>`;
+                            }
+                        }
+
+
+                        table.find('.contract').append(feesHTML);
+
                         divStudent.find('.tableDebt').show();
                     }else{
                         divStudent.find('.tableDebt').hide();
@@ -273,6 +290,8 @@ if(document.getElementById("app")){
                 let select = e.target;
                 this.showSaveButtonpayment(true);
                 if (select.value){
+                    const date = new Date();
+                    this.mainContractStudentkey = date.getTime();
                     if (this.previousElementStudent)
                         this.getCostsReassingAmount();
                     const student_id = select.options[select.selectedIndex].value;
@@ -324,6 +343,8 @@ if(document.getElementById("app")){
                 const elStudent = this.previousElementStudent;
                 const elEnrollmentCost = $(`input[name=enrollmentCost]`);
 
+                //when student have a contract create or assign costs  servicios, etc
+
                 if (elEnrollmentCost.length){
                     const enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
                     let servicesCostObligatory = 0;
@@ -332,7 +353,6 @@ if(document.getElementById("app")){
                     });
                     const annuityCost = $(elStudent).find(`input[name=annuityCost]`).val();
 
-                    //sum all cost of student
                     const total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
 
                     const leftover = Number(this.assign_deposit);

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div style="display: block;" class="col-12 border-top mt-2 studentDetail">
+        <div style="display: none;" class="col-12 border-top mt-2 studentDetail">
             <div class="row justify-content-between">
                 <div class="col-6 col-sm-4 mt-3">
                     <p class="h6"></p>
