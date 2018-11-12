@@ -16,6 +16,7 @@ class CreatePaymentsTable extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->increments('id');
             $table->date('date_deposit');
+            $table->string('operation_number')->unique();
             $table->unsignedInteger('student_id');
             $table->foreign('student_id')->references('id')->on('students');
             $table->string('receipt');

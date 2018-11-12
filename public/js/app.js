@@ -20577,7 +20577,8 @@ if (document.getElementById("app")) {
             elSelectStudent: '',
             buttonSavePayment: false,
             previousElementStudent: '',
-            mainContractStudentkey: 0
+            mainContractStudentkey: 0,
+            operation_number: ''
         },
         methods: {
             onChange: function onChange() {
@@ -20951,7 +20952,17 @@ if (document.getElementById("app")) {
                 this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
-                if (val && this.amount_deposit) {
+                if (val && this.date) {
+                    this.statusSelectStudent();
+                    this.showSaveButtonpayment(true);
+                } else {
+                    this.statusSelectStudent(false);
+                    this.showSaveButtonpayment(false);
+                }
+                this.assign_deposit = this.amount_deposit;
+            },
+            operation_number: function operation_number(val, oldval) {
+                if (val && this.date) {
                     this.statusSelectStudent();
                     this.showSaveButtonpayment(true);
                 } else {

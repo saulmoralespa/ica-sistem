@@ -51,7 +51,8 @@ if(document.getElementById("app")){
             elSelectStudent: '',
             buttonSavePayment: false,
             previousElementStudent: '',
-            mainContractStudentkey: 0
+            mainContractStudentkey: 0,
+            operation_number: ''
         },
         methods: {
             onChange:function(){
@@ -399,7 +400,17 @@ if(document.getElementById("app")){
 
             },
             date: function(val, oldVal){
-                if (val && this.amount_deposit){
+                if (val && this.date){
+                    this.statusSelectStudent();
+                    this.showSaveButtonpayment(true)
+                }else{
+                    this.statusSelectStudent(false);
+                    this.showSaveButtonpayment(false)
+                }
+                this.assign_deposit = this.amount_deposit;
+            },
+            operation_number: function(val, oldval) {
+                if (val && this.date){
                     this.statusSelectStudent();
                     this.showSaveButtonpayment(true)
                 }else{

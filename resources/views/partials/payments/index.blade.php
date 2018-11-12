@@ -30,6 +30,10 @@
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6">
+                            <label>{{ __("N° de operación") }}</label>
+                            <input type="number" id="operation_number" v-model.number="operation_number" class="form-control" required />
+                        </div>
+                        <div class="col-sm-6">
                             <label>{{ __("Pendiente por asignar") }}</label>
                             <input type="text" id="assign_deposit" v-model.number="assign_deposit" class="form-control" readonly />
                         </div>
