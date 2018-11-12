@@ -20637,15 +20637,17 @@ if (document.getElementById("app")) {
             },
             contractForm: function contractForm(e) {
                 e.preventDefault();
+                var form = $("form#createContract");
                 var nameContract = $("#gradeBachelor option:selected").text();
+                form.find("#nameContract").val(nameContract);
                 var year = $('#year').val();
                 $.ajax({
                     url: createContract,
                     type: 'post',
                     dataType: 'json',
-                    data: $('form#createContract').serialize(),
+                    data: $(form).serialize(),
                     beforeSend: function beforeSend() {
-                        $('form#createContract').find('button').prop("disabled", true);
+                        $(form).find('button').prop("disabled", true);
                         $('body').css('cursor', 'wait');
                     }
                 }).then(function (res) {

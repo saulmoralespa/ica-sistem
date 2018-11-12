@@ -91,15 +91,17 @@ if(document.getElementById("app")){
             },
             contractForm: function(e){
                 e.preventDefault();
+                let form = $("form#createContract");
                 let nameContract = $("#gradeBachelor option:selected").text();
+                form.find("#nameContract").val(nameContract);
                 let year = $('#year').val();
                 $.ajax({
                     url: createContract,
                     type: 'post',
                     dataType: 'json',
-                    data: $('form#createContract').serialize(),
+                    data: $(form).serialize(),
                     beforeSend: () => {
-                        $('form#createContract').find('button').prop( "disabled", true );
+                        $(form).find('button').prop( "disabled", true );
                         $('body').css('cursor', 'wait');
                     }
                 }).then(function(res){
