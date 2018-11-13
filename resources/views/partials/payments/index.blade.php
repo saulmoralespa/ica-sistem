@@ -80,10 +80,12 @@
             });
             $('form#addService').submit(function(e){
                 e.preventDefault();
-                contractStudent.services = $(this).find('input[name^=serviceAdd]').map(function(idx, elem) {
+                const serviceAdd = $('input[name^=serviceAdd]');
+                contractStudent.services = $(this).find(serviceAdd).map(function(idx, elem) {
                     if (elem.checked)
                         return elem
                 }).get();
+                $(this).find(serviceAdd).prop('checked',false);
                 contractStudent.assign_deposit = contractStudent.amount_deposit;
                 const date = new Date();
                 contractStudent.mainContractStudentkey = date.getTime();
