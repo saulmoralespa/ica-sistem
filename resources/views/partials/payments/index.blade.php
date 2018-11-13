@@ -50,6 +50,7 @@
             </div>
         </div>
     </div>
+    @include('partials.payments.additional_payments.modal')
 @endsection
 @push('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
@@ -66,12 +67,29 @@
         const noneResultsTextShow = '{{ __("No hay resultados {0}") }}';
         const textEnrollment = '{{ __("Matrícula") }}';
         const textStudent = '{{ __("Estudiante:") }}';
-        let isSuperAdmin = false
+        let isSuperAdmin = false;
         $(document).ready(function(){
+            const modalAddService = $('#add');
             $('#date').datepicker({
                 autoclose: true,
                 language: 'es',
                 format: 'dd/m/yy'
+            });
+            $(document).on("click", ".service-payment", function(){
+                modalAddService.modal({ backdrop: 'static', keyboard: false })
+            });
+            $('form#addService').submit(function(e){
+                e.preventDefault();
+                contractStudent.services = $(this).find('input[name^=serviceAdd]').map(function(idx, elem) {
+                    if (elem.checked)
+                        return elem
+                }).get();
+                //add service and revalues prices prority
+                contractStudent.assign_deposit = contractStudent.amount_deposit;
+                const date = new Date();
+                contractStudent.mainContractStudentkey = date.getTime();
+                contractStudent.loadContractPay();
+                modalAddService.modal('hide');
             });
         });
         function totalAnnuity(fees){

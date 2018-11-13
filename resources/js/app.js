@@ -136,7 +136,8 @@ if(document.getElementById("app")){
                     }
                 }.bind(this));
             },
-            loadContractPay: async function(student_id, el){
+            loadContractPay: async function(){
+                const student_id = this.student_id;
                 await $.ajax({
                     url: showContract,
                     type: 'post',
@@ -150,14 +151,15 @@ if(document.getElementById("app")){
                         $('body').css('cursor', 'wait');
                     }
                 }).then(function(res){
-                    const select = el;
+                    console.log(res);
+                    const select = this.elSelectStudent;
                     const divStudent = $(select).parents('div.mainStudent');
 
                     if (res.constructor !== Array){
                         const table = divStudent.find('table');
                         const services = res.services;
                         const fees = res.fees;
-                        const enrollment = `
+                        const enrollment = `<tr>
                         <td>${textEnrollment}</td>    
                         <td>
                                             ${res.enrollment_cost}
@@ -175,10 +177,11 @@ if(document.getElementById("app")){
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>`;
+                                        <td></td>
+                                        </tr>`;
                         let obligatoryServices = '';
                         services.forEach(function(service){
-                            obligatoryServices += `
+                            obligatoryServices += `<tr>
                                             <td>
                                                 ${service.name}
                                             </td>
@@ -188,32 +191,34 @@ if(document.getElementById("app")){
                                             <td class="servicePay">
                                             <input type="text"  name="serviceObligatoryCost[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>`;
+                                            </tr>`;
                         });
-                        table.find('.enrollment').html(enrollment);
-                        table.find(".obligatoryServices").html(obligatoryServices);
+                        table.find('tbody').append(enrollment);
+                        table.find('tbody').append(obligatoryServices);
                         //surcharges
                         //fees expired
                         //services
+                        if (this.services){
+                            let serviceHTML = '';
+                            for (let service of this.services){
+                                serviceHTML += `<tr>
+                                <td>${service.dataset.name}</td>
+                                <td>${service.dataset.price}</td>
+                                <td><input type="text" data-id="${service.id}" name="serviceCost" value="${ assignValueService(service.dataset.price) }"></td>
+                                </tr>`
+                            }
+                            table.find('tbody').append(serviceHTML);
+                        }
                         //fees without caducity
-                        table.find('.contract').html(`
+                        table.find('tbody').append(`<tr class="contract">
                                         <td>${res.name}</td>
                                         <td>
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
                                         <input type="text" name="annuityCost" value="${ this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
-                                        </td>`);
+                                        </td>
+                                        </tr>`);
                         let feesHTML = '';
                         let  totalAnnuityInt = Number(this.totalAnnuity);
 
@@ -291,14 +296,15 @@ if(document.getElementById("app")){
             },
             changeSelectStudent: function(e){
                 let select = e.target;
+                this.elSelectStudent = select;
                 this.showSaveButtonpayment(true);
                 if (select.value){
                     const date = new Date();
                     this.mainContractStudentkey = date.getTime();
                     if (this.previousElementStudent)
                         this.getCostsReassingAmount();
-                    const student_id = select.options[select.selectedIndex].value;
-                    this.loadContractPay(student_id, select);
+                    this.student_id = select.options[select.selectedIndex].value;
+                    this.loadContractPay();
                 }else{
                     const divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
@@ -354,9 +360,18 @@ if(document.getElementById("app")){
                     $(`input[name^=serviceObligatoryCost]`).map(function(){
                         servicesCostObligatory += Number($(this).val());
                     });
+
+                    let services = 0;
+                    if (this.services){
+                       services = _.reduce(this.services, function(memo, service) {
+                            return memo + Number(service.dataset.price);
+                        }, 0);
+                        this.services = '';
+                    }
+
                     const annuityCost = $(elStudent).find(`input[name=annuityCost]`).val();
 
-                    const total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+                    const total = Number(enrollmentCost) + servicesCostObligatory + services + Number(annuityCost);
 
                     const leftover = Number(this.assign_deposit);
                     const valueReAssign = Number(leftover) + total;

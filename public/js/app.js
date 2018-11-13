@@ -20703,12 +20703,14 @@ if (document.getElementById("app")) {
                 return loadContract;
             }(),
             loadContractPay: function () {
-                var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3(student_id, el) {
+                var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                    var student_id;
                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                         while (1) {
                             switch (_context3.prev = _context3.next) {
                                 case 0:
-                                    _context3.next = 2;
+                                    student_id = this.student_id;
+                                    _context3.next = 3;
                                     return $.ajax({
                                         url: showContract,
                                         type: 'post',
@@ -20722,35 +20724,65 @@ if (document.getElementById("app")) {
                                             $('body').css('cursor', 'wait');
                                         }
                                     }).then(function (res) {
-                                        var select = el;
+                                        console.log(res);
+                                        var select = this.elSelectStudent;
                                         var divStudent = $(select).parents('div.mainStudent');
 
                                         if (res.constructor !== Array) {
                                             var table = divStudent.find('table');
                                             var services = res.services;
                                             var fees = res.fees;
-                                            var enrollment = '\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>';
+                                            var enrollment = '<tr>\n                        <td>' + textEnrollment + '</td>    \n                        <td>\n                                            ' + res.enrollment_cost + '\n                                        </td>\n                                        <td class="enrollmentCostPay">\n                                        <input type="text" name="enrollmentCost" value="' + assignValueEnrollment(res.enrollment_cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '  >\n                                        </td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        <td></td>\n                                        </tr>';
                                             var obligatoryServices = '';
                                             services.forEach(function (service) {
-                                                obligatoryServices += '\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>\n                                            <td></td>';
+                                                obligatoryServices += '<tr>\n                                            <td>\n                                                ' + service.name + '\n                                            </td>\n                                            <td>\n                                                ' + service.cost + '\n                                            </td>\n                                            <td class="servicePay">\n                                            <input type="text"  name="serviceObligatoryCost[]" value="' + assignValueService(service.cost) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                            </td>\n                                            </tr>';
                                             });
-                                            table.find('.enrollment').html(enrollment);
-                                            table.find(".obligatoryServices").html(obligatoryServices);
+                                            table.find('tbody').append(enrollment);
+                                            table.find('tbody').append(obligatoryServices);
                                             //surcharges
                                             //fees expired
                                             //services
+                                            if (this.services) {
+                                                var serviceHTML = '';
+                                                var _iteratorNormalCompletion = true;
+                                                var _didIteratorError = false;
+                                                var _iteratorError = undefined;
+
+                                                try {
+                                                    for (var _iterator = this.services[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                                                        var service = _step.value;
+
+                                                        serviceHTML += '<tr>\n                                <td>' + service.dataset.name + '</td>\n                                <td>' + service.dataset.price + '</td>\n                                <td><input type="text" data-id="' + service.id + '" name="serviceCost" value="' + assignValueService(service.dataset.price) + '"></td>\n                                </tr>';
+                                                    }
+                                                } catch (err) {
+                                                    _didIteratorError = true;
+                                                    _iteratorError = err;
+                                                } finally {
+                                                    try {
+                                                        if (!_iteratorNormalCompletion && _iterator.return) {
+                                                            _iterator.return();
+                                                        }
+                                                    } finally {
+                                                        if (_didIteratorError) {
+                                                            throw _iteratorError;
+                                                        }
+                                                    }
+                                                }
+
+                                                table.find('tbody').append(serviceHTML);
+                                            }
                                             //fees without caducity
-                                            table.find('.contract').html('\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost" value="' + (this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees))) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>');
+                                            table.find('tbody').append('<tr class="contract">\n                                        <td>' + res.name + '</td>\n                                        <td>\n                                        ' + totalAnnuity(res.fees) + '\n                                        </td>\n                                        <td>\n                                        <input type="text" name="annuityCost" value="' + (this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees))) + '" ' + (!isSuperAdmin ? 'readonly' : '') + '>\n                                        </td>\n                                        </tr>');
                                             var feesHTML = '';
                                             var totalAnnuityInt = Number(this.totalAnnuity);
 
-                                            var _iteratorNormalCompletion = true;
-                                            var _didIteratorError = false;
-                                            var _iteratorError = undefined;
+                                            var _iteratorNormalCompletion2 = true;
+                                            var _didIteratorError2 = false;
+                                            var _iteratorError2 = undefined;
 
                                             try {
-                                                for (var _iterator = fees[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-                                                    var fee = _step.value;
+                                                for (var _iterator2 = fees[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                                                    var fee = _step2.value;
 
                                                     if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price) {
                                                         totalAnnuityInt -= fee.price;
@@ -20768,16 +20800,16 @@ if (document.getElementById("app")) {
                                                     }
                                                 }
                                             } catch (err) {
-                                                _didIteratorError = true;
-                                                _iteratorError = err;
+                                                _didIteratorError2 = true;
+                                                _iteratorError2 = err;
                                             } finally {
                                                 try {
-                                                    if (!_iteratorNormalCompletion && _iterator.return) {
-                                                        _iterator.return();
+                                                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                                                        _iterator2.return();
                                                     }
                                                 } finally {
-                                                    if (_didIteratorError) {
-                                                        throw _iteratorError;
+                                                    if (_didIteratorError2) {
+                                                        throw _iteratorError2;
                                                     }
                                                 }
                                             }
@@ -20801,7 +20833,7 @@ if (document.getElementById("app")) {
                                         $('body').css('cursor', 'default');
                                     }.bind(this));
 
-                                case 2:
+                                case 3:
                                 case 'end':
                                     return _context3.stop();
                             }
@@ -20809,7 +20841,7 @@ if (document.getElementById("app")) {
                     }, _callee3, this);
                 }));
 
-                function loadContractPay(_x3, _x4) {
+                function loadContractPay() {
                     return _ref3.apply(this, arguments);
                 }
 
@@ -20845,13 +20877,14 @@ if (document.getElementById("app")) {
             },
             changeSelectStudent: function changeSelectStudent(e) {
                 var select = e.target;
+                this.elSelectStudent = select;
                 this.showSaveButtonpayment(true);
                 if (select.value) {
                     var date = new Date();
                     this.mainContractStudentkey = date.getTime();
                     if (this.previousElementStudent) this.getCostsReassingAmount();
-                    var student_id = select.options[select.selectedIndex].value;
-                    this.loadContractPay(student_id, select);
+                    this.student_id = select.options[select.selectedIndex].value;
+                    this.loadContractPay();
                 } else {
                     var divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
@@ -20909,9 +20942,18 @@ if (document.getElementById("app")) {
                     $('input[name^=serviceObligatoryCost]').map(function () {
                         servicesCostObligatory += Number($(this).val());
                     });
+
+                    var services = 0;
+                    if (this.services) {
+                        services = _.reduce(this.services, function (memo, service) {
+                            return memo + Number(service.dataset.price);
+                        }, 0);
+                        this.services = '';
+                    }
+
                     var annuityCost = $(elStudent).find('input[name=annuityCost]').val();
 
-                    var total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+                    var total = Number(enrollmentCost) + servicesCostObligatory + services + Number(annuityCost);
 
                     var leftover = Number(this.assign_deposit);
                     var valueReAssign = Number(leftover) + total;
@@ -67580,7 +67622,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67591,6 +67633,7 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -67672,7 +67715,8 @@ var render = function() {
             _c(
               "button",
               {
-                staticClass: "btn btn-primary mr-3 mb-2 mb-lg-0",
+                staticClass:
+                  "btn btn-primary mr-3 mb-2 mb-lg-0 service-payment",
                 attrs: { type: "button" }
               },
               [
@@ -67683,7 +67727,10 @@ var render = function() {
             _vm._v(" "),
             _c(
               "button",
-              { staticClass: "btn btn-primary", attrs: { type: "button" } },
+              {
+                staticClass: "btn btn-primary refund-payment",
+                attrs: { type: "button" }
+              },
               [
                 _c("li", { staticClass: "fas fa-plus" }),
                 _vm._v(" " + _vm._s(_vm.refundtext))
@@ -67737,7 +67784,7 @@ var render = function() {
                 )
               ]),
               _vm._v(" "),
-              _vm._m(1)
+              _c("tbody")
             ]
           )
         ])
@@ -67752,25 +67799,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "col-6 col-sm-4 mt-3" }, [
       _c("p", { staticClass: "h6" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", { staticClass: "obligatoryServices" }),
-      _vm._v(" "),
-      _c("tr", { staticClass: "enrollment" }),
-      _vm._v(" "),
-      _c("tr", { staticClass: "contract" }),
-      _vm._v(" "),
-      _c("tr", {
-        staticClass: "surcharge-15",
-        staticStyle: { display: "none" }
-      }),
-      _vm._v(" "),
-      _c("tr", { staticClass: "surcharge-1", staticStyle: { display: "none" } })
     ])
   }
 ]

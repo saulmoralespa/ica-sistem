@@ -6,8 +6,8 @@
                     <p class="h6"></p>
                 </div>
                 <div class="col-6 col-sm-4 mt-3">
-                    <button class="btn btn-primary mr-3 mb-2 mb-lg-0" type="button"><li class="fas fa-plus"></li> {{ servicetext }}</button>
-                    <button class="btn btn-primary" type="button"><li class="fas fa-plus"></li> {{ refundtext }}</button>
+                    <button class="btn btn-primary mr-3 mb-2 mb-lg-0 service-payment" type="button"><li class="fas fa-plus"></li> {{ servicetext }}</button>
+                    <button class="btn btn-primary refund-payment" type="button"><li class="fas fa-plus"></li> {{ refundtext }}</button>
                 </div>
             </div>
         </div>
@@ -25,16 +25,17 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="obligatoryServices">
-                    </tr>
+                    <!--<div class="obligatoryServices">
+                    </div>
                     <tr class="enrollment">
                     </tr>
                     <tr class="contract">
                     </tr>
+                    <div class="additionalServices" style="display:none;"></div>
                     <tr class="surcharge-15" style="display:none;">
                     </tr>
                     <tr class="surcharge-1" style="display:none;">
-                    </tr>
+                    </tr>-->
                     </tbody>
                 </table>
             </div>
