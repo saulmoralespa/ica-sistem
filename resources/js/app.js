@@ -151,7 +151,6 @@ if(document.getElementById("app")){
                         $('body').css('cursor', 'wait');
                     }
                 }).then(function(res){
-                    console.log(res);
                     const select = this.elSelectStudent;
                     const divStudent = $(select).parents('div.mainStudent');
 
@@ -165,7 +164,7 @@ if(document.getElementById("app")){
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" name="enrollmentCost" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
+                                        <input type="text" name="enrollmentCost" value="${  assignValue(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -189,8 +188,19 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text"  name="serviceObligatoryCost[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                            <input type="text"  name="serviceObligatoryCost[]" value="${ assignValue(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
+                                            <td></td>
                                             </tr>`;
                         });
                         table.find('tbody').append(enrollment);
@@ -204,7 +214,18 @@ if(document.getElementById("app")){
                                 serviceHTML += `<tr>
                                 <td>${service.dataset.name}</td>
                                 <td>${service.dataset.price}</td>
-                                <td><input type="text" data-id="${service.id}" name="serviceCost" value="${ assignValueService(service.dataset.price) }"></td>
+                                <td><input type="text" data-id="${service.id}" name="serviceCost" value="${ assignValue(service.dataset.price) }"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                                 </tr>`
                             }
                             table.find('tbody').append(serviceHTML);
@@ -216,7 +237,7 @@ if(document.getElementById("app")){
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" name="annuityCost" value="${ this.totalAnnuity = assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                        <input type="text" name="annuityCost" value="${ this.totalAnnuity = assignValue(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                         </td>
                                         </tr>`);
                         let feesHTML = '';
@@ -247,7 +268,6 @@ if(document.getElementById("app")){
 
 
                         table.find('.contract').append(feesHTML);
-
                         divStudent.find('.tableDebt').show();
                     }else{
                         divStudent.find('.tableDebt').hide();

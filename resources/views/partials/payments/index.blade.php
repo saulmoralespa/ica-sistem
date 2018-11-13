@@ -84,7 +84,6 @@
                     if (elem.checked)
                         return elem
                 }).get();
-                //add service and revalues prices prority
                 contractStudent.assign_deposit = contractStudent.amount_deposit;
                 const date = new Date();
                 contractStudent.mainContractStudentkey = date.getTime();
@@ -97,29 +96,17 @@
                 return memo + Number(fee.price);
             }, 0)
         }
-        function assignValueEnrollment(enrollmentCost){
-            let cost = Number(enrollmentCost);
-            if(contractStudent.assign_deposit >= cost){
+        function assignValue(costPay){
+            let cost = Number(costPay);
+            if(contractStudent.assign_deposit >= cost && contractStudent.assign_deposit > 0){
                 const newValue = contractStudent.assign_deposit - cost;
                 contractStudent.assign_deposit = newValue.toFixed(2);
                 return cost.toFixed(2);
-            }
-        }
-        function assignValueService(serviceCost){
-            let cost = Number(serviceCost);
-            if(contractStudent.assign_deposit >= cost){
-                const newValue = contractStudent.assign_deposit - cost;
+            }else if(contractStudent.assign_deposit < cost && contractStudent.assign_deposit > 0){
+                const price = contractStudent.assign_deposit;
+                const newValue = contractStudent.assign_deposit - price;
                 contractStudent.assign_deposit = newValue.toFixed(2);
-                return cost.toFixed(2);
-            }
-        }
-        function assignValueAnnuity(annuityCost){
-            let cost = Number(annuityCost);
-            if(contractStudent.assign_deposit > 0){
-                const valueLeftLover = contractStudent.assign_deposit;
-                const newValue = 0;
-                contractStudent.assign_deposit = newValue.toFixed(2);
-                return valueLeftLover;
+                return price;
             }
         }
     </script>
