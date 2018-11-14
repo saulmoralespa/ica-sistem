@@ -78,10 +78,12 @@ class ContractController extends Controller
             ];
 
             $contract = $student->contracts()->create($data);
-
-            $price = $request->totalAnnuity  / 11;
+            $totalAnnuity = $request->totalAnnuity;
+            $price = $totalAnnuity  / 11;
 
             $costFee = (float)number_format((float)$price,2,".",".");
+            $difference =  abs($totalAnnuity - $costFee * 10);
+            $eleventCutota = number_format($difference,2,".",".");
 
             $fees = [
                 array('name' => __("Cuota 1"), 'price' => $costFee),
@@ -94,7 +96,7 @@ class ContractController extends Controller
                 array('name' => __("Cuota 8"), 'price' => $costFee),
                 array('name' => __("Cuota 9"), 'price' => $costFee),
                 array('name' => __("Cuota 10"), 'price' => $costFee),
-                array('name' => __("Cuota 11"), 'price' => $costFee),
+                array('name' => __("Cuota 11"), 'price' => $eleventCutota)
             ];
 
             $data = [
