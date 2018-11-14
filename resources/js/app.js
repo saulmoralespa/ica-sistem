@@ -52,7 +52,8 @@ if(document.getElementById("app")){
             buttonSavePayment: false,
             previousElementStudent: '',
             mainContractStudentkey: 0,
-            operation_number: ''
+            operation_number: '',
+            disabled: 0
         },
         methods: {
             onChange:function(){
@@ -136,7 +137,7 @@ if(document.getElementById("app")){
                     }
                 }.bind(this));
             },
-            loadContractPay: async function(){
+            loadContractPay: async function(amountChange = false){
                 const student_id = this.student_id;
                 await $.ajax({
                     url: showContract,
@@ -148,8 +149,10 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                     beforeSend: function(){
+                        if (amountChange)
+                            this.disabled = 1;
                         $('body').css('cursor', 'wait');
-                    }
+                    }.bind(this)
                 }).then(function(res){
                     const select = this.elSelectStudent;
                     const divStudent = $(select).parents('div.mainStudent');
@@ -280,6 +283,7 @@ if(document.getElementById("app")){
                     const nameStudent = select.options[select.selectedIndex].text;
                     $(divStudent).find('p').text(`${textStudent} ${nameStudent}`);
                     $('body').css('cursor', 'default');
+                    this.disabled = 0;
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -316,8 +320,7 @@ if(document.getElementById("app")){
                 this.elSelectStudent = select;
                 this.showSaveButtonpayment(true);
                 if (select.value){
-                    const date = new Date();
-                    this.mainContractStudentkey = date.getTime();
+                    this.resetMainContract();
                     if (this.previousElementStudent)
                         this.getCostsReassingAmount();
                     this.student_id = select.options[select.selectedIndex].value;
@@ -398,6 +401,9 @@ if(document.getElementById("app")){
                 }
 
             },
+            resetMainContract: function(){
+                this.mainContractStudentkey = '_' + Math.random().toString(36).substr(2, 9);
+            },
             addPayment: function(e){
                 //submit form add pay
                 let form = $(e.originalTarget);
@@ -430,6 +436,12 @@ if(document.getElementById("app")){
                     this.statusSelectStudent(false);
                     this.showSaveButtonpayment(false)
                 }
+                let select = this.elSelectStudent;
+                if (val > 0 && select.value && this.date && this.operation_number){
+                    this.resetMainContract();
+                    this.loadContractPay(true);
+                }
+
                 this.assign_deposit = this.amount_deposit;
 
             },

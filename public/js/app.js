@@ -20578,7 +20578,8 @@ if (document.getElementById("app")) {
             buttonSavePayment: false,
             previousElementStudent: '',
             mainContractStudentkey: 0,
-            operation_number: ''
+            operation_number: '',
+            disabled: 0
         },
         methods: {
             onChange: function onChange() {
@@ -20704,6 +20705,7 @@ if (document.getElementById("app")) {
             }(),
             loadContractPay: function () {
                 var _ref3 = _asyncToGenerator( /*#__PURE__*/__WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.mark(function _callee3() {
+                    var amountChange = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
                     var student_id;
                     return __WEBPACK_IMPORTED_MODULE_0_babel_runtime_regenerator___default.a.wrap(function _callee3$(_context3) {
                         while (1) {
@@ -20720,9 +20722,10 @@ if (document.getElementById("app")) {
                                             id: student_id,
                                             _token: $('meta[name=csrf-token]').attr('content')
                                         },
-                                        beforeSend: function beforeSend() {
+                                        beforeSend: function () {
+                                            if (amountChange) this.disabled = 1;
                                             $('body').css('cursor', 'wait');
-                                        }
+                                        }.bind(this)
                                     }).then(function (res) {
                                         var select = this.elSelectStudent;
                                         var divStudent = $(select).parents('div.mainStudent');
@@ -20828,6 +20831,7 @@ if (document.getElementById("app")) {
                                         var nameStudent = select.options[select.selectedIndex].text;
                                         $(divStudent).find('p').text(textStudent + ' ' + nameStudent);
                                         $('body').css('cursor', 'default');
+                                        this.disabled = 0;
                                     }.bind(this));
 
                                 case 3:
@@ -20877,8 +20881,7 @@ if (document.getElementById("app")) {
                 this.elSelectStudent = select;
                 this.showSaveButtonpayment(true);
                 if (select.value) {
-                    var date = new Date();
-                    this.mainContractStudentkey = date.getTime();
+                    this.resetMainContract();
                     if (this.previousElementStudent) this.getCostsReassingAmount();
                     this.student_id = select.options[select.selectedIndex].value;
                     this.loadContractPay();
@@ -20958,6 +20961,9 @@ if (document.getElementById("app")) {
                     if (reset) this.previousElementStudent = '';
                 }
             },
+            resetMainContract: function resetMainContract() {
+                this.mainContractStudentkey = '_' + Math.random().toString(36).substr(2, 9);
+            },
             addPayment: function addPayment(e) {
                 //submit form add pay
                 var form = $(e.originalTarget);
@@ -20990,6 +20996,12 @@ if (document.getElementById("app")) {
                     this.statusSelectStudent(false);
                     this.showSaveButtonpayment(false);
                 }
+                var select = this.elSelectStudent;
+                if (val > 0 && select.value && this.date && this.operation_number) {
+                    this.resetMainContract();
+                    this.loadContractPay(true);
+                }
+
                 this.assign_deposit = this.amount_deposit;
             },
             date: function date(val, oldVal) {
@@ -67619,7 +67631,7 @@ exports = module.exports = __webpack_require__(12)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n", ""]);
 
 // exports
 
@@ -67630,17 +67642,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //

@@ -25,17 +25,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <!--<div class="obligatoryServices">
-                    </div>
-                    <tr class="enrollment">
-                    </tr>
-                    <tr class="contract">
-                    </tr>
-                    <div class="additionalServices" style="display:none;"></div>
-                    <tr class="surcharge-15" style="display:none;">
-                    </tr>
-                    <tr class="surcharge-1" style="display:none;">
-                    </tr>-->
                     </tbody>
                 </table>
             </div>

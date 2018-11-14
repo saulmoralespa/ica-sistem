@@ -25,7 +25,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label>{{ __("Monto a depositar") }}</label>
-                            <input type="text" name="amount_deposit" id="amount_deposit" v-model.number="amount_deposit" class="form-control" required />
+                            <input type="text" name="amount_deposit" :disabled="disabled == 1 ? true : false" id="amount_deposit" v-model.number="amount_deposit" class="form-control" required />
                         </div>
                     </div>
                     <div class="form-group row">
@@ -88,7 +88,7 @@
                 $(this).find(serviceAdd).prop('checked',false);
                 contractStudent.assign_deposit = contractStudent.amount_deposit;
                 const date = new Date();
-                contractStudent.mainContractStudentkey = date.getTime();
+                contractStudent.resetMainContract();
                 contractStudent.loadContractPay();
                 modalAddService.modal('hide');
             });
