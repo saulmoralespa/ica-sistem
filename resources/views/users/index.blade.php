@@ -68,7 +68,7 @@
            $(document).on("click", ".edit-modal", function(e){
                e.preventDefault();
                const id = $(this).data('id');
-               const edit = $('#edit')
+               const edit = $('#edit');
                $(form_msj).empty();
                $(edit).modal({ backdrop: 'static', keyboard: false })
                $.ajax({

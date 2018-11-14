@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Payment;
+use App\Service;
 use App\Student;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
@@ -44,7 +45,8 @@ class PaymentController extends Controller
 
     public function add()
     {
-        return view('partials.payments.index');
+        $services = Service::where('status', '=', \App\Service::ACTIVE)->select('id','name','cost')->get();
+        return view('partials.payments.index', compact('services'));
     }
 
     public function test(Request $request)

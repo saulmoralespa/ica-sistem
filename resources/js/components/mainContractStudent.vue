@@ -1,24 +1,13 @@
 <template>
     <div>
         <div style="display: none;" class="col-12 border-top mt-2 studentDetail">
-            <div class="col-4">
-                <div class="float-left mt-3">
+            <div class="row justify-content-between">
+                <div class="col-6 col-sm-4 mt-3">
                     <p class="h6"></p>
                 </div>
-            </div>
-            <div class="float-right mt-3">
-                <div class="col-4">
-                    <button class="btn btn-danger"><li class="fas fa-minus"></li> {{ removetext }}</button>
-                </div>
-            </div>
-            <div class="float-right mt-3">
-                <div class="col-4">
-                    <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ servicetext }}</button>
-                </div>
-            </div>
-            <div class="float-right mt-3">
-                <div class="col-4">
-                    <button class="btn btn-primary"><li class="fas fa-plus"></li> {{ refundtext }}</button>
+                <div class="col-6 col-sm-4 mt-3">
+                    <button class="btn btn-primary mr-3 mb-2 mb-lg-0 service-payment" type="button"><li class="fas fa-plus"></li> {{ servicetext }}</button>
+                    <button class="btn btn-primary refund-payment" type="button"><li class="fas fa-plus"></li> {{ refundtext }}</button>
                 </div>
             </div>
         </div>
@@ -36,16 +25,6 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr class="obligatoryServices">
-                    </tr>
-                    <tr class="enrollment">
-                    </tr>
-                    <tr class="contract">
-                    </tr>
-                    <tr class="surcharge-15" style="display:none;">
-                    </tr>
-                    <tr class="surcharge-1" style="display:none;">
-                    </tr>
                     </tbody>
                 </table>
             </div>

@@ -50,7 +50,10 @@ if(document.getElementById("app")){
             students: '',
             elSelectStudent: '',
             buttonSavePayment: false,
-            previousElementStudent: ''
+            previousElementStudent: '',
+            mainContractStudentkey: 0,
+            operation_number: '',
+            disabled: 0
         },
         methods: {
             onChange:function(){
@@ -89,17 +92,17 @@ if(document.getElementById("app")){
             },
             contractForm: function(e){
                 e.preventDefault();
+                let form = $("form#createContract");
                 let nameContract = $("#gradeBachelor option:selected").text();
-                $("#nameContract").val(nameContract);
-                let student_id = $('#student_id').val();
+                form.find("#nameContract").val(nameContract);
                 let year = $('#year').val();
                 $.ajax({
                     url: createContract,
                     type: 'post',
                     dataType: 'json',
-                    data: $('form#createContract').serialize(),
+                    data: $(form).serialize(),
                     beforeSend: () => {
-                        $('form#createContract').find('button').prop( "disabled", true );
+                        $(form).find('button').prop( "disabled", true );
                         $('body').css('cursor', 'wait');
                     }
                 }).then(function(res){
@@ -134,7 +137,8 @@ if(document.getElementById("app")){
                     }
                 }.bind(this));
             },
-            loadContractPay: async function(student_id, el){
+            loadContractPay: async function(amountChange = false){
+                const student_id = this.student_id;
                 await $.ajax({
                     url: showContract,
                     type: 'post',
@@ -145,22 +149,25 @@ if(document.getElementById("app")){
                         _token: $('meta[name=csrf-token]').attr('content')
                     },
                     beforeSend: function(){
+                        if (amountChange)
+                            this.disabled = 1;
                         $('body').css('cursor', 'wait');
-                    }
+                    }.bind(this)
                 }).then(function(res){
-                    const select = el;
+                    const select = this.elSelectStudent;
                     const divStudent = $(select).parents('div.mainStudent');
 
                     if (res.constructor !== Array){
                         const table = divStudent.find('table');
                         const services = res.services;
-                        const enrollment = `
+                        const fees = res.fees;
+                        const enrollment = `<tr>
                         <td>${textEnrollment}</td>    
                         <td>
                                             ${res.enrollment_cost}
                                         </td>
                                         <td class="enrollmentCostPay">
-                                        <input type="text" name="enrollmentCost${student_id}" value="${  assignValueEnrollment(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
+                                        <input style="width:100px;" type="text" name="enrollmentCost" value="${  assignValue(res.enrollment_cost) }" ${!isSuperAdmin ? 'readonly' : '' }  >
                                         </td>
                                         <td></td>
                                         <td></td>
@@ -172,10 +179,11 @@ if(document.getElementById("app")){
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>`;
+                                        <td></td>
+                                        </tr>`;
                         let obligatoryServices = '';
                         services.forEach(function(service){
-                            obligatoryServices += `
+                            obligatoryServices += `<tr>
                                             <td>
                                                 ${service.name}
                                             </td>
@@ -183,7 +191,7 @@ if(document.getElementById("app")){
                                                 ${service.cost}
                                             </td>
                                             <td class="servicePay">
-                                            <input type="text"  name="serviceObligatoryCost${student_id}[]" value="${ assignValueService(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                            <input style="width:100px;" type="text"  name="serviceObligatoryCost[]" value="${ assignValue(service.cost) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                             </td>
                                             <td></td>
                                             <td></td>
@@ -195,48 +203,87 @@ if(document.getElementById("app")){
                                             <td></td>
                                             <td></td>
                                             <td></td>
-                                            <td></td>`;
+                                            <td></td>
+                                            </tr>`;
                         });
-                        table.find('.enrollment').html(enrollment);
-                        table.find(".obligatoryServices").html(obligatoryServices);
+                        table.find('tbody').append(enrollment);
+                        table.find('tbody').append(obligatoryServices);
                         //surcharges
                         //fees expired
                         //services
+                        if (this.services){
+                            let serviceHTML = '';
+                            for (let service of this.services){
+                                serviceHTML += `<tr>
+                                <td>${service.dataset.name}</td>
+                                <td>${service.dataset.price}</td>
+                                <td><input style="width:100px;" type="text" data-id="${service.id}" name="serviceCost" value="${ assignValue(service.dataset.price) }"></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                </tr>`
+                            }
+                            table.find('tbody').append(serviceHTML);
+                        }
                         //fees without caducity
-                        table.find('.contract').html(`
+                        table.find('tbody').append(`<tr class="contract">
                                         <td>${res.name}</td>
                                         <td>
                                         ${ totalAnnuity(res.fees) }
                                         </td>
                                         <td>
-                                        <input type="text" name="annuityCost${student_id}" value="${ assignValueAnnuity(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
+                                        <input style="width:100px;" type="text" name="annuityCost" value="${ this.totalAnnuity = assignValue(totalAnnuity(res.fees)) }" ${!isSuperAdmin ? 'readonly' : '' }>
                                         </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>`);
+                                        </tr>`);
+                        let feesHTML = '';
+                        let totalAnnuityInt = Number(this.totalAnnuity);
+
+                        for(let fee of fees){
+                            if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price){
+                                totalAnnuityInt -= fee.price;
+                                feesHTML += `<td>
+                                <input style="width:100px;" type="text" name="fees[]" value="${fee.price}" readonly>
+                                </td>`;
+                                continue;
+                            }
+                            if(totalAnnuityInt > 0 && totalAnnuityInt < fee.price){
+                                feesHTML += `<td>
+                                <input style="width:100px;" type="text" name="fees[]" value="${totalAnnuityInt.toFixed(2)}" readonly>
+                                </td>`;
+                                totalAnnuityInt = 0;
+                                continue;
+                            }
+                            if (totalAnnuityInt === 0){
+                                feesHTML += `<td>
+                                <input style="width:100px;" type="text" name="fees[]" value="0.00" readonly>
+                                </td>`;
+                            }
+                        }
+                        table.find('.contract').append(feesHTML);
                         divStudent.find('.tableDebt').show();
                     }else{
                         divStudent.find('.tableDebt').hide();
                     }
-                    const elementStudentId = $('input[name="student_id[]"]');
+                    const elementStudentId = $('input[name="student_id"]');
                     if (elementStudentId.length){
                         divStudent.find(elementStudentId).val(student_id);
                     }else{
                         //not contracts
-                        divStudent.append(`<input type="hidden" name="student_id[]" value="${student_id}">`);
+                        divStudent.append(`<input type="hidden" name="student_id" value="${student_id}">`);
                     }
                     divStudent.find('.studentDetail').show();
                     const nameStudent = select.options[select.selectedIndex].text;
                     $(divStudent).find('p').text(`${textStudent} ${nameStudent}`);
                     $('body').css('cursor', 'default');
+                    this.disabled = 0;
                 }.bind(this));
             },
             onChangeYear: function () {
@@ -270,12 +317,14 @@ if(document.getElementById("app")){
             },
             changeSelectStudent: function(e){
                 let select = e.target;
+                this.elSelectStudent = select;
                 this.showSaveButtonpayment(true);
                 if (select.value){
+                    this.resetMainContract();
                     if (this.previousElementStudent)
                         this.getCostsReassingAmount();
-                    const student_id = select.options[select.selectedIndex].value;
-                    this.loadContractPay(student_id, select);
+                    this.student_id = select.options[select.selectedIndex].value;
+                    this.loadContractPay();
                 }else{
                     const divStudent = $(select).parents('div.mainStudent');
                     divStudent.find('.studentDetail').hide();
@@ -321,19 +370,28 @@ if(document.getElementById("app")){
             },
             getCostsReassingAmount: function(reset = false){
                 const elStudent = this.previousElementStudent;
-                const student_id = $(elStudent).find('input[name^=student_id]').val();
-                const elEnrollmentCost = $(`input[name=enrollmentCost${student_id}]`);
+                const elEnrollmentCost = $(`input[name=enrollmentCost]`);
+
+                //when student have a contract create or assign costs  servicios, etc
 
                 if (elEnrollmentCost.length){
                     const enrollmentCost = $(elStudent).find(elEnrollmentCost).val();
                     let servicesCostObligatory = 0;
-                    $(`input[name^=serviceObligatoryCost${student_id}]`).map(function(){
+                    $(`input[name^=serviceObligatoryCost]`).map(function(){
                         servicesCostObligatory += Number($(this).val());
                     });
-                    const annuityCost = $(elStudent).find(`input[name=annuityCost${student_id}]`).val();
 
-                    //sum all cost of student
-                    const total = Number(enrollmentCost) + servicesCostObligatory + Number(annuityCost);
+                    let services = 0;
+                    if (this.services){
+                       services = _.reduce(this.services, function(memo, service) {
+                            return memo + Number(service.dataset.price);
+                        }, 0);
+                        this.services = '';
+                    }
+
+                    const annuityCost = $(elStudent).find(`input[name=annuityCost]`).val();
+
+                    const total = Number(enrollmentCost) + servicesCostObligatory + services + Number(annuityCost);
 
                     const leftover = Number(this.assign_deposit);
                     const valueReAssign = Number(leftover) + total;
@@ -342,6 +400,9 @@ if(document.getElementById("app")){
                         this.previousElementStudent = ''
                 }
 
+            },
+            resetMainContract: function(){
+                this.mainContractStudentkey = '_' + Math.random().toString(36).substr(2, 9);
             },
             addPayment: function(e){
                 //submit form add pay
@@ -375,11 +436,27 @@ if(document.getElementById("app")){
                     this.statusSelectStudent(false);
                     this.showSaveButtonpayment(false)
                 }
+                let select = this.elSelectStudent;
+                if (val > 0 && select.value && this.date && this.operation_number){
+                    this.resetMainContract();
+                    this.loadContractPay(true);
+                }
+
                 this.assign_deposit = this.amount_deposit;
 
             },
             date: function(val, oldVal){
-                if (val && this.amount_deposit){
+                if (val && this.date){
+                    this.statusSelectStudent();
+                    this.showSaveButtonpayment(true)
+                }else{
+                    this.statusSelectStudent(false);
+                    this.showSaveButtonpayment(false)
+                }
+                this.assign_deposit = this.amount_deposit;
+            },
+            operation_number: function(val, oldval) {
+                if (val && this.date){
                     this.statusSelectStudent();
                     this.showSaveButtonpayment(true)
                 }else{

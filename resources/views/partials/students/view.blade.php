@@ -15,11 +15,13 @@
             <p>{{ __("Email: ") }} {{ $student->email }}</p>
         </div>
         @if(isset($student->contracts[0]))
+            @role('SuperAdministrator')
             <div class="col-2">
                 <click-confirm placement="bottom" :messages="{title: '¿Seguro desea cancelar este contrato?', yes: 'Si, seguro', no: 'No'}">
                     <button @click="cancelContract" class="btn btn-danger">{{ __("Cancelar contrato") }}</button>
                 </click-confirm>
             </div>
+            @endrole
             <div id="contracts" class="col-12">
                 <div class="float-left">
                     <p class="h5 ml-5">{{ __("Bachillerato:") }} @{{ nameContract }}</p>
