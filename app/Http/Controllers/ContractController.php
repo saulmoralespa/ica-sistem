@@ -80,7 +80,7 @@ class ContractController extends Controller
             $contract = $student->contracts()->create($data);
             $totalAnnuity = $request->totalAnnuity;
             $price = $totalAnnuity  / 11;
-
+          
             $costFee = (float)number_format((float)$price,2,".",".");
             $difference =  abs($totalAnnuity - $costFee * 10);
             $eleventCutota = number_format($difference,2,".",".");
