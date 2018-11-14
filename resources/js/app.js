@@ -244,25 +244,25 @@ if(document.getElementById("app")){
                                         </td>
                                         </tr>`);
                         let feesHTML = '';
-                        let  totalAnnuityInt = Number(this.totalAnnuity);
+                        let totalAnnuityInt = Number(this.totalAnnuity);
 
                         for(let fee of fees){
                             if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price){
                                 totalAnnuityInt -= fee.price;
-                                feesHTML += ` <td>
+                                feesHTML += `<td>
                                 <input style="width:100px;" type="text" name="fees[]" value="${fee.price}" readonly>
                                 </td>`;
                                 continue;
                             }
                             if(totalAnnuityInt > 0 && totalAnnuityInt < fee.price){
-                                feesHTML += ` <td>
+                                feesHTML += `<td>
                                 <input style="width:100px;" type="text" name="fees[]" value="${totalAnnuityInt.toFixed(2)}" readonly>
                                 </td>`;
                                 totalAnnuityInt = 0;
                                 continue;
                             }
                             if (totalAnnuityInt === 0){
-                                feesHTML += ` <td>
+                                feesHTML += `<td>
                                 <input style="width:100px;" type="text" name="fees[]" value="0.00" readonly>
                                 </td>`;
                             }

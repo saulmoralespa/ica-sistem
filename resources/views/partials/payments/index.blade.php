@@ -105,10 +105,12 @@
                 contractStudent.assign_deposit = newValue.toFixed(2);
                 return cost.toFixed(2);
             }else if(contractStudent.assign_deposit < cost && contractStudent.assign_deposit > 0){
-                const price = contractStudent.assign_deposit;
+                const price = Number(contractStudent.assign_deposit);
                 const newValue = contractStudent.assign_deposit - price;
                 contractStudent.assign_deposit = newValue.toFixed(2);
-                return price;
+                return price.toFixed(2);
+            }else{
+                return contractStudent.assign_deposit;
             }
         }
     </script>

@@ -20788,16 +20788,16 @@ if (document.getElementById("app")) {
 
                                                     if (totalAnnuityInt > 0 && totalAnnuityInt >= fee.price) {
                                                         totalAnnuityInt -= fee.price;
-                                                        feesHTML += ' <td>\n                                <input style="width:100px;" type="text" name="fees[]" value="' + fee.price + '" readonly>\n                                </td>';
+                                                        feesHTML += '<td>\n                                <input style="width:100px;" type="text" name="fees[]" value="' + fee.price + '" readonly>\n                                </td>';
                                                         continue;
                                                     }
                                                     if (totalAnnuityInt > 0 && totalAnnuityInt < fee.price) {
-                                                        feesHTML += ' <td>\n                                <input style="width:100px;" type="text" name="fees[]" value="' + totalAnnuityInt.toFixed(2) + '" readonly>\n                                </td>';
+                                                        feesHTML += '<td>\n                                <input style="width:100px;" type="text" name="fees[]" value="' + totalAnnuityInt.toFixed(2) + '" readonly>\n                                </td>';
                                                         totalAnnuityInt = 0;
                                                         continue;
                                                     }
                                                     if (totalAnnuityInt === 0) {
-                                                        feesHTML += ' <td>\n                                <input style="width:100px;" type="text" name="fees[]" value="0.00" readonly>\n                                </td>';
+                                                        feesHTML += '<td>\n                                <input style="width:100px;" type="text" name="fees[]" value="0.00" readonly>\n                                </td>';
                                                     }
                                                 }
                                             } catch (err) {
